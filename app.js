@@ -17,7 +17,7 @@ app.use(logger('dev')); // Log delle richieste
 app.use(express.json()); // Parsing JSON
 app.use(express.urlencoded({ extended: false })); // Parsing dei dati del form
 app.use(cookieParser()); // Gestione dei cookie
-app.use(express.static(path.join(__dirname, 'public'))); // File statici
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Definizione delle route
 app.use('/', indexRouter);

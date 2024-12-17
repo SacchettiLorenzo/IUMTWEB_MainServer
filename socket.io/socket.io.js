@@ -1,23 +1,23 @@
-module.exports = (io) => {
-    io.on('connection', (socket) => {
-        console.log('A user connected');
+exports.init = function(io) {
+    io.sockets.on('connection', function (socket) {
+        console.log('A user connected:', socket.id);
 
-        socket.on('chat message', (room, msg, name) => {
-            io.to(room).emit('chat message', msg, name); // Broadcast the message to all connected clients
-        });
-        socket.on('create or join conversation', (room, name) => {
+        // Unisciti o crea una stanza
+        socket.on('create or join', function (room, userId) {
+            console.log(`Received "create or join". Room: ${room}, User: ${userId}`); // Debug
             socket.join(room);
-            io.to(room).emit('create or join conversation', name); // Broadcast the message to all connected clients
+            console.log(`${userId} joined room: ${room}`);
+            io.to(room).emit('joined', room, userId);
         });
 
-        socket.on('leave room', (roomName, name) => {
-            io.to(roomName).emit('chat message', "has left the conversation", name);
-            socket.leave(roomName);
+        // Invia un messaggio a tutti nella stanza
+        socket.on('chat', function (room, userId, chatText) {
+            console.log(`Message in room ${room} from ${userId}: ${chatText}`);
+            io.to(room).emit('chat', room, userId, chatText);
         });
 
-
-        socket.on('disconnect', () => {
-            console.log('A user disconnected');
+        socket.on('disconnect', function() {
+            console.log('A user disconnected:', socket.id);
         });
     });
 };
