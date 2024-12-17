@@ -1,4 +1,3 @@
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -9,31 +8,33 @@ var moviesRouter = require('./routes/movies');
 
 var app = express();
 
-// view engine setup
+// Configurazione del motore di template (Handlebars)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// Middleware di Express
+app.use(logger('dev')); // Log delle richieste
+app.use(express.json()); // Parsing JSON
+app.use(express.urlencoded({ extended: false })); // Parsing dei dati del form
+app.use(cookieParser()); // Gestione dei cookie
+app.use(express.static(path.join(__dirname, 'public'))); // File statici
 
+// Definizione delle route
 app.use('/', indexRouter);
 app.use('/movies', moviesRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+// Gestione errori 404
+app.use(function (req, res, next) {
+  res.status(404).render('error', { message: 'Page not found', error: {} });
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+// Gestione degli errori generici
+app.use(function (err, req, res, next) {
+  // Fornisci errori solo in ambiente di sviluppo
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  // Renderizza la pagina di errore
   res.status(err.status || 500);
   res.render('error');
 });
