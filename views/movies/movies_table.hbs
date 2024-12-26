@@ -1,0 +1,22 @@
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Tagline</th>
+        <th>Description</th>
+        <th>Minute</th>
+        <th>Rating</th>
+    </tr>
+    {{#each movies}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+            <td>{{date}}</td>
+            <td>{{tagline}}</td>
+            <td>{{description}}</td>
+            <td>{{minute}}</td>
+            <td>{{rating}}</td>
+        </tr>
+    {{/each}}
+</table>

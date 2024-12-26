@@ -2,11 +2,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const hbs = require('hbs')
+
 
 var indexRouter = require('./routes/index');
 var moviesRouter = require('./routes/movies');
 
 var app = express();
+
+//the components inside /movies can be used inside other components
+hbs.registerPartials(__dirname + '/views/movies')
+hbs.registerPartials(__dirname + '/views/actors')
+hbs.registerPartials(__dirname + '/views/crew')
+
 
 // Configurazione del motore di template (Handlebars)
 app.set('views', path.join(__dirname, 'views'));

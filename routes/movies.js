@@ -1,86 +1,28 @@
 var express = require('express');
 var router = express.Router();
+const axios = require('axios');
+var url = require('url-composer');
 
-var movies = [
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    },
-    {
-        "movie_name": "Oppenheimer",
-        "movie_date": 2023,
-        "movie_poster" : "https://a.ltrbxd.com/resized/film-poster/7/8/4/3/2/8/784328-oppenheimer-0-230-0-345-crop.jpg?v=e3c6e7a32c",
-        "movie_description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II"
-    }
-]
+
+var movies = []
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    let request_url = url.build({
+        host: "http://localhost:8080",
+        path: "movies",
+        query: {
+            page: req.query.page,
+            size: req.query.size,
+        }
+    })
 
-    res.render('movies', { title: 'Movies', movies : movies });
-
+    axios.get(request_url).then(movies => {
+        res.render('./movies/movie', { title: 'Movies', movies : movies.data.content });
+    }).catch(error => {
+        console.log(error);
+    })
 });
+
 
 module.exports = router;
