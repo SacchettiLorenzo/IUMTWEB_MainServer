@@ -1,0 +1,29 @@
+<div id="MovieCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+    <div id="MovieCarouselIndicators" class="carousel-indicators">
+    {{#times movies.length}}
+        <button type="button" data-bs-target="#MovieCarousel" data-bs-slide-to="{{this}}" aria-current="true" aria-label="Slide {{this}}"></button>
+    {{/times}}
+    </div>
+    <div id="MovieCarouselInner" class="carousel-inner">
+    {{#each movies}}
+        <div class="carousel-item bg-dark text-light ">
+            <img class="w-25 mx-auto d-block" src="{{poster}}" alt="{{name}}" onerror="load_default_movie_image(this)">
+            <div class="container">
+                <div class="carousel-caption text-start bg-dark text-light opacity-75">
+                    <h1 class="">{{name}}</h1>
+                    <p class="opacity-75 ">{{tagline}}</p>
+                    <p class="opacity-75 ">{{date}}</p>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#MovieCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#MovieCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>

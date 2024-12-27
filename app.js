@@ -20,6 +20,13 @@ hbs.registerPartials(__dirname + '/views/movies')
 hbs.registerPartials(__dirname + '/views/actors')
 hbs.registerPartials(__dirname + '/views/crew')
 
+hbs.registerHelper('times', function(n, block) {
+  var accum = '';
+  for(var i = 0; i < n; ++i)
+    accum += block.fn(i);
+  return accum;
+});
+
 
 // Configurazione del motore di template (Handlebars)
 app.set('views', path.join(__dirname, 'views'));

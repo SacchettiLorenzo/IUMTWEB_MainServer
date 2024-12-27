@@ -7,6 +7,7 @@
         <th scope="col">Description</th>
         <th scope="col">Minute</th>
         <th scope="col">Rating</th>
+        <th scope="col">Poster</th>
     </tr>
     {{#each movies}}
         <tr>
@@ -17,6 +18,7 @@
             <td>{{description}}</td>
             <td>{{minute}}</td>
             <td>{{rating}}</td>
+            <td><a href="{{poster}}">Poster Link</a></td>
         </tr>
     {{/each}}
 </table>
