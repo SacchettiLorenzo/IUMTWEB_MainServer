@@ -3,22 +3,19 @@ var router = express.Router();
 const axios = require('axios');
 var url = require('url-composer');
 
-
-var movies = []
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
     let request_url = url.build({
         host: global.host,
-        path: "movies",
+        path: "crew",
         query: {
             page: req.query.page,
             size: req.query.size,
         }
     })
 
-    axios.get(request_url).then(movies => {
-        res.render('./movies/movie', { title: 'Movies', movies : movies.data.content });
+    axios.get(request_url).then(crew => {
+        res.render('./crew/crew', { title: 'Crew', crew : crew.data.content });
     }).catch(error => {
         console.log(error);
     })

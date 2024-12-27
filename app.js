@@ -4,9 +4,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const hbs = require('hbs')
 
+global.host = "http://localhost:8080";
+
 
 var indexRouter = require('./routes/index');
 var moviesRouter = require('./routes/movies');
+var actorsRouter = require('./routes/actors');
+var crewRouter = require('./routes/crew');
 
 var app = express();
 
@@ -30,6 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Definizione delle route
 app.use('/', indexRouter);
 app.use('/movies', moviesRouter);
+app.use('/actors', actorsRouter);
+app.use('/crew', crewRouter);
 
 // Gestione errori 404
 app.use(function (req, res, next) {
