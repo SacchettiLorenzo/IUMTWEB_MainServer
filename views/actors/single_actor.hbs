@@ -1,8 +1,22 @@
-{{actor.id}}
-{{actor.name}}
-{{actor.summary}}
-{{actor.section}}
-{{actor.image_url}}
+<div class="card w-25">
+    <img src="{{actor.image_url}}" class="card-img-top" onerror="load_default_image(this)"/>
+    <div class="card-body">
+        <h5 class="card-title">
+            {{actor.name}}
+        </h5>
+        <p class="card-text">
+            {{actor.summary}}
+        </p>
+        <p class="card-text">
+            {{actor.section}}
+        </p>
+    </div>
+    <div class="card-footer">
+        <small class="text-muted">
+            {{actor.id}}
+        </small>
+    </div>
+</div>
 {{> movies_table}}
 
 

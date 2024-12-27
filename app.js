@@ -4,7 +4,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const hbs = require('hbs')
 
-global.host = "http://localhost:8080";
+global.SQLBrokerHost = "http://localhost:8080";
+global.NoSQLBrokerHost = "http://localhost:8081";
 
 
 var indexRouter = require('./routes/index');
@@ -29,7 +30,7 @@ app.use(logger('dev')); // Log delle richieste
 app.use(express.json()); // Parsing JSON
 app.use(express.urlencoded({ extended: false })); // Parsing dei dati del form
 app.use(cookieParser()); // Gestione dei cookie
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Definizione delle route
 app.use('/', indexRouter);

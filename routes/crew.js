@@ -6,7 +6,7 @@ var url = require('url-composer');
 /* GET home page. */
 router.get('/', function(req, res, next) {
     let request_url = url.build({
-        host: global.host,
+        host: global.SQLBrokerHost,
         path: "crew",
         query: {
             page: req.query.page,

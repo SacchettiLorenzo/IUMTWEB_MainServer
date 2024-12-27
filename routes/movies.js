@@ -9,7 +9,7 @@ var movies = []
 /* GET home page. */
 router.get('/', function(req, res, next) {
     let request_url = url.build({
-        host: global.host,
+        host: global.SQLBrokerHost,
         path: "movies",
         query: {
             page: req.query.page,
