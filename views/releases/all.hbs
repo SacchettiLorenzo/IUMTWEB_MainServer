@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>All Releases</title>
+</head>
+<body>
+<h1>All Releases</h1>
+<ul>
+    {{#each releases}}
+        <li>
+            <strong>Title:</strong> {{title}} <br />
+            <a href="/releases/{{id}}">View Details</a>
+        </li>
+        <hr />
+    {{/each}}
+</ul>
+</body>
+</html>

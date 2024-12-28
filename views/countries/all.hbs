@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>All Countries</title>
+</head>
+<body>
+<h1>All Countries</h1>
+<ul>
+    {{#each countries}}
+        <li>
+            <strong>Name:</strong> {{name}} <br />
+            <a href="/countries/{{id}}">View Details</a>
+        </li>
+        <hr />
+    {{/each}}
+</ul>
+</body>
+</html>

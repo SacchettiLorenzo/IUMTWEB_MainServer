@@ -8,11 +8,14 @@ global.SQLBrokerHost = "http://localhost:8080";
 global.NoSQLBrokerHost = "http://localhost:8081";
 
 
-var indexRouter = require('./routes/index');
-var moviesRouter = require('./routes/movies');
-var actorsRouter = require('./routes/actors');
-var crewRouter = require('./routes/crew');
-var oscarsRouter = require('./routes/oscars');
+const indexRouter = require('./routes/index');
+const moviesRouter = require('./routes/movies');
+const actorsRouter = require('./routes/actors');
+const crewRouter = require('./routes/crew');
+const oscarsRouter = require('./routes/oscars');
+const countriesRouter = require('./routes/countries');
+const releasesRouter = require('./routes/releases');
+const studiosRouter = require('./routes/studios');
 
 var app = express();
 
@@ -47,6 +50,9 @@ app.use('/movies', moviesRouter);
 app.use('/actors', actorsRouter);
 app.use('/crew', crewRouter);
 app.use('/oscars', oscarsRouter);
+app.use('/countries', countriesRouter);
+app.use('/releases', releasesRouter);
+app.use('/studios', studiosRouter);
 // Gestione errori 404
 app.use(function (req, res, next) {
   res.status(404).render('error', { message: 'Page not found', error: {} });
