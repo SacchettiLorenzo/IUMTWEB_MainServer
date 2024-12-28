@@ -1,0 +1,19 @@
+<div class="card w-50">
+    <div class="card-body">
+        <h5 class="card-title">
+            {{movie_title}}
+        </h5>
+        <ul class="list-group">
+            {{#each oscars}}
+                <li class="list-group-item">
+                    Year: {{year_film}}, Category: {{category}}, Winner: {{#if winner}}Yes{{else}}No{{/if}}
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+    <div class="card-footer">
+        <small class="text-muted">
+            ID: {{id}}
+        </small>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<h1>Oscars for Year: {{title}}</h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Movie Title</th>
+        <th>Category</th>
+        <th>Winner</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each oscarsByYear}}
+        {{#each oscars}}
+            <tr>
+                <td>{{../movie_title}}</td>
+                <td>{{category}}</td>
+                <td>{{#if winner}}Yes{{else}}No{{/if}}</td>
+            </tr>
+        {{/each}}
+    {{/each}}
+    </tbody>
+</table>

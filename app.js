@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const hbs = require('hbs')
+const hbs = require('hbs');
 
 global.SQLBrokerHost = "http://localhost:8080";
 global.NoSQLBrokerHost = "http://localhost:8081";
@@ -12,13 +12,15 @@ var indexRouter = require('./routes/index');
 var moviesRouter = require('./routes/movies');
 var actorsRouter = require('./routes/actors');
 var crewRouter = require('./routes/crew');
+var oscarsRouter = require('./routes/oscars');
 
 var app = express();
 
 //the components inside /movies can be used inside other components
-hbs.registerPartials(__dirname + '/views/movies')
-hbs.registerPartials(__dirname + '/views/actors')
-hbs.registerPartials(__dirname + '/views/crew')
+hbs.registerPartials(__dirname + '/views/movies');
+hbs.registerPartials(__dirname + '/views/actors');
+hbs.registerPartials(__dirname + '/views/crew');
+hbs.registerPartials(path.join(__dirname, '/views/oscars'));
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
@@ -44,7 +46,7 @@ app.use('/', indexRouter);
 app.use('/movies', moviesRouter);
 app.use('/actors', actorsRouter);
 app.use('/crew', crewRouter);
-
+app.use('/oscars', oscarsRouter);
 // Gestione errori 404
 app.use(function (req, res, next) {
   res.status(404).render('error', { message: 'Page not found', error: {} });

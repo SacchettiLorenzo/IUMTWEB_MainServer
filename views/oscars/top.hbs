@@ -1,0 +1,17 @@
+<h1>Top {{limit}} Films with Most Oscars</h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Movie Title</th>
+        <th>Total Wins</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each topFilms}}
+        <tr>
+            <td>{{_id}}</td>
+            <td>{{totalWins}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

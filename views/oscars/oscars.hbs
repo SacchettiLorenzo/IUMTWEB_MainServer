@@ -1,0 +1,7 @@
+{{> oscar_table}}
+{{#each oscars}}
+    {{id}} - {{movie_title}}
+    {{#each oscars}}
+        {{year_film}} - {{category}} - {{#if winner}}Winner{{else}}Nominee{{/if}}
+    {{/each}}
+{{/each}}

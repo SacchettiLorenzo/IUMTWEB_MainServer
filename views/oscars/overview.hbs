@@ -1,0 +1,11 @@
+<h1>Oscar API Overview</h1>
+<p>Total Entries: {{overview.totalEntries}}</p>
+<p>Total Categories: {{overview.totalCategories}}</p>
+<p>Total Winners: {{overview.totalWinners}}</p>
+
+<h2>Available Routes:</h2>
+<ul>
+    {{#each overview.availableRoutes}}
+        <li><strong>{{method}}:</strong> {{route}} - {{description}}</li>
+    {{/each}}
+</ul>
