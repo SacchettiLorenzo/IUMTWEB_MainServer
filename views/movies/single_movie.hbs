@@ -1,0 +1,29 @@
+<div class="min-vh-100 min-vw-100" id="movie-background">
+    {{#with movie}}
+    <div class="bg-dark text-white row " id="movie-container">
+        <div class="col" id="movie-caption">
+            <div>
+                <h1 class="col align-self-center">
+                    {{name}}
+                </h1>
+                <p>
+                    {{tagline}}
+                </p>
+                <p>
+                    {{description}}
+                </p>
+            </div>
+
+        </div>
+        <div class="col" id="movie-poster">
+            <img class="" src="{{poster}}" alt="{{name}}" onerror="load_default_movie_image(this)">
+        </div>
+    </div>
+    {{/with}}
+    <div id="movie-actors">
+        {{> actors_card}}
+    </div>
+
+    similar movies
+</div>
+

@@ -1,0 +1,22 @@
+#movie-container{
+    position: absolute;
+    height: 40vh;
+    width: 100%;
+    top: 10vh
+}
+
+#movie-poster img{
+    height: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+#movie-caption div{
+    margin-top: 10%;
+}
+
+#movie-actors{
+    margin-top: 50vh;
+
+}
+
