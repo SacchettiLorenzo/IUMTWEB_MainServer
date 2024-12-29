@@ -16,6 +16,8 @@ const oscarsRouter = require('./routes/oscars');
 const countriesRouter = require('./routes/countries');
 const releasesRouter = require('./routes/releases');
 const studiosRouter = require('./routes/studios');
+const themesRouter = require('./routes/themes');
+
 
 var app = express();
 
@@ -24,6 +26,8 @@ hbs.registerPartials(__dirname + '/views/movies');
 hbs.registerPartials(__dirname + '/views/actors');
 hbs.registerPartials(__dirname + '/views/crew');
 hbs.registerPartials(path.join(__dirname, '/views/oscars'));
+hbs.registerPartials(path.join(__dirname, '/views/themes'));
+
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
@@ -53,6 +57,8 @@ app.use('/oscars', oscarsRouter);
 app.use('/countries', countriesRouter);
 app.use('/releases', releasesRouter);
 app.use('/studios', studiosRouter);
+app.use('/themes', themesRouter);
+
 // Gestione errori 404
 app.use(function (req, res, next) {
   res.status(404).render('error', { message: 'Page not found', error: {} });
