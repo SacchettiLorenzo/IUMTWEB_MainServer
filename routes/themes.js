@@ -46,7 +46,7 @@ router.get('/id', async  (req, res, next) =>{
 router.get('/top10', async (req, res, next) =>{
     let themes_data_request_url = url.build({
         host: global.SQLBrokerHost,
-        path: "themes/id",
+        path: "themes/top10",
         query: {
             id: req.query.id,
         }
