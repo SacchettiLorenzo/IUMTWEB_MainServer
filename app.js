@@ -18,7 +18,8 @@ const releasesRouter = require('./routes/releases');
 const studiosRouter = require('./routes/studios');
 const themesRouter = require('./routes/themes');
 const languagesRouter = require('./routes/languages');
-
+const genresRouter = require('./routes/genres');
+const postersRouter = require('./routes/posters');
 
 
 var app = express();
@@ -30,6 +31,8 @@ hbs.registerPartials(__dirname + '/views/crew');
 hbs.registerPartials(path.join(__dirname, '/views/oscars'));
 hbs.registerPartials(__dirname, '/views/themes');
 hbs.registerPartials(__dirname, '/views/languages');
+hbs.registerPartials(__dirname, '/views/genres');
+hbs.registerPartials(__dirname, '/views/posters');
 
 
 hbs.registerHelper('times', function(n, block) {
@@ -62,6 +65,8 @@ app.use('/releases', releasesRouter);
 app.use('/studios', studiosRouter);
 app.use('/themes', themesRouter);
 app.use('/languages', languagesRouter);
+app.use('/genres', genresRouter);
+app.use('/posters', postersRouter);
 
 // Gestione errori 404
 app.use(function (req, res, next) {
