@@ -5,14 +5,25 @@
 </head>
 <body>
 <h1>All Studios</h1>
+
+<!-- Search Form -->
+<form action="/studios/search" method="GET">
+    <input type="text" name="keyword" placeholder="Search studios" required>
+    <button type="submit">Search</button>
+</form>
+
+<hr />
+
+<!-- List of Studios -->
 <ul>
     {{#each studios}}
         <li>
-            <strong>Name:</strong> {{name}} <br />
+            <strong>Name:</strong> {{studio}} <br />
             <a href="/studios/{{id}}">View Details</a>
         </li>
         <hr />
     {{/each}}
 </ul>
+
 </body>
 </html>

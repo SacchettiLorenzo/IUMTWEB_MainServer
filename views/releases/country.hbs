@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>All Releases</title>
+    <title>{{title}}</title>
 </head>
 <body>
-<h1>All Releases</h1>
+<h1>{{title}}</h1>
 <ul>
     {{#each releases}}
         <li>
             <strong>Country:</strong> {{country}} <br />
             <strong>Type:</strong> {{type}} <br />
             <strong>Rating:</strong> {{rating}} <br />
-            <a href="/releases/{{id}}">View Details</a>
+            <strong>Date:</strong> {{date}} <br />
         </li>
-        <hr />
     {{/each}}
 </ul>
+<a href="/releases/all">Back to All Releases</a>
 </body>
 </html>

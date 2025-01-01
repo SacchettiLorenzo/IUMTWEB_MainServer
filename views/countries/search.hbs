@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>All Countries</title>
+    <title>Search Results</title>
 </head>
 <body>
-<h1>All Countries</h1>
+<h1>Search Results for "{{country}}"</h1>
 <ul>
     {{#each countries}}
         <li>
             <strong>Country:</strong> {{country}} <br />
             <a href="/countries/{{id}}">View Details</a>
         </li>
-        <hr />
     {{/each}}
 </ul>
+<a href="/countries/all">Back to all countries</a>
 </body>
 </html>
