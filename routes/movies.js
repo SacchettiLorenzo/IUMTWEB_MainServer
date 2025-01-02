@@ -12,9 +12,11 @@ module.exports = (options) => {
     /* GET home page. */
     router.get('/', function (req, res, next) {
 
+        let path = "movies";
+
         let request_url = {
             host: options.servers.SQLBrokerHost,
-            path: "movies",
+            path: path,
             query: {}
         }
 
@@ -31,16 +33,30 @@ module.exports = (options) => {
         request_url = url.build(request_url);
 
         axios.get(request_url).then(movies => {
-            res.render('./movies/movie', {title: 'Movies', movies: movies.data.content});
+            console.log(movies);
+            res.render('./movies/movie',
+                {
+                    title: 'Movies',
+                    movies: movies.data.content,
+                    path: path,
+                    pages: true,
+                    pages_amount: (movies.data.totalPages - 1),
+                    current_page: movies.data.number,
+                    page_size: movies.data.size
+                });
+
         }).catch(error => {
             console.log(error);
         })
     });
 
     router.get('/name', function (req, res, next) {
+
+        let path = "movies/name";
+
         let request_url = {
             host: options.servers.SQLBrokerHost,
-            path: "movies/name",
+            path: path,
             query: {}
         }
 
@@ -54,7 +70,16 @@ module.exports = (options) => {
         request_url = url.build(request_url);
 
         axios.get(request_url).then(movies => {
-            res.render('./movies/movie', {title: 'Movies', movies: movies.data});
+            res.render('./movies/movie',
+                {
+                    title: 'Movies',
+                    movies: movies.data,
+                    path: path,
+                    pages: true,
+                    pages_amount: (movies.data.totalPages - 1),
+                    current_page: movies.data.number,
+                    page_size: movies.data.size
+                });
         }).catch(error => {
             console.log(error);
         })

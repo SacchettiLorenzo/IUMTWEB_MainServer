@@ -1,22 +1,35 @@
+#movie-background{
+    background-color: dimgrey;
+}
+
+
 #movie-container{
-    position: absolute;
+    position: relative;
     height: 40vh;
-    width: 100%;
-    top: 10vh
+    margin-top: 10vh;
 }
 
 #movie-poster img{
     height: 100%;
     margin: 0 auto;
-    display: block;
+    display: flex;
+    object-fit: contain;
 }
 
 #movie-caption div{
     margin-top: 10%;
+    text-align: center;
+    margin-left: 3%;
 }
 
 #movie-actors{
-    margin-top: 50vh;
+    position: relative;
+}
 
+#actor-card{
+    max-width: 20%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
 }
 

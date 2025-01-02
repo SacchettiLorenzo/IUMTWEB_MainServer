@@ -23,6 +23,7 @@ var app = express();
 hbs.registerPartials(__dirname + '/views/movies')
 hbs.registerPartials(__dirname + '/views/actors')
 hbs.registerPartials(__dirname + '/views/crew')
+hbs.registerPartials(__dirname + '/views/partials')
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
@@ -45,6 +46,14 @@ hbs.registerHelper( "when",function(operand_1, operator, operand_2, options) {
   if (result) return options.fn(this);
   else  return options.inverse(this);
 });
+
+hbs.registerHelper("add", function (operand_1, operand_2) {
+  return operand_1 + operand_2;
+})
+
+hbs.registerHelper("sub", function (operand_1, operand_2) {
+  return operand_1 - operand_2;
+})
 
 
 // Configurazione del motore di template (Handlebars)

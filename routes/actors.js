@@ -38,7 +38,8 @@ module.exports = (options) => {
 
         axios.get(request_url).then(actors => {
             actors.data.content = filter_actors_summary(actors.data.content);
-            res.render('./actors/actors', {title: 'Actors', actors: actors.data.content});
+
+            res.render('./actors/actors', {title: 'Actors', actors: actors.data.content, pages : false});
         }).catch(error => {
             console.log(error);
         })
@@ -119,4 +120,3 @@ module.exports = (options) => {
 
 return router;
 }
-
