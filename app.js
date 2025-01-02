@@ -24,6 +24,8 @@ hbs.registerPartials(__dirname + '/views/movies');
 hbs.registerPartials(__dirname + '/views/actors');
 hbs.registerPartials(__dirname + '/views/crew');
 hbs.registerPartials(path.join(__dirname, '/views/oscars'));
+hbs.registerPartials(path.join(__dirname, '/views/homepage'));
+hbs.registerPartials(path.join(__dirname, '/views/channels'));
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';

@@ -1,0 +1,15 @@
+<h2 class="text-center">Film Popolari</h2>
+<div class="row">
+    {{#each popularMovies}}
+        <div class="col-md-4 mb-4">
+            <div class="card bg-dark text-white">
+                <img src="{{poster}}" class="card-img-top" alt="{{name}}" onerror="load_default_movie_image(this)">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">{{tagline}}</p>
+                    <a href="/movies/id?id={{id}}" class="btn btn-primary">Scopri di più</a>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</div>

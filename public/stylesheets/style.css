@@ -1,0 +1,41 @@
+#movie-container{
+    position: absolute;
+    height: 40vh;
+    width: 100%;
+    top: 10vh
+}
+
+#movie-poster img{
+    height: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+#movie-caption div{
+    margin-top: 10%;
+}
+
+#movie-actors{
+    margin-top: 50vh;
+
+}
+
+#carousel-section {
+    background-color: #222;
+    padding: 20px;
+}
+
+#popular-movies .card {
+    transition: transform 0.2s;
+}
+
+#popular-movies .card:hover {
+    transform: scale(1.05);
+}
+
+#latest-reviews ul {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+}
