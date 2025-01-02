@@ -4,8 +4,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const hbs = require('hbs')
 
-global.SQLBrokerHost = "http://localhost:8080";
-global.NoSQLBrokerHost = "http://localhost:8081";
+
+
+const servers = {
+  SQLBrokerHost : "http://localhost:8080",
+  NoSQLBrokerHost : "http://localhost:8081"
+}
 
 
 var indexRouter = require('./routes/index');
@@ -56,9 +60,9 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Definizione delle route
 app.use('/', indexRouter);
-app.use('/movies', moviesRouter);
-app.use('/actors', actorsRouter);
-app.use('/crew', crewRouter);
+app.use('/movies', moviesRouter({servers:servers}));
+app.use('/actors', actorsRouter({servers:servers}));
+app.use('/crew', crewRouter({servers:servers}));
 
 // Gestione errori 404
 app.use(function (req, res, next) {
