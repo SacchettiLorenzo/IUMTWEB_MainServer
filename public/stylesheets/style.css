@@ -33,3 +33,24 @@
     margin-top: 2%;
 }
 
+#actor{
+    background-color: dimgrey;
+    color: white;
+    display: flex;
+}
+
+#actor-image-container img{
+    height: 100vh;
+    max-width: 30vw;
+    aspect-ratio: 1;
+    margin-left: 0;
+    object-fit: cover;
+}
+
+#actor-caption-container{
+    margin-top: 10%;
+    text-align: left;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+

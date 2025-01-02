@@ -1,22 +1,26 @@
 {{#with actor}}
-<div class="card w-25">
-    <img src="{{imageUrl}}" class="card-img-top" onerror="load_default_actor_image(this)"/>
-    <div class="card-body">
-        <h5 class="card-title">
+<div class="" id="actor">
+    <div class="d-flex" id="actor-image-container">
+        <img src="{{imageUrl}}" class="" onerror="load_default_actor_image(this)"/>
+    </div>
+
+    <div class="" id="actor-caption-container">
+        <h3 class="">
             {{name}}
-        </h5>
-        <p class="card-text">
+        </h3>
+        <p class="">
             {{summary}}
         </p>
-        <p class="card-text">
+        <p class="">
             {{section}}
         </p>
+        <div class="">
+            <small class="">
+                {{id}}
+            </small>
+        </div>
     </div>
-    <div class="card-footer">
-        <small class="text-muted">
-            {{id}}
-        </small>
-    </div>
+
 </div>
 {{/with}}
 {{> movies_table}}
