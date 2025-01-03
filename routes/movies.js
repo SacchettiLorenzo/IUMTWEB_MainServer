@@ -86,47 +86,96 @@ module.exports = (options) => {
     })
 
     router.get('/id', function (req, res, next) {
-        let movie_data_request_url = {
+
+            //todo: if id == null render error page
+
+            if (req.query.id === undefined || req.query.id === '' || req.query.id === null) {
+                res.render('./error', {
+                    message: 'No movie id'
+                })
+            } else {
+                let movie_data_request_url = {
+                    host: options.servers.SQLBrokerHost,
+                    path: "movies/id",
+                    query: {
+                        id: req.query.id
+                    }
+                }
+
+                movie_data_request_url = url.build(movie_data_request_url);
+
+
+                let actors_data_request_url = {
+                    host: options.servers.SQLBrokerHost,
+                    path: "actors/movie",
+                    query: {
+                        movieId: req.query.id
+                    }
+                }
+
+                actors_data_request_url = url.build(actors_data_request_url);
+
+                let similar_movie_data_request_url = {
+                    host: options.servers.SQLBrokerHost,
+                    path: "movies/similar",
+                    query: {
+                        id: req.query.id
+                    }
+                }
+
+                similar_movie_data_request_url = url.build(similar_movie_data_request_url);
+
+                Promise.all([
+                    axios.get(movie_data_request_url).then(movie => {
+                        return movie.data
+                    }).catch(error => {
+                        console.log(error);
+                    }),
+                    axios.get(actors_data_request_url).then(actors => {
+                        return actors.data
+                    }).catch(error => {
+                        console.log(error);
+                    }),
+                    axios.get(similar_movie_data_request_url).then(actors => {
+                        return actors.data
+                    }).catch(error => {
+                        console.log(error);
+                    })
+                ]).then(result => {
+                    res.render('./movies/single_movie', {title: 'Movies', movie: result[0], actors: result[1], similar: result[2]});
+                })
+            }
+        }
+    )
+
+
+
+    router.get('/stats', function (req, res, next) {
+
+        let path = "movies/stats";
+
+        let request_url = {
             host: options.servers.SQLBrokerHost,
-            path: "movies/id",
+            path: path,
             query: {}
         }
 
-        movie_data_request_url = {
-            ...movie_data_request_url,
-            query: {
-                ...((req.query.id == null) ? {} : {id: req.query.id}),
-            }
-        }
+        request_url = url.build(request_url);
 
-        movie_data_request_url = url.build(movie_data_request_url);
-
-        let actors_data_request_url = {
-            host: options.servers.SQLBrokerHost,
-            path: "actors/movie",
-            query: {
-                movieId: req.query.id
-            }
-        }
-
-        actors_data_request_url = url.build(actors_data_request_url);
-
-        Promise.all([
-            axios.get(movie_data_request_url).then(movie => {
-                return movie.data
-                //res.render('./movies/single_movie', { title: 'Movies', movie : movie.data });
-            }).catch(error => {
-                console.log(error);
-            }),
-            axios.get(actors_data_request_url).then(actors => {
-                return actors.data
-                //res.render('./movies/single_movie', { title: 'Movies', movie : movie.data });
-            }).catch(error => {
-                console.log(error);
-            })
-        ]).then(result => {
-            res.render('./movies/single_movie', {title: 'Movies', movie: result[0], actors: result[1]});
+        /*
+        axios.get(request_url).then(movies => {
+            res.render('./movies/movies_stats',
+                {
+                    title: 'Movies',
+                    movies: movies.data
+                });
+        }).catch(error => {
+            console.log(error);
         })
+        */
+
+
+        res.render('./movies/movies_stats');
     })
 
     return router;
