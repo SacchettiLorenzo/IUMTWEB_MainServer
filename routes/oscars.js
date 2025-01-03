@@ -3,142 +3,146 @@ var router = express.Router();
 const axios = require('axios');
 const url = require('url-composer');
 
-/* GET all Oscars */
-router.get('/', function (req, res, next) {
-    let request_url = url.build({
-        host: 'http://localhost:3001',
-        path: 'oscar/all',
+module.exports = (options) => {
+
+    /* GET all Oscars */
+    router.get('/', function (req, res, next) {
+        let request_url = url.build({
+            host: 'http://localhost:3001',
+            path: 'oscar/all',
+        });
+
+        axios.get(request_url).then(response => {
+            res.render('./oscars/oscars', {title: 'All Oscars', oscars: response.data});
+        }).catch(error => {
+            console.error('Error fetching all Oscars:', error);
+            res.status(500).send('Error fetching all Oscars.');
+        });
     });
 
-    axios.get(request_url).then(response => {
-        res.render('./oscars/oscars', { title: 'All Oscars', oscars: response.data });
-    }).catch(error => {
-        console.error('Error fetching all Oscars:', error);
-        res.status(500).send('Error fetching all Oscars.');
+    /* GET details of a single Oscar */
+    router.get('/:id', function (req, res, next) {
+        let request_url = url.build({
+            host: 'http://localhost:3001',
+            path: `oscar/id/${req.params.id}`,
+        });
+
+        axios.get(request_url).then(response => {
+            res.render('./oscars/single_oscar', {title: 'Oscar Details', oscar: response.data});
+        }).catch(error => {
+            console.error('Error fetching Oscar details:', error);
+            res.status(500).send('Error fetching Oscar details.');
+        });
     });
-});
 
-/* GET details of a single Oscar */
-router.get('/:id', function (req, res, next) {
-    let request_url = url.build({
-        host: 'http://localhost:3001',
-        path: `oscar/id/${req.params.id}`,
+    router.get('/top/:limit', async function (req, res, next) {
+        try {
+            const {limit} = req.params;
+            const request_url = `http://localhost:3001/oscar/top/${limit}`;
+            const response = await axios.get(request_url);
+            const topFilms = response.data;
+
+            res.render('oscars/top', {
+                title: `Top ${limit} Films with Most Oscars`,
+                topFilms
+            });
+        } catch (error) {
+            console.error('Error fetching top films:', error);
+            res.status(500).send('Error fetching top films.');
+        }
     });
 
-    axios.get(request_url).then(response => {
-        res.render('./oscars/single_oscar', { title: 'Oscar Details', oscar: response.data });
-    }).catch(error => {
-        console.error('Error fetching Oscar details:', error);
-        res.status(500).send('Error fetching Oscar details.');
+    router.get('/year/:year', async function (req, res, next) {
+        try {
+            const {year} = req.params;
+            const request_url = `http://localhost:3001/oscar/year_film/${year}`;
+            const response = await axios.get(request_url);
+            const oscarsByYear = response.data;
+
+            res.render('oscars/year', {
+                title: `Oscars for Year: ${year}`,
+                oscarsByYear
+            });
+        } catch (error) {
+            console.error('Error fetching Oscars by year:', error);
+            res.status(500).send('Error fetching Oscars by year.');
+        }
     });
-});
 
-router.get('/top/:limit', async function (req, res, next) {
-    try {
-        const { limit } = req.params;
-        const request_url = `http://localhost:3001/oscar/top/${limit}`;
-        const response = await axios.get(request_url);
-        const topFilms = response.data;
+    router.get('/category/:category', async function (req, res, next) {
+        try {
+            const {category} = req.params;
+            const request_url = `http://localhost:3001/oscar/category/${category}`;
+            const response = await axios.get(request_url);
+            const oscarsByCategory = response.data;
 
-        res.render('oscars/top', {
-            title: `Top ${limit} Films with Most Oscars`,
-            topFilms
-        });
-    } catch (error) {
-        console.error('Error fetching top films:', error);
-        res.status(500).send('Error fetching top films.');
-    }
-});
+            res.render('oscars/category', {
+                title: `Oscars in Category: ${category}`,
+                oscarsByCategory
+            });
+        } catch (error) {
+            console.error('Error fetching Oscars by category:', error);
+            res.status(500).send('Error fetching Oscars by category.');
+        }
+    });
 
-router.get('/year/:year', async function (req, res, next) {
-    try {
-        const { year } = req.params;
-        const request_url = `http://localhost:3001/oscar/year_film/${year}`;
-        const response = await axios.get(request_url);
-        const oscarsByYear = response.data;
+    router.get('/film/:title', async function (req, res, next) {
+        try {
+            const {title} = req.params;
+            const request_url = `http://localhost:3001/oscar/film/${title}`;
+            const response = await axios.get(request_url);
+            const oscarsByFilm = response.data;
 
-        res.render('oscars/year', {
-            title: `Oscars for Year: ${year}`,
-            oscarsByYear
-        });
-    } catch (error) {
-        console.error('Error fetching Oscars by year:', error);
-        res.status(500).send('Error fetching Oscars by year.');
-    }
-});
+            res.render('oscars/film', {
+                title: `Oscars for ${title}`,
+                oscarsByFilm
+            });
+        } catch (error) {
+            console.error('Error fetching Oscars by film:', error);
+            res.status(500).send('Error fetching Oscars by film.');
+        }
+    });
 
-router.get('/category/:category', async function (req, res, next) {
-    try {
-        const { category } = req.params;
-        const request_url = `http://localhost:3001/oscar/category/${category}`;
-        const response = await axios.get(request_url);
-        const oscarsByCategory = response.data;
+    router.get('/all', async function (req, res, next) {
+        try {
+            const request_url = 'http://localhost:3001/oscar/all'; // Endpoint corretto
+            console.log('Requesting:', request_url);
 
-        res.render('oscars/category', {
-            title: `Oscars in Category: ${category}`,
-            oscarsByCategory
-        });
-    } catch (error) {
-        console.error('Error fetching Oscars by category:', error);
-        res.status(500).send('Error fetching Oscars by category.');
-    }
-});
+            const response = await axios.get(request_url);
+            console.log('Response received from server1:', response.data);
 
-router.get('/film/:title', async function (req, res, next) {
-    try {
-        const { title } = req.params;
-        const request_url = `http://localhost:3001/oscar/film/${title}`;
-        const response = await axios.get(request_url);
-        const oscarsByFilm = response.data;
+            const oscars = response.data;
 
-        res.render('oscars/film', {
-            title: `Oscars for ${title}`,
-            oscarsByFilm
-        });
-    } catch (error) {
-        console.error('Error fetching Oscars by film:', error);
-        res.status(500).send('Error fetching Oscars by film.');
-    }
-});
+            res.render('oscars/all', {
+                title: 'All Oscars',
+                oscars
+            });
+        } catch (error) {
+            console.error('Error fetching Oscar details:', error.message);
+            console.error('Error details:', error);
+            res.status(500).send('Error fetching Oscar details.');
+        }
+    });
 
-router.get('/all', async function (req, res, next) {
-    try {
-        const request_url = 'http://localhost:3001/oscar/all'; // Endpoint corretto
-        console.log('Requesting:', request_url);
+    router.get('/', async function (req, res, next) {
+        try {
+            const request_url = 'http://localhost:3001/oscar'; // URL del server1
+            const response = await axios.get(request_url);
+            const overview = response.data;
 
-        const response = await axios.get(request_url);
-        console.log('Response received from server1:', response.data);
+            res.render('oscars/overview', {
+                title: 'Oscar API Overview',
+                overview
+            });
+        } catch (error) {
+            console.error('Error fetching Oscar overview:', error);
+            res.status(500).send('Error fetching Oscar overview.');
+        }
+    });
 
-        const oscars = response.data;
+    return router;
 
-        res.render('oscars/all', {
-            title: 'All Oscars',
-            oscars
-        });
-    } catch (error) {
-        console.error('Error fetching Oscar details:', error.message);
-        console.error('Error details:', error);
-        res.status(500).send('Error fetching Oscar details.');
-    }
-});
-
-router.get('/', async function (req, res, next) {
-    try {
-        const request_url = 'http://localhost:3001/oscar'; // URL del server1
-        const response = await axios.get(request_url);
-        const overview = response.data;
-
-        res.render('oscars/overview', {
-            title: 'Oscar API Overview',
-            overview
-        });
-    } catch (error) {
-        console.error('Error fetching Oscar overview:', error);
-        res.status(500).send('Error fetching Oscar overview.');
-    }
-});
-
-module.exports = router;
+}
 
 
 /*

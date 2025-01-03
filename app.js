@@ -8,7 +8,7 @@ const hbs = require('hbs')
 
 const servers = {
   SQLBrokerHost : "http://localhost:8080",
-  NoSQLBrokerHost : "http://localhost:8081"
+  NoSQLBrokerHost : "http://localhost:3001"
 }
 
 
@@ -79,10 +79,10 @@ app.use('/', indexRouter);
 app.use('/movies', moviesRouter({servers:servers}));
 app.use('/actors', actorsRouter({servers:servers}));
 app.use('/crew', crewRouter({servers:servers}));
-app.use('/oscars', oscarsRouter);
-app.use('/countries', countriesRouter);
-app.use('/releases', releasesRouter);
-app.use('/studios', studiosRouter);
+app.use('/oscars', oscarsRouter({servers:servers}));
+app.use('/countries', countriesRouter({servers:servers}));
+app.use('/releases', releasesRouter({servers:servers}));
+app.use('/studios', studiosRouter({servers:servers}));
 
 // Gestione errori 404
 app.use(function (req, res, next) {
