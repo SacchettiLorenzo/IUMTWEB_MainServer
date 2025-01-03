@@ -27,3 +27,34 @@ function filter_table(inputElement, table){
         }
     }
 }
+
+let tableTemplate;
+
+async function sendMovieSearch(){
+
+    if(tableTemplate == null){
+        await loadTableTemplate();
+    }
+
+    document.getElementById("searchResult").style.display = "none";
+
+    const country = document.getElementById("countrySelect").value;
+    const genre = document.getElementById("genreSelect").value;
+    const language = document.getElementById("languageSelect").value;
+    const theme = document.getElementById("themeSelect").value;
+    const date = document.getElementById("dateInput").value;
+
+    let res = document.getElementById("searchResult");
+
+    axios.get("/movies/filter", {params : {country : country, genre : genre, language : language,theme: theme, date:date}}).then((response) => {
+        console.log(response.data);
+        res.innerHTML = tableTemplate({movies : response.data});
+        res.style.display = "block";
+    })
+}
+
+function loadTableTemplate(){
+    axios.get("/movies/filter/table").then((response) => {
+        tableTemplate = Handlebars.compile(response.data);
+    })
+}

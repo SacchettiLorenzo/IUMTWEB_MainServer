@@ -1,5 +1,6 @@
 #movie-background{
     background-color: dimgrey;
+    width: 100vw;
 }
 
 
@@ -24,6 +25,7 @@
 
 #movie-actors{
     position: relative;
+    width: 100%;
 }
 
 #actor-card{
