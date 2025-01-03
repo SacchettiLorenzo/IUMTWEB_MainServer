@@ -20,6 +20,10 @@ const oscarsRouter = require('./routes/oscars');
 const countriesRouter = require('./routes/countries');
 const releasesRouter = require('./routes/releases');
 const studiosRouter = require('./routes/studios');
+const themesRouter = require('./routes/themes');
+const languagesRouter = require('./routes/languages');
+const genresRouter = require('./routes/genres');
+
 
 var app = express();
 
@@ -31,6 +35,9 @@ hbs.registerPartials(__dirname + '/views/partials')
 hbs.registerPartials(__dirname + '/views/oscars');
 hbs.registerPartials(__dirname + '/views/homepage');
 hbs.registerPartials(__dirname + '/views/channels');
+hbs.registerPartials(__dirname + '/views/themes');
+hbs.registerPartials(__dirname + '/views/languages');
+hbs.registerPartials(__dirname + '/views/genres');
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
@@ -83,6 +90,9 @@ app.use('/oscars', oscarsRouter({servers:servers}));
 app.use('/countries', countriesRouter({servers:servers}));
 app.use('/releases', releasesRouter({servers:servers}));
 app.use('/studios', studiosRouter({servers:servers}));
+app.use('/themes', themesRouter);
+app.use('/languages', languagesRouter);
+app.use('/genres', genresRouter);
 
 // Gestione errori 404
 app.use(function (req, res, next) {
