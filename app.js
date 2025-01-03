@@ -90,9 +90,9 @@ app.use('/oscars', oscarsRouter({servers:servers}));
 app.use('/countries', countriesRouter({servers:servers}));
 app.use('/releases', releasesRouter({servers:servers}));
 app.use('/studios', studiosRouter({servers:servers}));
-app.use('/themes', themesRouter);
-app.use('/languages', languagesRouter);
-app.use('/genres', genresRouter);
+app.use('/themes', themesRouter({servers:servers}));
+app.use('/languages', languagesRouter({servers:servers}));
+app.use('/genres', genresRouter({servers:servers}));
 
 // Gestione errori 404
 app.use(function (req, res, next) {
