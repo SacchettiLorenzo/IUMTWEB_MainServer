@@ -12,10 +12,14 @@ const servers = {
 }
 
 
-var indexRouter = require('./routes/index');
-var moviesRouter = require('./routes/movies');
-var actorsRouter = require('./routes/actors');
-var crewRouter = require('./routes/crew');
+const indexRouter = require('./routes/index');
+const moviesRouter = require('./routes/movies');
+const actorsRouter = require('./routes/actors');
+const crewRouter = require('./routes/crew');
+const oscarsRouter = require('./routes/oscars');
+const countriesRouter = require('./routes/countries');
+const releasesRouter = require('./routes/releases');
+const studiosRouter = require('./routes/studios');
 
 var app = express();
 
@@ -24,6 +28,7 @@ hbs.registerPartials(__dirname + '/views/movies')
 hbs.registerPartials(__dirname + '/views/actors')
 hbs.registerPartials(__dirname + '/views/crew')
 hbs.registerPartials(__dirname + '/views/partials')
+hbs.registerPartials(__dirname, '/views/oscars');
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
@@ -72,6 +77,10 @@ app.use('/', indexRouter);
 app.use('/movies', moviesRouter({servers:servers}));
 app.use('/actors', actorsRouter({servers:servers}));
 app.use('/crew', crewRouter({servers:servers}));
+app.use('/oscars', oscarsRouter);
+app.use('/countries', countriesRouter);
+app.use('/releases', releasesRouter);
+app.use('/studios', studiosRouter);
 
 // Gestione errori 404
 app.use(function (req, res, next) {

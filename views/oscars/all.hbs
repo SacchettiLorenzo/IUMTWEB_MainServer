@@ -1,0 +1,23 @@
+<h1>All Oscars</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Movie Title</th>
+        <th>Year</th>
+        <th>Category</th>
+        <th>Winner</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each oscars}}
+        {{#each oscars}}
+            <tr>
+                <td>{{../movie_title}}</td>
+                <td>{{year_film}}</td>
+                <td>{{category}}</td>
+                <td>{{#if winner}}Yes{{else}}No{{/if}}</td>
+            </tr>
+        {{/each}}
+    {{/each}}
+    </tbody>
+</table>

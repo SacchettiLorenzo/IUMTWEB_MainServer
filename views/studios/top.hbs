@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Top Studios</title>
+</head>
+<body>
+<h1>Top Studios</h1>
+<ul>
+    {{#each studios}}
+        <li>
+            <strong>Name:</strong> {{name}} <br />
+            <a href="/studios/{{id}}">View Details</a>
+        </li>
+        <hr />
+    {{/each}}
+</ul>
+<a href="/studios/all">Back to all studios</a>
+</body>
+</html>

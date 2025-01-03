@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Studio Search Results</title>
+</head>
+<body>
+<h1>Search Results</h1>
+<h3>Studios matching "{{keyword}}"</h3>
+<ul>
+    {{#each studios}}
+        <li>
+            <strong>Name:</strong> {{studio}} <br />
+            <a href="/studios/{{id}}">View Details</a>
+        </li>
+        <hr />
+    {{/each}}
+</ul>
+<a href="/studios/all">Back to all studios</a>
+</body>
+</html>
