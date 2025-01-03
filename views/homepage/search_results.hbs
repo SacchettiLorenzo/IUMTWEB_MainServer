@@ -1,0 +1,63 @@
+<main class="container mt-5">
+    <h1>Risultati per "{{query}}"</h1>
+
+    <!-- Risultati dei Film -->
+    <section id="movie-results" class="mt-4">
+        <h2>Film</h2>
+        {{#if movieResults.length}}
+            <div class="row">
+                {{#each movieResults}}
+                    <div class="col-md-3 mb-4">
+                        <div class="card">
+                            <img src="{{poster}}" class="card-img-top" alt="{{name}}" onerror="this.src='/public/images/default-movie.jpg'">
+                            <div class="card-body">
+                                <h5 class="card-title">{{name}}</h5>
+                                <a href="/movies/id?id={{id}}" class="btn btn-primary">Scopri di più</a>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        {{else}}
+            <p>Nessun film trovato.</p>
+        {{/if}}
+    </section>
+
+    <!-- Risultati degli Attori -->
+    <section id="actor-results" class="mt-4">
+        <h2>Attori</h2>
+        {{#if actorResults.length}}
+            <div class="row">
+                {{#each actorResults}}
+                    <div class="col-md-3 mb-4">
+                        <div class="card">
+                            <img src="{{photo}}" class="card-img-top" alt="{{name}}" onerror="this.src='/public/images/default-actor.jpg'">
+                            <div class="card-body">
+                                <h5 class="card-title">{{name}}</h5>
+                                <a href="/actors/id?id={{id}}" class="btn btn-primary">Scopri di più</a>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        {{else}}
+            <p>Nessun attore trovato.</p>
+        {{/if}}
+    </section>
+
+    <!-- Risultati delle Notizie -->
+    <section id="news-results" class="mt-4">
+        <h2>Notizie</h2>
+        {{#if newsResults.length}}
+            <ul class="list-group">
+                {{#each newsResults}}
+                    <li class="list-group-item">
+                        <a href="/news/id?id={{id}}">{{title}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        {{else}}
+            <p>Nessuna notizia trovata.</p>
+        {{/if}}
+    </section>
+</main>

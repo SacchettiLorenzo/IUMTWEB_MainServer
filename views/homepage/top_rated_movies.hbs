@@ -1,0 +1,17 @@
+<section id="top-rated-movies" class="container mt-5">
+    <h2 class="text-center">Film più votati</h2>
+    <div class="row">
+        {{#each topRatedMovies}}
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <img src="{{poster}}" class="card-img-top" alt="{{name}}" onerror="this.src='/public/images/default-movie.jpg'">
+                    <div class="card-body">
+                        <h5 class="card-title">{{name}}</h5>
+                        <p class="card-text">Valutazione: {{rating}}/10</p>
+                        <a href="/movies/id?id={{id}}" class="btn btn-primary">Scopri di più</a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>

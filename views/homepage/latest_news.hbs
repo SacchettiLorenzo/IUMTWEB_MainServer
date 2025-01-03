@@ -1,0 +1,12 @@
+<section id="latest-news" class="container mt-5">
+    <h2 class="text-center">Ultime Notizie</h2>
+    <div class="list-group">
+        {{#each news}}
+            <a href="/news/id?id={{id}}" class="list-group-item list-group-item-action">
+            <h5 class="mb-1">{{title}}</h5>
+            <p class="mb-1">{{snippet}}</p>
+            <small>{{date}}</small>
+            </a>
+        {{/each}}
+    </div>
+</section>
