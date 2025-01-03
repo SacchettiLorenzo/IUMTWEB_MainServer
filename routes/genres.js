@@ -8,17 +8,6 @@ const res = require("express/lib/response");
 
 module.exports = (options) => {
 
-    router.get('/', async (req, res, next) => {
-        let request_url = url.build({
-            host: options.servers.SQLBrokerHost,
-            path: "genres",
-            query: {
-                page: req.query.page,
-                size: req.query.size,
-            }
-        });
-module.exports = (options) => {
-
     router.get('/', function (req, res, next) {
         let request_url = {
             host: options.servers.SQLBrokerHost,
@@ -48,6 +37,7 @@ module.exports = (options) => {
         });
     });
 
+    /*
         try {
             const response = await axios.get(request_url);
             res.render('./genres/genres', {title: 'Genres', themes: response.data.content});
@@ -55,9 +45,7 @@ module.exports = (options) => {
             console.error(error);
             res.status(500).send("Error fetching genres.");
         }
-    })
-
-
+     */
     router.get('/movie', function (req, res, next) {
         if (!req.query.movieId) {
             return res.status(400).send('movieId is required');
@@ -102,6 +90,7 @@ module.exports = (options) => {
         if (!req.query.movieId) {
             return res.status(400).send('movieId is required');
         }
+    });
 
     router.get('/ids', async (req, res, next) => {
         let request_url = url.build({
@@ -127,7 +116,9 @@ module.exports = (options) => {
             console.error(error);
             res.status(500).send("Error fetching genres ids.");
         }
-    })
+    });
+
+        /*
         axios.get(genre_data_request_url).then(response => {
 
             const genre = response.data.genre;
@@ -136,10 +127,10 @@ module.exports = (options) => {
             console.log(error);
         })
     });
+    */
 
 
-
-
+/*
         try {
             const response = await axios.get(request_url);
             res.render('./genres/top10', {title: 'Genres top 10', themes: response.data.content});
@@ -148,13 +139,7 @@ module.exports = (options) => {
             res.status(500).send("Error fetching genres top10.");
         }
     })
+
+ */
     return router;
-}
-
-
-
-
-
-    return router;
-
 }
