@@ -4,10 +4,15 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const hbs = require('hbs');
 
-global.SQLBrokerHost = "http://localhost:8080";
-global.NoSQLBrokerHost = "http://localhost:8081";
+//global.SQLBrokerHost = "http://localhost:8080";
+//global.NoSQLBrokerHost = "http://localhost:8081";
 
+const servers = {
+  SQLBrokerHost : "http://localhost:8080",
+  NoSQLBrokerHost : "http://localhost:8081"
+}
 
+/*
 const indexRouter = require('./routes/index');
 const moviesRouter = require('./routes/movies');
 const actorsRouter = require('./routes/actors');
@@ -20,20 +25,38 @@ const themesRouter = require('./routes/themes');
 const languagesRouter = require('./routes/languages');
 const genresRouter = require('./routes/genres');
 const postersRouter = require('./routes/posters');
-
+const reviewsRouter = require('./routes/reviews');
+*/
+var indexRouter = require('./routes/index');
+//var moviesRouter = require('./routes/movies');
+var genresRouter = require('./routes/genres');
 
 var app = express();
 
 //the components inside /movies can be used inside other components
+/*
 hbs.registerPartials(__dirname + '/views/movies');
 hbs.registerPartials(__dirname + '/views/actors');
 hbs.registerPartials(__dirname + '/views/crew');
-hbs.registerPartials(path.join(__dirname, '/views/oscars'));
-hbs.registerPartials(__dirname, '/views/themes');
-hbs.registerPartials(__dirname, '/views/languages');
-hbs.registerPartials(__dirname, '/views/genres');
-hbs.registerPartials(__dirname, '/views/posters');
 
+ */
+//hbs.registerPartials(path.join(__dirname, '/views/oscars'));
+
+//hbs.registerPartials(path.join(__dirname, '/views/themes'));
+//hbs.registerPartials(path.join(__dirname, '/views/languages'));
+hbs.registerPartials(path.join(__dirname, '/views/genres'));
+//hbs.registerPartials(__dirname, '/views/posters');
+
+/*
+hbs.registerPartials(path.join(__dirname, '/views/reviews'));
+
+hbs.registerHelper('times', function(n, block) {
+  var accum = '';
+  for(var i = 0; i < n; ++i)
+    accum += block.fn(i);
+  return accum;
+});
+*/
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
@@ -42,6 +65,28 @@ hbs.registerHelper('times', function(n, block) {
   return accum;
 });
 
+hbs.registerHelper( "when",function(operand_1, operator, operand_2, options) {
+  var operators = {
+    'eq': function(l,r) { return l == r; },
+    'noteq': function(l,r) { return l != r; },
+    'gt': function(l,r) { return Number(l) > Number(r); },
+    'or': function(l,r) { return l || r; },
+    'and': function(l,r) { return l && r; },
+    '%': function(l,r) { return (l % r) === 0; }
+  }
+      , result = operators[operator](operand_1,operand_2);
+
+  if (result) return options.fn(this);
+  else  return options.inverse(this);
+});
+
+hbs.registerHelper("add", function (operand_1, operand_2) {
+  return operand_1 + operand_2;
+})
+
+hbs.registerHelper("sub", function (operand_1, operand_2) {
+  return operand_1 - operand_2;
+})
 
 // Configurazione del motore di template (Handlebars)
 app.set('views', path.join(__dirname, 'views'));
@@ -56,17 +101,19 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Definizione delle route
 app.use('/', indexRouter);
-app.use('/movies', moviesRouter);
-app.use('/actors', actorsRouter);
-app.use('/crew', crewRouter);
-app.use('/oscars', oscarsRouter);
-app.use('/countries', countriesRouter);
-app.use('/releases', releasesRouter);
-app.use('/studios', studiosRouter);
-app.use('/themes', themesRouter);
-app.use('/languages', languagesRouter);
-app.use('/genres', genresRouter);
-app.use('/posters', postersRouter);
+//app.use('/movies', moviesRouter);
+//app.use('/movies', moviesRouter({servers:servers}));
+//app.use('/actors', actorsRouter);
+//app.use('/crew', crewRouter);
+//app.use('/oscars', oscarsRouter);
+//app.use('/countries', countriesRouter);
+//app.use('/releases', releasesRouter);
+//app.use('/studios', studiosRouter);
+//app.use('/themes', themesRouter);
+//app.use('/languages', languagesRouter);
+app.use('/genres', genresRouter({servers:servers}));
+//app.use('/posters', postersRouter);
+//app.use('/reviews', reviewsRouter);
 
 // Gestione errori 404
 app.use(function (req, res, next) {
