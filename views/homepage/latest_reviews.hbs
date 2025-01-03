@@ -1,0 +1,9 @@
+<h2 class="text-center">Ultime Recensioni</h2>
+<ul class="list-group">
+    {{#each latestReviews}}
+        <li class="list-group-item bg-dark text-white">
+            <strong>{{movieName}}</strong> - {{reviewSnippet}}
+            <a href="/reviews?id={{reviewId}}" class="btn btn-link">Leggi di più</a>
+        </li>
+    {{/each}}
+</ul>

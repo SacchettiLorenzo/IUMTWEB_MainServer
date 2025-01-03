@@ -174,6 +174,26 @@ module.exports = (options) => {
         })
         */
 
+router.get('/titles', async (req, res) => {
+    try {
+        let request_url = {
+            host: global.SQLBrokerHost,
+            path: "movies",
+            query: { size: 100 } // Ottieni i primi 100 film
+        };
+
+        request_url = url.build(request_url);
+
+        const response = await axios.get(request_url);
+        const movieTitles = response.data.content.map(movie => movie.title);
+
+        res.json(movieTitles);
+    } catch (error) {
+        console.error('Error retrieving movie titles:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
         res.render('./movies/movies_stats');
     })
