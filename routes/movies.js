@@ -70,17 +70,24 @@ module.exports = (options) => {
         request_url = url.build(request_url);
 
         axios.get(request_url).then(movies => {
-            res.render('./movies/movie',
-                {
-                    title: 'Movies',
-                    movies: movies.data,
-                    path: path,
-                    pages: true,
-                    searchable: true,
-                    pages_amount: (movies.data.totalPages - 1),
-                    current_page: movies.data.number,
-                    page_size: movies.data.size
-                });
+
+            if(req.query.only_data === "true"){
+                console.log("ciaiciaociacoaic")
+                res.send(movies.data);
+            }else{
+                res.render('./movies/movie',
+                    {
+                        title: 'Movies',
+                        movies: movies.data,
+                        path: path,
+                        //pages: true,
+                        searchable: true,
+                        //pages_amount: (movies.data.totalPages - 1),
+                        //current_page: movies.data.number,
+                        //page_size: movies.data.size
+                    });
+            }
+
         }).catch(error => {
             console.log(error);
         })
@@ -288,7 +295,6 @@ module.exports = (options) => {
     router.get('/filter', function (req, res, next) {
         console.log(req.query);
 
-
         let path = "movies/filter";
 
         let request_url = {
@@ -316,7 +322,6 @@ module.exports = (options) => {
         }).catch(error => {
             console.log(error);
         })
-
 
     });
 

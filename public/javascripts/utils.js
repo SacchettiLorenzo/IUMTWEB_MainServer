@@ -30,7 +30,7 @@ function filter_table(inputElement, table){
 
 let tableTemplate;
 
-async function sendMovieSearch(){
+async function sendMovieSearchFilter(){
 
     if(tableTemplate == null){
         await loadTableTemplate();
@@ -57,4 +57,20 @@ function loadTableTemplate(){
     axios.get("/movies/filter/table").then((response) => {
         tableTemplate = Handlebars.compile(response.data);
     })
+}
+
+async function sendMoviesSearchWord(){
+    if(tableTemplate == null){
+        await loadTableTemplate();
+    }
+
+    let res = document.getElementById("searchResult");
+
+    const partial = document.getElementById("MovieName").value;
+    axios.get("/movies/name", {params : {partial : partial, only_data : true}}).then((response) => {
+        console.log(response.data);
+        res.innerHTML = tableTemplate({movies : response.data});
+        res.style.display = "block";
+    })
+
 }

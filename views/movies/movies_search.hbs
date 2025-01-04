@@ -1,42 +1,57 @@
-<form class="w-25" >
-    <div class="form-group">
-        <label for="countrySelect">Select the Country</label>
-        <select class="form-control" id="countrySelect" name="country">
-            {{#each countries}}
-                <option value="{{id}}">{{country}}</option>
-            {{/each}}
-        </select>
+<div class="container">
+    <div class="row">
+        <div class="col bg-info">
+            <form class="">
+                <div class="form-group">
+                    <label for="countrySelect">Select the Country</label>
+                    <select class="form-control" id="countrySelect" name="country">
+                        {{#each countries}}
+                            <option value="{{id}}">{{country}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="genreSelect">Select the genre</label>
+                    <select class="form-control" id="genreSelect" name="genre">
+                        {{#each genres}}
+                            <option value="{{id}}">{{genre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="languageSelect">Select the language</label>
+                    <select class="form-control" id="languageSelect" name="language">
+                        {{#each languages}}
+                            <option value="{{id}}">{{language}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="themeSelect">Select the theme</label>
+                    <select class="form-control" id="themeSelect" name="theme">
+                        {{#each themes}}
+                            <option value="{{id}}">{{theme}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dateInput">Select the date</label>
+                    <input class="form-control" type="number" id="dateInput" step="1" value="2024">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="sendMovieSearchFilter()">Search</button>
+            </form>
+        </div>
+        <div class="col bg-danger">
+            <form class="">
+                <div class="form-group">
+                    <label for="MovieName">Select the movie name</label>
+                    <input class="form-control" type="text" id="MovieName" name="MovieName" placeholder="Movie Name...">
+                    <button type="button" class="btn btn-primary" onclick="sendMoviesSearchWord()">Search</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="genreSelect">Select the genre</label>
-        <select class="form-control" id="genreSelect" name="genre">
-            {{#each genres}}
-                <option value="{{id}}">{{genre}}</option>
-            {{/each}}
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="languageSelect">Select the language</label>
-        <select class="form-control" id="languageSelect" name="language">
-            {{#each languages}}
-                <option value="{{id}}">{{language}}</option>
-            {{/each}}
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="themeSelect">Select the theme</label>
-        <select class="form-control" id="themeSelect" name="theme">
-            {{#each themes}}
-                <option value="{{id}}">{{theme}}</option>
-            {{/each}}
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="dateInput">Select the theme</label>
-        <input class="form-control" type="number" id="dateInput" step="1" value="2024">
-    </div>
-    <button type="button" class="btn btn-primary" onclick="sendMovieSearch()" >Sign in</button>
-</form>
+</div>
 <div id="searchResult">
 
 </div>
