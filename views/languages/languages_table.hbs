@@ -1,16 +1,14 @@
-<table class="table">
-    <thead>
+<table class="table table-striped table-hover table-condensed table-bordered table-responsive">
     <tr>
-        <th>ID</th>
-        <th>Genre</th>
+        <th scope="col">Id</th>
+        <th scope="col">Languages</th>
+
     </tr>
-    </thead>
-    <tbody>
-    {{#each genres}}
+    {{#each languages}}
         <tr>
-            <td>{{id}}</td>
-            <td>{{genre}}</td>
+            <th scope="row">{{id}}</th>
+            <td>{{language}}</td>
+
         </tr>
     {{/each}}
-    </tbody>
 </table>
