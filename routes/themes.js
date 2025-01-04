@@ -1,66 +1,98 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
 const axios = require('axios');
-const url = require('url-composer');
+var url = require('url-composer');
+const {log} = require("debug");
+var async = require('async')
+const res = require("express/lib/response");
 
 module.exports = (options) => {
 
-    router.get('/', async (req, res, next) => {
-        let request_url = url.build({
-            host: options.servers.SQLBrokerHost,
-            path: "themes",
-            query: {
-                page: req.query.page,
-                size: req.query.size,
-            }
-        });
+    /* GET home page. */
+    router.get('/', function (req, res, next) {
 
-        try {
-            const response = await axios.get(request_url);
-            res.render('./themes/themes', {title: 'Themes', themes: response.data.content});
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Error fetching themes.");
+        let path = "themes";
+
+        let request_url = {
+            host: options.servers.SQLBrokerHost,
+            path: path,
+            query: {}
         }
-    })
 
-    router.get('/id', async (req, res, next) => {
-        let themes_data_request_url = url.build({
-            host: options.servers.SQLBrokerHost,
-            path: "themes/id",
+        request_url = {
+            ...request_url,
             query: {
-                id: req.query.id,
+                ...((req.query.page == null) ? {} : {page: req.query.page}),
+                ...((req.query.size == null) ? {} : {size: req.query.size}),
+                ...((req.query.sortParam == null) ? {} : {sortParam: req.query.sortParam}),
+                ...((req.query.sortDirection == null) ? {} : {sortDirection: req.query.sortDirection})
+            }
+        }
+
+        request_url = url.build(request_url);
+
+        axios.get(request_url).then(themes => {
+            console.log(themes);
+            res.render('./themes/theme_home',
+                {
+                    title: 'Themes',
+                    themes: themes.data.content,
+                    path: path,
+                    pages: true,
+                    pages_amount: (themes.data.totalPages - 1),
+                    current_page: themes.data.number,
+                    page_size: themes.data.size
+                });
+
+        }).catch(error => {
+            console.log(error);
+        })
+    });
+
+
+    router.get('/theme', function (req, res, next) {
+        let movie_data_request_url = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: `themes/theme`,
+            query: {
+                movieId: req.query.movieId,
             }
         })
 
-        try {
-            const response = await axios.get(themes_data_request_url);
-            res.render('./themes/single_theme', {title: 'Theme Details', theme: response.data});
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Error fetching theme.");
-        }
+        axios.get(movie_data_request_url).then(themes => {
+
+            res.render('./themes/themes', {title: 'Theme', themes: themes.data});
+        }).catch(error => {
+            console.log(error);
+        })
     })
 
 
-    router.get('/top10', async (req, res, next) => {
-        let themes_data_request_url = url.build({
+    router.get('/top10', function (req, res, next) {
+        let movie_data_request_url = url.build({
             host: options.servers.SQLBrokerHost,
-            path: "themes/top10",
-            query: {
-                id: req.query.id,
-            }
+            path: `themes/top10`,
+            query: {}
         })
 
-        try {
-            const response = await axios.get(themes_data_request_url);
-            res.render('./themes/top10', {title: 'Top 10 Themes', theme: response.data});
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Error retrieving top 10 themes.");
-        }
+        axios.get(movie_data_request_url).then(themes => {
+
+            res.render('./themes/top10', {title: 'Themes top10', themes: themes.data});
+        }).catch(error => {
+            console.log(error);
+        })
     })
 
     return router;
-
 }
+
+
+/*
+    QUERY
+    -http://localhost:3000/themes visualizza tutti i temi
+    -http://localhost:3000/themes/theme?movieId=1000001  per ottenere il tema del film in base al suo id
+    -http://localhost:3000/themes/top10 per ottenere una lista dei 10 top themi più usati
+    
+
+
+ */

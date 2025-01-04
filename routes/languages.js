@@ -1,134 +1,92 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
 const axios = require('axios');
-const url = require('url-composer');
+var url = require('url-composer');
+const {log} = require("debug");
+var async = require('async')
+const res = require("express/lib/response");
 
 module.exports = (options) => {
 
-    router.get('/', async (req, res, next) => {
-        let request_url = url.build({
+    router.get('/', function (req, res, next) {
+        let request_url = {
             host: options.servers.SQLBrokerHost,
             path: "languages",
-            query: {
-                page: req.query.page,
-                size: req.query.size,
-            }
-        });
-
-        try {
-            const response = await axios.get(request_url);
-            res.render('./languages/languages', {title: 'Languages', languages: response.data.content});
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Error fetching languages.");
+            query: {}
         }
+
+        // Costruzione dei parametri per la query
+        request_url = {
+            ...request_url,
+            query: {
+                ...((req.query.page == null) ? {} : {page: req.query.page}),
+                ...((req.query.size == null) ? {} : {size: req.query.size}),
+                ...((req.query.sortParam == null) ? {} : {sortParam: req.query.sortParam}),
+                ...((req.query.sortDirection == null) ? {} : {sortDirection: req.query.sortDirection})
+            }
+        }
+
+        // Composizione dell'URL finale
+        request_url = url.build(request_url);
+
+        axios.get(request_url).then(languages => {
+
+            res.render('./languages/languages', { title: 'Languages', languages: languages.data.content, pages: false });
+        }).catch(error => {
+            console.log(error);
+        });
     })
 
 
-    router.get('/type', async (req, res, next) => {
-        let request_url = url.build({
+    router.get('/language', function (req, res, next) {
+        let movie_data_request_url = url.build({
             host: options.servers.SQLBrokerHost,
-            path: "languages/type",
+            path: `languages/language`,
             query: {
-                page: req.query.page,
-                size: req.query.size,
+                movieId: req.query.movieId,
             }
-        });
+        })
 
-        try {
-            const response = await axios.get(request_url);
-            res.render('./languages/type', {title: 'Languages type', languages: response.data.content});
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Error fetching languages.");
-        }
+        axios.get(movie_data_request_url).then(languages => {
+
+            res.render('./languages/languages', {title: 'Language', languages: languages.data});
+        }).catch(error => {
+            console.log(error);
+        })
     })
 
-    router.get('/language', async (req, res, next) => {
-        let request_url = url.build({
+
+    router.get('/top10-languages', function (req, res, next) {
+        let movie_data_request_url = url.build({
             host: options.servers.SQLBrokerHost,
-            path: "languages/language",
-            query: {
-                page: req.query.page,
-                size: req.query.size,
-            }
-        });
+            path: `languages/top10-languages`,
+            query: {}
+        })
 
-        try {
-            const response = await axios.get(request_url);
-            res.render('./languages/language', {title: 'Language', languages: response.data.content});
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Error fetching languages.");
-        }
-    })
+        axios.get(movie_data_request_url).then(languages => {
 
-// nell'altro server è paginato
-    router.get('/languages', async (req, res, next) => {
-        let request_url = url.build({
-            host: options.servers.SQLBrokerHost,
-            path: "languages/languages",
-            query: {
-                page: req.query.page,
-                size: req.query.size,
-            }
-        });
-
-        try {
-            const response = await axios.get(request_url);
-            res.render('./languages/languages', {title: 'Languages', languages: response.data.content});
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Error fetching languages.");
-        }
-    })
-
-//mancano 2 route ------------
-
-
-    router.get('/top10-languages', async (req, res, next) => {
-        let request_url = url.build({
-            host: options.servers.SQLBrokerHost,
-            path: "languages/top10-languages",
-            query: {
-                page: req.query.page,
-                size: req.query.size,
-            }
-        });
-
-        try {
-            const response = await axios.get(request_url);
-            res.render('./languages/top10-languages', {title: 'top10 languages', languages: response.data.content});
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Error fetching languages.");
-        }
+            res.render('./languages/top10', {title: 'Language top10', languages: languages.data});
+        }).catch(error => {
+            console.log(error);
+        })
     })
 
 
-    router.get('/top5-types', async (req, res, next) => {
-        let request_url = url.build({
-            host: options.servers.SQLBrokerHost,
-            path: "languages/top5-types",
-            query: {
-                page: req.query.page,
-                size: req.query.size,
-            }
-        });
 
-        try {
-            const response = await axios.get(request_url);
-            res.render('./languages/top5-types', {title: 'top5 types', languages: response.data.content});
-        } catch (error) {
-            console.error(error);
-            res.status(500).send("Error fetching languages.");
-        }
-    })
-    
+
+
+
+
     return router;
-
 }
 
 
+/*
+    QUERY
+    -http://localhost:3000/languages visualizza tutte le lingue
+    -http://localhost:3000/languages/language?movieId=1023319  per ottenere le lingue del film in base al suo id
+    -http://localhost:3000/languages/top10 per ottenere una lista delle 10 lingue più usate
+    
 
 
+ */
