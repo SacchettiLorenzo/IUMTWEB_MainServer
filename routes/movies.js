@@ -325,5 +325,50 @@ module.exports = (options) => {
 
     });
 
+    router.get('/genres', (req, res, next) => {
+        const genresId = req.query.genresId || 1;
+        const page = req.query.page || 0;
+        const size = req.query.size || 10;
+        let path ="movies/genres";
+
+
+        if (!genresId) {
+            return res.status(400).send('Gender ID not specified');
+        }
+
+        const request_url = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: path,
+            query: {
+                page: page,
+                size: size,
+                genresId: genresId }
+        });
+
+        axios.get(request_url)
+            .then(movies => {
+                res.render('./genres/genres_home', {
+                    title: 'Movies - Filtered by Genre',
+                    movies: movies.data.content,
+                    genresId: genresId,
+                    path: path,
+                    pages: true,
+                    searchable: true,
+                    pages_amount: (movies.data.totalPages - 1),
+                    current_page: movies.data.number,
+                    page_size: movies.data.size
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching movies by genre ID:', error);
+                res.status(500).send('Internal Server Error');
+            });
+    });
+
+
+
+
+
+
     return router;
 }

@@ -69,6 +69,17 @@ hbs.registerHelper("sub", function (operand_1, operand_2) {
   return operand_1 - operand_2;
 })
 
+hbs.registerHelper('ifCond', function(v1, v2, options) {
+  if(v1 === v2) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+})
+
+hbs.registerHelper('toNumber', function(value) {
+  return parseInt(value, 10);
+});
+
 
 // Configurazione del motore di template (Handlebars)
 app.set('views', path.join(__dirname, 'views'));
