@@ -1,55 +1,10 @@
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
     <h4>Category:
-        {{#if genresId}}
-            {{#ifCond (toNumber genresId) 1}}Comedy
-            {{else ifCond (toNumber genresId) 2}}Adventure
-            {{else ifCond (toNumber genresId) 3}}Thriller
-            {{else ifCond (toNumber genresId) 4}}Drama
-            {{else ifCond (toNumber genresId) 5}}Science Fiction
-            {{else ifCond (toNumber genresId) 6}}Action
-            {{else ifCond (toNumber genresId) 7}}Music
-            {{else ifCond (toNumber genresId) 8}}Romance
-            {{else ifCond (toNumber genresId) 9}}History
-            {{else ifCond (toNumber genresId) 10}}Crime
-            {{else ifCond (toNumber genresId) 11}}Animation
-            {{else ifCond (toNumber genresId) 12}}Mystery
-            {{else ifCond (toNumber genresId) 13}}Horror
-            {{else ifCond (toNumber genresId) 14}}Family
-            {{else ifCond (toNumber genresId) 15}}Fantasy
-            {{else ifCond (toNumber genresId) 16}}War
-            {{else ifCond (toNumber genresId) 17}}Western
-            {{else ifCond (toNumber genresId) 18}}TV Movie
-            {{else ifCond (toNumber genresId) 19}}Documentary
-            {{else}}Unknown Category
-            {{/ifCond}}
-        {{else}}
-            Unknown Category
-        {{/if}}
+        {{#each genres}}
+            {{#when ../genresId 'eq' id}}
+                {{genre}}
+            {{/when}}
+        {{/each}}
     </h4>
     <a href="/movies" class="btn btn-danger">X</a>
 </div>
-
-<table class="table table-striped table-hover table-condensed table-bordered table-responsive" id="movie_table">
-    <tr >
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Date</th>
-        <th scope="col">Tagline</th>
-        <th scope="col">Description</th>
-        <th scope="col">Minute</th>
-        <th scope="col">Rating</th>
-        <th scope="col">Poster</th>
-    </tr>
-    {{#each movies}}
-        <tr>
-            <th scope="row">{{id}}</th>
-            <td><a href="/movies/id?id={{id}}">{{name}}</a></td>
-            <td>{{date}}</td>
-            <td>{{tagline}}</td>
-            <td>{{description}}</td>
-            <td>{{minute}}</td>
-            <td>{{rating}}</td>
-            <td><a href="{{poster}}">Poster Link</a></td>
-        </tr>
-    {{/each}}
-</table>

@@ -12,42 +12,60 @@ module.exports = (options) => {
     /* GET home page. */
     router.get('/', function (req, res, next) {
 
-        let path = "movies";
-
-        let request_url = {
+        let genres_path = "genres";
+        let genres_request_url = {
             host: options.servers.SQLBrokerHost,
-            path: path,
-            query: {}
-        }
-
-        request_url = {
-            ...request_url,
+            path: genres_path,
             query: {
-                ...((req.query.page == null) ? {} : {page: req.query.page}),
-                ...((req.query.size == null) ? {} : {size: req.query.size}),
-                ...((req.query.sortParam == null) ? {} : {sortParam: req.query.sortParam}),
-                ...((req.query.sortDirection == null) ? {} : {sortDirection: req.query.sortDirection})
+                page: 0,
+                size: 1000,
             }
-        }
+        };
 
-        request_url = url.build(request_url);
+        genres_request_url = url.build(genres_request_url);
 
-        axios.get(request_url).then(movies => {
-            res.render('./movies/movie',
-                {
-                    title: 'Movies',
-                    movies: movies.data.content,
-                    path: path,
-                    pages: true,
-                    searchable: true,
-                    pages_amount: (movies.data.totalPages - 1),
-                    current_page: movies.data.number,
-                    page_size: movies.data.size
-                });
+        axios.get(genres_request_url).then(genres => {
+
+            let path = "movies";
+
+            let request_url = {
+                host: options.servers.SQLBrokerHost,
+                path: path,
+                query: {}
+            };
+
+            request_url = {
+                ...request_url,
+                query: {
+                    ...((req.query.page == null) ? {} : {page: req.query.page}),
+                    ...((req.query.size == null) ? {} : {size: req.query.size}),
+                    ...((req.query.sortParam == null) ? {} : {sortParam: req.query.sortParam}),
+                    ...((req.query.sortDirection == null) ? {} : {sortDirection: req.query.sortDirection})
+                }
+            };
+
+            request_url = url.build(request_url);
+
+            axios.get(request_url).then(movies => {
+                res.render('./movies/movie',
+                    {
+                        title: 'Movies',
+                        movies: movies.data.content,
+                        genres: genres.data.content, // Passa i generi
+                        path: path,
+                        pages: true,
+                        searchable: true,
+                        pages_amount: (movies.data.totalPages - 1),
+                        current_page: movies.data.number,
+                        page_size: movies.data.size
+                    });
+            }).catch(error => {
+                console.log(error);
+            });
 
         }).catch(error => {
             console.log(error);
-        })
+        });
     });
 
     router.get('/name', function (req, res, next) {
@@ -325,45 +343,67 @@ module.exports = (options) => {
 
     });
 
+
+
     router.get('/genres', (req, res, next) => {
-        const genresId = req.query.genresId || 1;
+        const genresId = req.query.genresId || 1;  // Imposta un genere di default se non fornito
         const page = req.query.page || 0;
         const size = req.query.size || 10;
-        let path ="movies/genres";
+        let path = "movies/genres";
 
-
-        if (!genresId) {
-            return res.status(400).send('Gender ID not specified');
-        }
-
-        const request_url = url.build({
+        // Richiesta per caricare i generi
+        let genres_path = "genres";
+        let genres_request_url = {
             host: options.servers.SQLBrokerHost,
-            path: path,
+            path: genres_path,
             query: {
-                page: page,
-                size: size,
-                genresId: genresId }
-        });
+                page: 0,
+                size: 1000,
+            }
+        };
 
-        axios.get(request_url)
-            .then(movies => {
-                res.render('./genres/genres_home', {
-                    title: 'Movies - Filtered by Genre',
-                    movies: movies.data.content,
-                    genresId: genresId,
-                    path: path,
-                    pages: true,
-                    searchable: true,
-                    pages_amount: (movies.data.totalPages - 1),
-                    current_page: movies.data.number,
-                    page_size: movies.data.size
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching movies by genre ID:', error);
-                res.status(500).send('Internal Server Error');
+        genres_request_url = url.build(genres_request_url);
+
+        axios.get(genres_request_url).then(genres => {
+            if (!genresId) {
+                return res.status(400).send('Gender ID not specified');
+            }
+
+            // Richiesta per ottenere i film per il genere selezionato
+            const request_url = url.build({
+                host: options.servers.SQLBrokerHost,
+                path: path,
+                query: {
+                    page: page,
+                    size: size,
+                    genresId: genresId
+                }
             });
+
+            axios.get(request_url)
+                .then(movies => {
+                    res.render('./genres/genres_home', {
+                        title: 'Movies - Filtered by Genre',
+                        movies: movies.data.content,
+                        genresId: genresId,
+                        genres: genres.data.content, // Passa anche i generi
+                        path: 'movies/genres',
+                        pages: true,
+                        searchable: true,
+                        pages_amount: (movies.data.totalPages - 1),
+                        current_page: movies.data.number,
+                        page_size: movies.data.size
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching movies by genre ID:', error);
+                    res.status(500).send('Internal Server Error');
+                });
+        }).catch(error => {
+            console.log(error);
+        });
     });
+
 
 
 
