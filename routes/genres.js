@@ -56,6 +56,26 @@ module.exports = (options) => {
     })
 
 
+    router.get('/top-genres', function (req, res, next) {
+        let topGenresRequestUrl = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: 'genres/trending' // Endpoint per i generi più popolari
+        });
+
+        axios.get(topGenresRequestUrl).then(response => {
+            res.render('./statistics/statistics', {
+                title: 'Top 10 Genres',
+                genres: response.data // Passa direttamente i dati ricevuti
+            });
+        }).catch(error => {
+            console.error("Error fetching top genres:", error);
+            res.status(500).send("Error fetching top genres");
+        });
+    })
+
+
+
+
 
 
 
