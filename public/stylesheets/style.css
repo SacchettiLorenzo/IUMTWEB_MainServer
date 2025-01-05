@@ -1,5 +1,6 @@
 #movie-background{
     background-color: dimgrey;
+    min-width: 100%;
 }
 
 #movie-container{
@@ -20,16 +21,17 @@
     margin-left: 3%;
 }
 
+
+
 #movie-actors{
     position: relative;
-    width: 100%;
+
     max-height: 100vh;
     overflow-y: scroll;
-
 }
 
 #actor-card{
-    max-width: 20%;
+
     margin-left: 2%;
     margin-right: 2%;
     margin-top: 2%;

@@ -196,6 +196,26 @@ module.exports = (options) => {
                     }).catch(error => {
                         console.log(error);
                     }),
+                    axios.get(languages_request_url).then(languages => {
+                        return languages.data; // Le lingue del film
+                    }).catch(error => {
+                        console.log(error);
+                    }),
+                    axios.get(genres_request_url).then(genres => {
+                        return genres.data; // I generi del film
+                    }).catch(error => {
+                        console.log(error);
+                    }),
+                    axios.get(countries_request_url).then(countries => {
+                        return countries.data; // I paesi del film
+                    }).catch(error => {
+                        console.log(error);
+                    }),
+                    axios.get(themes_request_url).then(themes => {
+                        return themes.data; // I temi del film
+                    }).catch(error => {
+                        console.log(error);
+                    })
 
                     /*
                     axios.get(similar_movie_data_request_url).then(similar => {
@@ -207,6 +227,10 @@ module.exports = (options) => {
                 ]).then(result => {
                     let movie = result[0];
                     let actors = result[1];
+                    let languages = result[2];
+                    let genres = result[3];
+                    let countries = result[4];
+                    let themes = result[5];
 
                     let reviews_data_request_url = {
                         host: options.servers.NoSQLBrokerHost,
@@ -236,70 +260,16 @@ module.exports = (options) => {
                             movie: movie,
                             actors: actors,
                             reviews: reviews_,
+                            languages: languages,
+                            genres: genres,
+                            countries: countries,
+                            themes: themes
                             //similar: result[2]
                         });
                     })
                 })
             }
-            // Effettua tutte le richieste in parallelo
-            Promise.all([
-                axios.get(movie_data_request_url).then(movie => {
-                    //console.log(movie.data);
-                    return movie.data;
-                }).catch(error => {
-                    console.log(error);
-                }),
-                axios.get(actors_data_request_url).then(actors => {
-                    return actors.data;
-                }).catch(error => {
-                    console.log(error);
-                }),
-                axios.get(languages_request_url).then(languages => {
-                    console.log(languages.data);
-                    return languages.data; // Le lingue del film
-                }).catch(error => {
-                    console.log(error);
-                }),
-                axios.get(genres_request_url).then(genres => {
-                    console.log(genres.data);
-                    return genres.data; // I generi del film
-                }).catch(error => {
-                    console.log(error);
-                }),
-                axios.get(countries_request_url).then(countries => {
-                    console.log(countries.data);
-                    return countries.data; // I paesi del film
-                }).catch(error => {
-                    console.log(error);
-                }),
-                axios.get(themes_request_url).then(themes => {
-                    console.log(themes.data);
-                    return themes.data; // I temi del film
-                }).catch(error => {
-                    console.log(error);
-                })
-            ]).then(result => {
-                // Invia tutti i dati al template
-                res.render('./movies/single_movie', {
-                    title: 'Movies',
-                    movie: result[0],        // Dati del film
-                    actors: result[1],       // Attori del film
-                    languages: result[2],    // Lingue del film
-                    genres: result[3],       // Generi del film
-                    countries: result[4],    // Paesi del film
-                    themes: result[5]        // Temi del film
-                });
-            }).catch(error => {
-                console.log(error);
-            });
-        }
     });
-
-
-
-    /*
-
-     */
 
     router.get('/stats', function (req, res, next) {
 
