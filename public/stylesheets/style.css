@@ -169,3 +169,18 @@ h2 {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+#suggestions {
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+#suggestions a {
+    text-decoration: none;
+    color: black;
+}
+
+#suggestions a:hover {
+    background-color: #f8f9fa;
+}
