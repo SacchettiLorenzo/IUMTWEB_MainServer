@@ -1,30 +1,85 @@
-
 <div class="min-vh-100 min-vw-100" id="movie-background">
     {{#with movie}}
-    <div class="bg-dark text-white row " id="movie-container">
-        <div class="col" id="movie-caption">
-            <div>
-                <h1 class="col align-self-center">
-                    {{name}}
-                </h1>
-                <p>
-                    {{tagline}}
-                </p>
-                <p>
-                    {{description}}
-                </p>
+        <div class="bg-dark text-white row " id="movie-container">
+            <div class="col" id="movie-caption">
+                <div>
+                    <h1 class="col align-self-center">
+                        {{name}}
+                    </h1>
+                    <p>
+                        {{tagline}}
+                    </p>
+                    <p>
+                        {{description}}
+                    </p>
+                </div>
             </div>
-
+            <div class="col" id="movie-poster">
+                <img class="" src="{{poster}}" alt="{{name}}" onerror="load_default_movie_image(this)">
+            </div>
         </div>
-        <div class="col" id="movie-poster">
-            <img class="" src="{{poster}}" alt="{{name}}" onerror="load_default_movie_image(this)">
-        </div>
-    </div>
     {{/with}}
+
+    <!-- Tabella Dettagli del Film -->
+    <div class="movie-details">
+        <h3>Details:</h3>
+        <table class="table table-bordered">
+            <tbody>
+            <!-- Lingue -->
+            <tr>
+                <th scope="row">Languages:</th>
+                <td>
+                    {{#each languages}}
+                        {{language}}{{#unless @last}}, {{/unless}} <!-- Mostra tutte le lingue separate da virgola -->
+                    {{else}}
+                        No languages available
+                    {{/each}}
+                </td>
+            </tr>
+
+            <!-- Generi -->
+            <tr>
+                <th scope="row">Genres:</th>
+                <td>
+                    {{#each genres}}
+                        {{genre}}{{#unless @last}}, {{/unless}} <!-- Mostra tutti i generi separati da virgola -->
+                    {{else}}
+                        No genres available
+                    {{/each}}
+                </td>
+            </tr>
+
+            <!-- Paesi -->
+            <tr>
+                <th scope="row">Country:</th>
+                <td>
+                    {{#each countries}}
+                        {{country}}{{#unless @last}}, {{/unless}} <!-- Mostra tutti i paesi separati da virgola -->
+                    {{else}}
+                        No countries available
+                    {{/each}}
+                </td>
+            </tr>
+
+            <!-- Temi -->
+            <tr>
+                <th scope="row">Themes:</th>
+                <td>
+                    {{#each themes}}
+                        {{theme}}{{#unless @last}}, {{/unless}} <!-- Mostra tutti i temi separati da virgola -->
+                    {{else}}
+                        No themes available
+                    {{/each}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Fine Tabella Dettagli -->
+
     <div class="row" id="movie-actors">
         {{> actors_card}}
     </div>
 
     similar movies
 </div>
-
