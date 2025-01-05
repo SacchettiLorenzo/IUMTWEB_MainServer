@@ -35,4 +35,36 @@ router.get('/chat', function(req, res) {
   });
 });
 
+const { getMoviesFromDatabase, getActorsFromDatabase, getNewsFromDatabase } = require('./movies');
+
+const axios = require('axios');
+global.SQLBrokerHost = 'http://localhost:8080';
+
+
+router.get('/search', async (req, res) => {
+  const query = req.query.query || ''; // Query digitata dall'utente
+  if (!query) {
+    return res.json([]); // Nessun risultato per query vuota
+  }
+
+  try {
+    // Cerchiamo sia nei film che negli attori
+    const [movies, actors] = await Promise.all([
+      axios.get(`${global.SQLBrokerHost}/movies/name`, { params: { partial: query } }),
+      axios.get(`${global.SQLBrokerHost}/actors/name`, { params: { partial: query } }),
+    ]);
+
+    // Formattiamo i risultati per la barra di ricerca
+    const results = [
+      ...movies.data.map(movie => ({ id: movie.id, name: movie.name, type: 'movie' })),
+      ...actors.data.map(actor => ({ id: actor.id, name: actor.name, type: 'actor' })),
+    ];
+
+    res.json(results); // Restituiamo i risultati
+  } catch (error) {
+    console.error('Error fetching search results:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = router;

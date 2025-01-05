@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/path/to/bootstrap.css">
-    <link rel="stylesheet" href="/path/to/custom.css">
-    <title>CineReviews - Home</title>
-</head>
-<body>
-{{> header}}
-
 <main>
     <section id="carousel-section" class="mt-4">
         {{> movies_carousel }}
@@ -22,8 +10,24 @@
     <section id="latest-reviews" class="container mt-5">
         {{> latest_reviews }}
     </section>
-</main>
 
-<script src="/path/to/bootstrap.bundle.js"></script>
-</body>
-</html>
+    <section id="upcoming-movies" class="container mt-5">
+        {{> upcoming_movies }}
+    </section>
+
+    <section id="top-rated-movies" class="container mt-5">
+        {{> top_rated_movies }}
+    </section>
+
+    <section id="latest-news" class="container mt-5">
+        {{> latest_news }}
+    </section>
+
+    <section id="popular-actors" class="container mt-5">
+        {{> popular_actors }}
+    </section>
+
+    <section id="join-community" class="container mt-5">
+        {{> join_community }}
+    </section>
+</main>

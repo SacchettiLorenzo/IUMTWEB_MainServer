@@ -214,7 +214,6 @@ module.exports = (options) => {
 
      */
 
-
     router.get('/stats', function (req, res, next) {
 
         let path = "movies/stats";
