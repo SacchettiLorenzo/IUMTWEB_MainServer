@@ -1,8 +1,6 @@
 #movie-background{
     background-color: dimgrey;
-    width: 100vw;
 }
-
 
 #movie-container{
     position: relative;
@@ -74,4 +72,18 @@
     color: white;
     padding: 15px;
     border-radius: 10px;
+}
+
+#movie-reviews {
+    position: relative;
+}
+
+#review-card{
+    max-width: 40%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#review-card svg{
+    color: gold;
 }

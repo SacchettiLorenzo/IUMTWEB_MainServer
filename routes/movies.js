@@ -89,10 +89,10 @@ module.exports = (options) => {
 
         axios.get(request_url).then(movies => {
 
-            if(req.query.only_data === "true"){
+            if (req.query.only_data === "true") {
                 console.log("ciaiciaociacoaic")
                 res.send(movies.data);
-            }else{
+            } else {
                 res.render('./movies/movie',
                     {
                         title: 'Movies',
@@ -162,22 +162,52 @@ module.exports = (options) => {
                     }).catch(error => {
                         console.log(error);
                     }),
+
+                    /*
                     axios.get(similar_movie_data_request_url).then(similar => {
                         return similar.data
                     }).catch(error => {
                         console.log(error);
                     })
+                     */
                 ]).then(result => {
-                    res.render('./movies/single_movie', {
-                        title: 'Movies',
-                        movie: result[0],
-                        actors: result[1],
-                        similar: result[2]
-                    });
+                    let movie = result[0];
+                    let actors = result[1];
+
+                    let reviews_data_request_url = {
+                        host: options.servers.NoSQLBrokerHost,
+                        path: "review/movie/:title",
+                        params: {
+                            title: movie.name
+                        }
+                    }
+
+                    reviews_data_request_url = url.build(reviews_data_request_url);
+
+                    Promise.all([
+                        axios.get(reviews_data_request_url).then(reviews => {
+                            return reviews.data
+                        }).catch(error => {
+                            console.log(error);
+                        })
+                    ]).then(result => {
+                        let reviews_ = result[0].reviews || null;
+                        res.render('./movies/single_movie', {
+                            title: 'Movies',
+                            movie: movie,
+                            actors: actors,
+                            reviews: reviews_,
+                            //similar: result[2]
+                        });
+                    })
                 })
             }
         }
     )
+
+    /*
+
+     */
 
 
     router.get('/stats', function (req, res, next) {
@@ -302,12 +332,18 @@ module.exports = (options) => {
                 console.log(error);
             })
         ]).then(result => {
-            res.render('./movies/movies_search', {title: 'Movies', countries: result[0], genres: result[1],languages: result[2],themes: result[3]});
+            res.render('./movies/movies_search', {
+                title: 'Movies',
+                countries: result[0],
+                genres: result[1],
+                languages: result[2],
+                themes: result[3]
+            });
         })
     })
 
     router.get('/filter/table', function (req, res, next) {
-        res.sendFile('views/movies/movies_table.hbs', { root: '.' })
+        res.sendFile('views/movies/movies_table.hbs', {root: '.'})
     });
 
     router.get('/filter', function (req, res, next) {
