@@ -5,14 +5,16 @@
                 <div class="form-group">
                     <label for="countrySelect">Select the Country</label>
                     <select class="form-control" id="countrySelect" name="country">
+                        <option value="" selected>No country</option>
                         {{#each countries}}
                             <option value="{{id}}">{{country}}</option>
                         {{/each}}
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="genreSelect">Select the genre</label>
+                    <label for="genreSelect" >Select the genre</label>
                     <select class="form-control" id="genreSelect" name="genre">
+                        <option value="" selected>No genre</option>
                         {{#each genres}}
                             <option value="{{id}}">{{genre}}</option>
                         {{/each}}
@@ -21,6 +23,7 @@
                 <div class="form-group">
                     <label for="languageSelect">Select the language</label>
                     <select class="form-control" id="languageSelect" name="language">
+                        <option value="" selected>No language</option>
                         {{#each languages}}
                             <option value="{{id}}">{{language}}</option>
                         {{/each}}
@@ -29,6 +32,7 @@
                 <div class="form-group">
                     <label for="themeSelect">Select the theme</label>
                     <select class="form-control" id="themeSelect" name="theme">
+                        <option value="" selected>No theme</option>
                         {{#each themes}}
                             <option value="{{id}}">{{theme}}</option>
                         {{/each}}
