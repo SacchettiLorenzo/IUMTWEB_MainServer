@@ -5,7 +5,6 @@
 #movie-container{
     position: relative;
     height: 40vh;
-    margin-top: 10vh;
 }
 
 #movie-poster img{
@@ -24,6 +23,9 @@
 #movie-actors{
     position: relative;
     width: 100%;
+    max-height: 100vh;
+    overflow-y: scroll;
+
 }
 
 #actor-card{
@@ -76,6 +78,8 @@
 
 #movie-reviews {
     position: relative;
+    max-height: 100vh;
+    overflow-y: scroll;
 }
 
 #review-card{
