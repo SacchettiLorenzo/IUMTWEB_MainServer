@@ -191,7 +191,12 @@ module.exports = (options) => {
                             console.log(error);
                         })
                     ]).then(result => {
-                        let reviews_ = result[0].reviews || null;
+                        let reviews_;
+
+                        if(result[0] != null) {
+                            reviews_ = result[0].reviews;
+                        }
+
                         res.render('./movies/single_movie', {
                             title: 'Movies',
                             movie: movie,

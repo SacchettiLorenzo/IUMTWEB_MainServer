@@ -53,7 +53,6 @@ hbs.registerHelper('date_formatter', function(date) {
 });
 
 hbs.registerHelper('grouped_each', function(every, context, options) {
-  console.log(options);
   var out = "", subcontext = [], i;
   if (context && context.length > 0) {
     for (i = 0; i < context.length; i++) {
