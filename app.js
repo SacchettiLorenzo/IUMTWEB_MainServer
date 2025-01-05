@@ -6,7 +6,10 @@ const hbs = require('hbs')
 
 
 
-
+const servers = {
+  SQLBrokerHost : "http://localhost:8080/",
+  NoSQLBrokerHost : "http://localhost:3001/"
+}
 
 const indexRouter = require('./routes/index');
 const moviesRouter = require('./routes/movies');
