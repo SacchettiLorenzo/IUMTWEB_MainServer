@@ -113,43 +113,77 @@ module.exports = (options) => {
 
     router.get('/id', function (req, res, next) {
 
-            //todo: if id == null render error page
-
-            if (req.query.id === undefined || req.query.id === '' || req.query.id === null) {
-                res.render('./error', {
-                    message: 'No movie id'
-                })
-            } else {
-                let movie_data_request_url = {
-                    host: options.servers.SQLBrokerHost,
-                    path: "movies/id",
-                    query: {
-                        id: req.query.id
-                    }
+        // Controlla se l'ID del film è stato fornito
+        if (req.query.id === undefined || req.query.id === '' || req.query.id === null) {
+            res.render('./error', {
+                message: 'No movie id'
+            });
+        } else {
+            // URL per ottenere i dettagli del film
+            let movie_data_request_url = {
+                host: options.servers.SQLBrokerHost,
+                path: "movies/id",
+                query: {
+                    id: req.query.id
                 }
+            };
 
-                movie_data_request_url = url.build(movie_data_request_url);
+            movie_data_request_url = url.build(movie_data_request_url);
 
-
-                let actors_data_request_url = {
-                    host: options.servers.SQLBrokerHost,
-                    path: "actors/movie",
-                    query: {
-                        movieId: req.query.id
-                    }
+            // URL per ottenere gli attori del film
+            let actors_data_request_url = {
+                host: options.servers.SQLBrokerHost,
+                path: "actors/movie",
+                query: {
+                    movieId: req.query.id
                 }
+            };
 
-                actors_data_request_url = url.build(actors_data_request_url);
+            actors_data_request_url = url.build(actors_data_request_url);
 
-                let similar_movie_data_request_url = {
-                    host: options.servers.SQLBrokerHost,
-                    path: "movies/similar",
-                    query: {
-                        id: req.query.id
-                    }
+            // URL per ottenere le lingue del film
+            let languages_request_url = {
+                host: options.servers.SQLBrokerHost,
+                path: "languages/language",
+                query: {
+                    movieId: req.query.id
                 }
+            };
 
-                similar_movie_data_request_url = url.build(similar_movie_data_request_url);
+            languages_request_url = url.build(languages_request_url);
+
+            // URL per ottenere i generi del film
+            let genres_request_url = {
+                host: options.servers.SQLBrokerHost,
+                path: "genres/movie",
+                query: {
+                    movieId: req.query.id
+                }
+            };
+
+            genres_request_url = url.build(genres_request_url);
+
+            // URL per ottenere i paesi del film
+            let countries_request_url = {
+                host: options.servers.SQLBrokerHost,
+                path: "countries/id",
+                query: {
+                    movieId: req.query.id
+                }
+            };
+
+            countries_request_url = url.build(countries_request_url);
+
+            // URL per ottenere i temi del film
+            let themes_request_url = {
+                host: options.servers.SQLBrokerHost,
+                path: "themes/theme",
+                query: {
+                    movieId: req.query.id
+                }
+            };
+
+            themes_request_url = url.build(themes_request_url);
 
                 Promise.all([
                     axios.get(movie_data_request_url).then(movie => {
@@ -207,8 +241,61 @@ module.exports = (options) => {
                     })
                 })
             }
+            // Effettua tutte le richieste in parallelo
+            Promise.all([
+                axios.get(movie_data_request_url).then(movie => {
+                    //console.log(movie.data);
+                    return movie.data;
+                }).catch(error => {
+                    console.log(error);
+                }),
+                axios.get(actors_data_request_url).then(actors => {
+                    return actors.data;
+                }).catch(error => {
+                    console.log(error);
+                }),
+                axios.get(languages_request_url).then(languages => {
+                    console.log(languages.data);
+                    return languages.data; // Le lingue del film
+                }).catch(error => {
+                    console.log(error);
+                }),
+                axios.get(genres_request_url).then(genres => {
+                    console.log(genres.data);
+                    return genres.data; // I generi del film
+                }).catch(error => {
+                    console.log(error);
+                }),
+                axios.get(countries_request_url).then(countries => {
+                    console.log(countries.data);
+                    return countries.data; // I paesi del film
+                }).catch(error => {
+                    console.log(error);
+                }),
+                axios.get(themes_request_url).then(themes => {
+                    console.log(themes.data);
+                    return themes.data; // I temi del film
+                }).catch(error => {
+                    console.log(error);
+                })
+            ]).then(result => {
+                // Invia tutti i dati al template
+                res.render('./movies/single_movie', {
+                    title: 'Movies',
+                    movie: result[0],        // Dati del film
+                    actors: result[1],       // Attori del film
+                    languages: result[2],    // Lingue del film
+                    genres: result[3],       // Generi del film
+                    countries: result[4],    // Paesi del film
+                    themes: result[5]        // Temi del film
+                });
+            }).catch(error => {
+                console.log(error);
+            });
         }
-    )
+    });
+
+
 
     /*
 
@@ -336,13 +423,7 @@ module.exports = (options) => {
                 console.log(error);
             })
         ]).then(result => {
-            res.render('./movies/movies_search', {
-                title: 'Movies',
-                countries: result[0],
-                genres: result[1],
-                languages: result[2],
-                themes: result[3]
-            });
+            res.render('./movies/movies_search', {title: 'Movies', countries: result[0], genres: result[1],languages: result[2],themes: result[3]});
         })
     })
 
