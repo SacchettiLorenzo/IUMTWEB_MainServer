@@ -8,11 +8,20 @@ async function fetchSuggestions() {
     }
 
     try {
-        const response = await fetch(`/search?query=${query}&entity=movies`);
+        const response = await fetch(`/search?query=${query}`);
         const results = await response.json();
 
+        if (!results || results.length === 0) {
+            suggestionsBox.innerHTML = '<p class="text-muted">Nessun risultato trovato</p>';
+            return;
+        }
+
         suggestionsBox.innerHTML = results
-            .map(item => `<a href="/movies/id?id=${item.id}" class="list-group-item list-group-item-action">${item.name}</a>`)
+            .map(item =>
+                `<a href="${item.type === 'movie' ? '/movies/id' : '/actors/id'}?id=${item.id}" 
+                   class="list-group-item list-group-item-action">
+                   ${item.name} (${item.type === 'movie' ? 'Film' : 'Attore'})
+                 </a>`)
             .join('');
     } catch (error) {
         console.error('Error fetching suggestions:', error);

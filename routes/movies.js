@@ -148,46 +148,6 @@ module.exports = (options) => {
         }
     )
 
-    async function getMoviesFromDatabase(options) {
-        const request_url = url.build({
-            host: options.servers.SQLBrokerHost,
-            path: "movies",
-            query: { size: 100 }
-        });
-
-        const response = await axios.get(request_url);
-        return response.data.content; // Restituisci l'elenco dei film
-    }
-
-    async function getActorsFromDatabase(options) {
-        const request_url = url.build({
-            host: options.servers.SQLBrokerHost,
-            path: "actors",
-            query: { size: 100 }
-        });
-
-        const response = await axios.get(request_url);
-        return response.data.content; // Restituisci l'elenco degli attori
-    }
-
-    async function getNewsFromDatabase(options) {
-        const request_url = url.build({
-            host: options.servers.NoSQLBrokerHost,
-            path: "news",
-            query: { size: 100 }
-        });
-
-        const response = await axios.get(request_url);
-        return response.data.content; // Restituisci l'elenco delle notizie
-    }
-
-    module.exports = {
-        getMoviesFromDatabase,
-        getActorsFromDatabase,
-        getNewsFromDatabase
-    };
-
-
 
     router.get('/stats', function (req, res, next) {
 
