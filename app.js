@@ -38,12 +38,34 @@ hbs.registerPartials(__dirname + '/views/channels');
 hbs.registerPartials(__dirname + '/views/themes');
 hbs.registerPartials(__dirname + '/views/languages');
 hbs.registerPartials(__dirname + '/views/genres');
+hbs.registerPartials(__dirname + '/views/reviews');
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
   for(var i = 0; i < n; ++i)
     accum += block.fn(i);
   return accum;
+});
+
+hbs.registerHelper('date_formatter', function(date) {
+  const date_ = new Date(date);
+  return date_.getFullYear() + '-' + (date_.getMonth() + 1) + '-' + date_.getDate();
+});
+
+hbs.registerHelper('grouped_each', function(every, context, options) {
+  console.log(options);
+  var out = "", subcontext = [], i;
+  if (context && context.length > 0) {
+    for (i = 0; i < context.length; i++) {
+      if (i > 0 && i % every === 0) {
+        out += options.fn(subcontext);
+        subcontext = [];
+      }
+      subcontext.push(context[i]);
+    }
+    out += options.fn(subcontext);
+  }
+  return out;
 });
 
 hbs.registerHelper( "when",function(operand_1, operator, operand_2, options) {
