@@ -495,7 +495,41 @@ module.exports = (options) => {
         });
     });
 
+    router.get('/top10-longest', function (req, res, next) {
+        let topMoviesRequestUrl = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: 'movies/top10-longest'
+        });
 
+        axios.get(topMoviesRequestUrl).then(response => {
+            res.render('./statistics/statistics', {
+                title: 'Top 10 Longest movies',
+                type: 'movies longest',
+                movies: response.data
+            });
+        }).catch(error => {
+            console.error("Error fetching top movies:", error);
+            res.status(500).send("Error fetching top longest movies");
+        });
+    })
+
+    router.get('/top10-shortest', function (req, res, next) {
+        let topMoviesRequestUrl = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: 'movies/top10-shortest'
+        });
+
+        axios.get(topMoviesRequestUrl).then(response => {
+            res.render('./statistics/statistics', {
+                title: 'Top 10 Shortest movies',
+                type: 'movies shortest',
+                movies: response.data
+            });
+        }).catch(error => {
+            console.error("Error fetching top shortest movies:", error);
+            res.status(500).send("Error fetching top shortest movies");
+        });
+    })
 
 
 

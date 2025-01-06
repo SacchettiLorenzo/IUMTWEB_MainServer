@@ -1,23 +1,59 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{title}}</title>
-</head>
-<body>
 <h1>{{title}}</h1>
-<ul>
 
-        {{#when type 'eq' 'genre'}} <!-- Se il tipo è 'genre' -->
-            {{#each genres}}
-            <li>{{genre}}: {{movie_count}} movies</li> <!-- Mostra i generi -->
-            {{/each}}
-        {{/when}}
-        {{#when type 'eq' 'country'}} <!-- Se il tipo è 'country' -->
-            {{#each country}}
-            <li>{{country}}: {{movie_count}} movies</li> <!-- Mostra i paesi -->
-            {{/each}}
-        {{/when}}
+<!-- Tendina per "Statistiche sui Film" -->
+<div class="card custom-card">
+    <div class="card-header" id="statisticHeader">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#movieStatistics" aria-expanded="false" aria-controls="movieStatistics">
+                Statistiche sui Film
+            </button>
+        </h5>
+    </div>
+    <div id="movieStatistics" class="collapse" aria-labelledby="statisticHeader" data-bs-parent="#movieStatsAccordion">
+        <div class="card-body">
+            <!-- Contenuto delle statistiche sui film -->
+            <ul>
+                <li><a href="/movies/top10-shortest">Top 10 Film Più Corti</a></li>
+                <li><a href="/movies/top10-longest">Top 10 Film Più Lungi</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-</ul>
-</body>
-</html>
+<!-- Tendina per "Generi e Tendenze" -->
+<div class="card custom-card">
+    <div class="card-header" id="genreTrendHeader">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#genreTrend" aria-expanded="false" aria-controls="genreTrend">
+                Generi e Tendenze
+            </button>
+        </h5>
+    </div>
+    <div id="genreTrend" class="collapse" aria-labelledby="genreTrendHeader" data-bs-parent="#genreTrendAccordion">
+        <div class="card-body">
+            <!-- Contenuto delle statistiche sui generi -->
+            <ul>
+                <li><a href="/genres/top-genres">Top 10 Generi</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Tendina per "Top Paesi" -->
+<div class="card custom-card">
+    <div class="card-header" id="countryHeader">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#countryStatistics" aria-expanded="false" aria-controls="countryStatistics">
+                Statistiche Top 10 Paesi
+            </button>
+        </h5>
+    </div>
+    <div id="countryStatistics" class="collapse" aria-labelledby="countryHeader" data-bs-parent="#countryStatsAccordion">
+        <div class="card-body">
+            <!-- Contenuto delle statistiche sui paesi -->
+            <ul>
+                <li><a href="/countries/top-countries">Top 10 Paesi</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

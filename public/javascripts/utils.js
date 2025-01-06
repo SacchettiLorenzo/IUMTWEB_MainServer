@@ -74,3 +74,33 @@ async function sendMoviesSearchWord(){
     })
 
 }
+
+window.onload = function() {
+    document.getElementById("MovieCarouselInner").children[0].classList.add('active');
+    document.getElementById("MovieCarouselIndicators").children[0].classList.add('active');
+
+    document.querySelectorAll('.card-body a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            let url = this.getAttribute('href');
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    displayTopCountries(data);
+                })
+                .catch(error => console.error('Error loading data:', error));
+        });
+    });
+};
+
+
+function displayTopCountries(data) {
+    const container = document.getElementById('topCountriesContainer');
+    container.innerHTML = '';
+    data.forEach(country => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${country.name}: ${country.movie_count} movies`;
+        container.appendChild(listItem);
+    });
+}

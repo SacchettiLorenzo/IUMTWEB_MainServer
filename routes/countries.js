@@ -84,15 +84,14 @@ module.exports = (options) => {
     router.get('/top-countries', function (req, res, next) {
         let topCountriesRequestUrl = url.build({
             host: options.servers.SQLBrokerHost,
-            path: 'countries/trending' // Endpoint per i paesi più popolari
+            path: 'countries/trending'
         });
-        console.log('Top Countries Request URL:', topCountriesRequestUrl);
 
         axios.get(topCountriesRequestUrl).then(response => {
             res.render('./statistics/statistics', {
-                title: 'Top 10 Countries', // Titolo per i paesi
-                type: 'country', // Passiamo un tipo per decidere quale set di dati visualizzare
-                country: response.data // Dati dei paesi
+                title: 'Top 10 Countries',
+                type: 'country',
+                country: response.data
             });
         }).catch(error => {
             console.error("Error fetching top countries:", error);

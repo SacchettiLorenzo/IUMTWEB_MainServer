@@ -204,3 +204,39 @@ h2 {
 #suggestions a:hover {
     background-color: #f8f9fa;
 }
+
+
+
+.custom-card {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.custom-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    cursor: pointer;
+    background-color: #f8f9fa;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-body {
+    background-color: #ffffff;
+    padding: 15px;
+}
+
+.card-body a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.card-body a:hover {
+    text-decoration: underline;
+}
+
