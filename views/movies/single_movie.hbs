@@ -20,7 +20,7 @@
         </div>
     {{/with}}
 
-    <div class="container-fluid" id="movie-details">
+    <div class="container" id="movie-info">
         <div class="row">
             <div class="col" id="movie-details">
                 <table class="table">
@@ -30,7 +30,8 @@
                         <th scope="row">Languages:</th>
                         <td>
                             {{#each languages}}
-                                {{language}}{{#unless @last}}, {{/unless}} <!-- Mostra tutte le lingue separate da virgola -->
+                                {{language}}{{#unless @last}}
+                                , {{/unless}} <!-- Mostra tutte le lingue separate da virgola -->
                             {{else}}
                                 No languages available
                             {{/each}}
@@ -40,7 +41,8 @@
                         <th scope="row">Genres:</th>
                         <td>
                             {{#each genres}}
-                                {{genre}}{{#unless @last}}, {{/unless}} <!-- Mostra tutti i generi separati da virgola -->
+                                {{genre}}{{#unless @last}}
+                                , {{/unless}} <!-- Mostra tutti i generi separati da virgola -->
                             {{else}}
                                 No genres available
                             {{/each}}
@@ -50,7 +52,8 @@
                         <th scope="row">Country:</th>
                         <td>
                             {{#each countries}}
-                                {{country}}{{#unless @last}}, {{/unless}} <!-- Mostra tutti i paesi separati da virgola -->
+                                {{country}}{{#unless @last}}
+                                , {{/unless}} <!-- Mostra tutti i paesi separati da virgola -->
                             {{else}}
                                 No countries available
                             {{/each}}
@@ -59,9 +62,11 @@
                     <tr>
                         <th scope="row">Themes:</th>
                         <td>
+                        <ul>
                             {{#each themes}}
-                                {{theme}}{{#unless @last}}, {{/unless}} <!-- Mostra tutti i temi separati da virgola -->
+                                <li>{{theme}}</li>
                             {{else}}
+                            </ul>
                                 No themes available
                             {{/each}}
                         </td>
@@ -71,16 +76,27 @@
                 </table>
             </div>
             <div class="col" id="movie-releases">
-                releases
+
+                {{#grouped_each 2 releases}}
+                <ul class="row">
+                    {{#each this}}
+                        <li class="col list-group-item">
+                            {{country}} {{#date_formatter date}}{{/date_formatter}}
+                        </li>
+                    {{/each}}
+                </ul>
+                {{/grouped_each}}
+
+
             </div>
         </div>
     </div>
 
-    <div class="row" id="movie-reviews">
+    <div class="row mt-3" id="movie-reviews">
         {{> reviews_card}}
     </div>
 
-    <div class="row" id="movie-actors">
+    <div class="row mt-3" id="movie-actors">
         {{> actors_card}}
     </div>
 

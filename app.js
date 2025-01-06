@@ -89,6 +89,10 @@ hbs.registerHelper("sub", function (operand_1, operand_2) {
   return operand_1 - operand_2;
 })
 
+hbs.registerHelper("div", function (operand_1, operand_2) {
+  return (operand_1 / operand_2);
+})
+
 
 
 // Configurazione del motore di template (Handlebars)

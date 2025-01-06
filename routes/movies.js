@@ -185,6 +185,16 @@ module.exports = (options) => {
 
             themes_request_url = url.build(themes_request_url);
 
+            let releases_request_url = {
+                host: options.servers.SQLBrokerHost,
+                path: "releases/movie",
+                query: {
+                    movieId: req.query.id
+                }
+            };
+
+            releases_request_url = url.build(releases_request_url);
+
                 Promise.all([
                     axios.get(movie_data_request_url).then(movie => {
                         return movie.data
@@ -215,6 +225,11 @@ module.exports = (options) => {
                         return themes.data; // I temi del film
                     }).catch(error => {
                         console.log(error);
+                    }),
+                    axios.get(releases_request_url).then(releases => {
+                        return releases.data; // I temi del film
+                    }).catch(error => {
+                        console.log(error);
                     })
 
                     /*
@@ -231,6 +246,7 @@ module.exports = (options) => {
                     let genres = result[3];
                     let countries = result[4];
                     let themes = result[5];
+                    let releases = result[6];
 
                     let reviews_data_request_url = {
                         host: options.servers.NoSQLBrokerHost,
@@ -263,7 +279,8 @@ module.exports = (options) => {
                             languages: languages,
                             genres: genres,
                             countries: countries,
-                            themes: themes
+                            themes: themes,
+                            releases: releases,
                             //similar: result[2]
                         });
                     })

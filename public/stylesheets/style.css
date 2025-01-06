@@ -23,6 +23,18 @@
 
 
 
+#movie-releases{
+    background-color: white;
+    height: 40vh;
+    overflow-y: scroll;
+}
+
+#movie-details{
+    background-color: white;
+    height: 40vh;
+    overflow-y: scroll;
+}
+
 #movie-actors{
     position: relative;
 
