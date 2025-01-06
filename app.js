@@ -38,6 +38,7 @@ hbs.registerPartials(__dirname + '/views/themes');
 hbs.registerPartials(__dirname + '/views/languages');
 hbs.registerPartials(__dirname + '/views/genres');
 hbs.registerPartials(__dirname + '/views/reviews');
+hbs.registerPartials(__dirname + '/views/countries');
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';

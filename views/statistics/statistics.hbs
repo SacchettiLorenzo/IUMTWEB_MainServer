@@ -6,9 +6,18 @@
 <body>
 <h1>{{title}}</h1>
 <ul>
-    {{#each genres}}
-        <li>{{genre}}: {{movie_count}} movies</li>
-    {{/each}}
+
+        {{#when type 'eq' 'genre'}} <!-- Se il tipo è 'genre' -->
+            {{#each genres}}
+            <li>{{genre}}: {{movie_count}} movies</li> <!-- Mostra i generi -->
+            {{/each}}
+        {{/when}}
+        {{#when type 'eq' 'country'}} <!-- Se il tipo è 'country' -->
+            {{#each country}}
+            <li>{{country}}: {{movie_count}} movies</li> <!-- Mostra i paesi -->
+            {{/each}}
+        {{/when}}
+
 </ul>
 </body>
 </html>

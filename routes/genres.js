@@ -8,6 +8,7 @@ const res = require("express/lib/response");
 
 module.exports = (options) => {
 
+
     router.get('/', function (req, res, next) {
         let request_url = {
             host: options.servers.SQLBrokerHost,
@@ -65,6 +66,7 @@ module.exports = (options) => {
         axios.get(topGenresRequestUrl).then(response => {
             res.render('./statistics/statistics', {
                 title: 'Top 10 Genres',
+                type: 'genre',
                 genres: response.data // Passa direttamente i dati ricevuti
             });
         }).catch(error => {
@@ -72,11 +74,6 @@ module.exports = (options) => {
             res.status(500).send("Error fetching top genres");
         });
     })
-
-
-
-
-
 
 
 
