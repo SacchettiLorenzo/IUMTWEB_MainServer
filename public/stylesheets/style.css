@@ -282,3 +282,16 @@ h2 {
     z-index: 1000;
     width: 100%; /* Per allineamento con l'input */
 }
+
+#HomepageCarousel .carousel-item img {
+    max-height: 400px; /* Altezza massima delle immagini */
+    object-fit: contain; /* Mostra l'immagine intera senza ritagliarla */
+    width: auto; /* Mantiene la proporzione originale */
+    margin: 0 auto; /* Centra l'immagine */
+}
+
+#HomepageCarousel .carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 15px;
+}
