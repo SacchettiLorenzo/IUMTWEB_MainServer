@@ -508,7 +508,7 @@ module.exports = (options) => {
                 movie_count: movies.minute
             }));
 
-            res.render('./movies/top10-longest', {
+            res.render('./movies/top10-time', {
                 title: 'Top 10 Longest movies',
                 type: 'movies',
                 movies: response.data
@@ -532,7 +532,7 @@ module.exports = (options) => {
                 movie_count: movies.minute
             }));
 
-            res.render('./movies/top10-shortest', {
+            res.render('./movies/top10-time', {
                 title: 'Top 10 Shortest movies',
                 type: 'movies',
                 movies: response.data
@@ -540,6 +540,54 @@ module.exports = (options) => {
         }).catch(error => {
             console.error("Error fetching top shortest movies:", error);
             res.status(500).send("Error fetching top shortest movies");
+        });
+    })
+
+    router.get('/top10-bestMovies', function (req, res, next) {
+        let topMoviesRequestUrl = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: 'movies/top10-bestMovies'
+        });
+
+        axios.get(topMoviesRequestUrl).then(response => {
+            const movies = response.data.map(movies => ({
+                id: movies.id,
+                movies: movies.name,
+                movie_count: movies.rating
+            }));
+
+            res.render('./movies/top10-rating', {
+                title: 'Top 10 Best movies',
+                type: 'movies',
+                movies: response.data
+            });
+        }).catch(error => {
+            console.error("Error fetching top best movies:", error);
+            res.status(500).send("Error fetching top best movies");
+        });
+    })
+
+    router.get('/top10-worstMovies', function (req, res, next) {
+        let topMoviesRequestUrl = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: 'movies/top10-worstMovies'
+        });
+
+        axios.get(topMoviesRequestUrl).then(response => {
+            const movies = response.data.map(movies => ({
+                id: movies.id,
+                movies: movies.name,
+                movie_count: movies.rating
+            }));
+
+            res.render('./movies/top10-rating', {
+                title: 'Top 10 Worst movies',
+                type: 'movies',
+                movies: response.data
+            });
+        }).catch(error => {
+            console.error("Error fetching top worst movies:", error);
+            res.status(500).send("Error fetching top worst movies");
         });
     })
 

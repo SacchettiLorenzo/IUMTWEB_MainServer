@@ -5,7 +5,7 @@
     <div class="card-header" id="statisticHeader">
         <h5 class="mb-0">
             <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#movieStatistics" aria-expanded="false" aria-controls="movieStatistics">
-                Statistiche sui Film
+                Movie Stats
             </button>
         </h5>
     </div>
@@ -13,8 +13,10 @@
         <div class="card-body">
             <!-- Contenuto delle statistiche sui film -->
             <ul>
-                <li><a href="/movies/top10-shortest">Top 10 Film Più Corti</a></li>
-                <li><a href="/movies/top10-longest">Top 10 Film Più Lungi</a></li>
+                <li><a href="/movies/top10-shortest">Top 10 Shortest Movies</a></li>
+                <li><a href="/movies/top10-longest">Top 10 Longest Movies</a></li>
+                <li><a href="/movies/top10-bestMovies">Top 10 Best movies</a></li>
+                <li><a href="/movies/top10-worstMovies">Top 10 Worst movies</a></li>
             </ul>
         </div>
     </div>
@@ -25,7 +27,7 @@
     <div class="card-header" id="genreTrendHeader">
         <h5 class="mb-0">
             <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#genreTrend" aria-expanded="false" aria-controls="genreTrend">
-                Generi e Tendenze
+                Genres and Trends
             </button>
         </h5>
     </div>
@@ -33,7 +35,7 @@
         <div class="card-body">
             <!-- Contenuto delle statistiche sui generi -->
             <ul>
-                <li><a href="/genres/top-genres">Top 10 Generi</a></li>
+                <li><a href="/genres/top-genres">Top 10 Genres</a></li>
             </ul>
         </div>
     </div>
@@ -44,7 +46,7 @@
     <div class="card-header" id="countryHeader">
         <h5 class="mb-0">
             <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#countryStatistics" aria-expanded="false" aria-controls="countryStatistics">
-                Statistiche Top 10 Paesi
+                Country Statistics
             </button>
         </h5>
     </div>
@@ -52,7 +54,26 @@
         <div class="card-body">
             <!-- Contenuto delle statistiche sui paesi -->
             <ul>
-                <li><a href="/countries/top-countries">Top 10 Paesi</a></li>
+                <li><a href="/countries/top-countries">Top 10 Countries</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Tendina per "Top Actor" -->
+<div class="card custom-card">
+    <div class="card-header" id="actorHeader">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#actorStatistics" aria-expanded="false" aria-controls="actorStatistics">
+                Actor Statistics
+            </button>
+        </h5>
+    </div>
+    <div id="actorStatistics" class="collapse" aria-labelledby="actorHeader" data-bs-parent="#actorStatsAccordion">
+        <div class="card-body">
+
+            <ul>
+                <li><a href="/actors/top10-mostPopularActors">Top 10 actors with most appearances</a></li>
             </ul>
         </div>
     </div>

@@ -2,16 +2,18 @@
     <thead>
     <tr>
         <th>Position</th>
-        <th>Film</th>
-        <th>Duration (minutes)</th>
+        <th>Actor</th>
+        <th>Number of attendances</th>
+
     </tr>
     </thead>
     <tbody>
-    {{#each movies}}
+    {{#each actors}}
         <tr>
             <td>{{@index}}</td>
-            <td><a href="/movies/id?id={{id}}">{{name}}</a></td>
-            <td>{{minute}} min</td>
+            <td><a href="/actors/id?id={{id}}">{{name}}</a></td>
+
+            <td>{{actor_count}}</td>
         </tr>
     {{/each}}
     </tbody>
