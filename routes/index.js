@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const axios = require('axios');
+global.SQLBrokerHost = 'http://localhost:8080';
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -37,9 +39,6 @@ router.get('/chat', function(req, res) {
 
 const { getMoviesFromDatabase, getActorsFromDatabase, getNewsFromDatabase } = require('./movies');
 
-const axios = require('axios');
-global.SQLBrokerHost = 'http://localhost:8080';
-
 
 router.get('/search', async (req, res) => {
   const query = req.query.query || ''; // Query digitata dall'utente
@@ -66,5 +65,6 @@ router.get('/search', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 module.exports = router;
