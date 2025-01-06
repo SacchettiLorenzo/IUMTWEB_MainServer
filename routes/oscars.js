@@ -140,6 +140,23 @@ module.exports = (options) => {
         }
     });
 
+    router.get('/nominations/top/:limit', async function (req, res, next) {
+        try {
+            const { limit } = req.params;
+            const request_url = `http://localhost:3001/oscar/nominations/top/${limit}`;
+            const response = await axios.get(request_url);
+            const topNominatedFilms = response.data;
+
+            res.render('oscars/nominations_top', {
+                title: `Top ${limit} Films with Most Nominations`,
+                topNominatedFilms
+            });
+        } catch (error) {
+            console.error('Error fetching top nominated films:', error);
+            res.status(500).send('Error fetching top nominated films.');
+        }
+    });
+
     return router;
 
 }
