@@ -40,6 +40,10 @@ const { getMoviesFromDatabase, getActorsFromDatabase, getNewsFromDatabase } = re
 const axios = require('axios');
 global.SQLBrokerHost = 'http://localhost:8080';
 
+router.get('/statistics', function(req, res) {
+  // Renderizza la pagina statistics
+  res.render('statistics/statistics', { title: 'Statistics' });
+});
 
 router.get('/search', async (req, res) => {
   const query = req.query.query || ''; // Query digitata dall'utente

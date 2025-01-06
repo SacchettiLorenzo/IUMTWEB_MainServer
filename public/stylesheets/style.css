@@ -240,3 +240,42 @@ h2 {
     text-decoration: underline;
 }
 
+/*css per le tabelle di statistics*/
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #343a40;
+    color: white;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tbody tr:hover {
+    background-color: #dcdcdc;
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+

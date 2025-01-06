@@ -502,9 +502,15 @@ module.exports = (options) => {
         });
 
         axios.get(topMoviesRequestUrl).then(response => {
-            res.render('./statistics/statistics', {
+            const movies = response.data.map(movies => ({
+                id: movies.id,
+                movies: movies.name,
+                movie_count: movies.minute
+            }));
+
+            res.render('./movies/top10-longest', {
                 title: 'Top 10 Longest movies',
-                type: 'movies longest',
+                type: 'movies',
                 movies: response.data
             });
         }).catch(error => {
@@ -520,9 +526,15 @@ module.exports = (options) => {
         });
 
         axios.get(topMoviesRequestUrl).then(response => {
-            res.render('./statistics/statistics', {
+            const movies = response.data.map(movies => ({
+                id: movies.id,
+                movies: movies.name,
+                movie_count: movies.minute
+            }));
+
+            res.render('./movies/top10-shortest', {
                 title: 'Top 10 Shortest movies',
-                type: 'movies shortest',
+                type: 'movies',
                 movies: response.data
             });
         }).catch(error => {
@@ -530,6 +542,7 @@ module.exports = (options) => {
             res.status(500).send("Error fetching top shortest movies");
         });
     })
+
 
 
 

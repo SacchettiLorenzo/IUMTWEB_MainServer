@@ -104,3 +104,23 @@ function displayTopCountries(data) {
         container.appendChild(listItem);
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const tables = document.querySelectorAll('table');
+
+    tables.forEach(table => {
+        const headers = table.querySelectorAll('th');
+        headers.forEach((header, index) => {
+            header.addEventListener('click', function() {
+                const rows = Array.from(table.querySelectorAll('tr:nth-child(n+2)'));
+                const sortedRows = rows.sort((a, b) => {
+                    const aText = a.cells[index].textContent.trim();
+                    const bText = b.cells[index].textContent.trim();
+                    return aText > bText ? 1 : -1;
+                });
+                table.tBodies[0].append(...sortedRows);
+            });
+        });
+    });
+});
+

@@ -1,0 +1,18 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Position</th>
+        <th>Film</th>
+        <th>Duration (minutes)</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each movies}}
+        <tr>
+            <td>{{@index}}</td>
+            <td><a href="/movies/id?id={{id}}">{{name}}</a></td>
+            <td>{{minute}} min</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

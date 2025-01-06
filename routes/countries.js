@@ -88,10 +88,10 @@ module.exports = (options) => {
         });
 
         axios.get(topCountriesRequestUrl).then(response => {
-            res.render('./statistics/statistics', {
+            res.render('./countries/top-countries', {
                 title: 'Top 10 Countries',
                 type: 'country',
-                country: response.data
+                countries: response.data
             });
         }).catch(error => {
             console.error("Error fetching top countries:", error);
