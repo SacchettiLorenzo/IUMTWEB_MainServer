@@ -540,33 +540,38 @@ module.exports = (options) => {
         let genreId = req.query.genreId || '';
         let languageId = req.query.languageId || '';
 
-        if (req.query.removeCountry) {
-            countryId = '';
-        }
-
-        if (req.query.removeGenre) {
-            genreId = '';
-        }
-
-        if (req.query.removeLanguage) {
-            languageId = '';
-        }
-
         const queryParams = {};
         if (countryId) queryParams.countryId = countryId;
         if (genreId) queryParams.genreId = genreId;
         if (languageId) queryParams.languageId = languageId;
 
         let path;
+        let minuteSort = null;
+        let ratingSort = null;
+        let sortDirection = 'DESC'; // Default sorting direction, can be modified
+
         if (type === 'best') {
             path = "movies/top10ByIds";
+            ratingSort = 1; // Ordina per rating
+            sortDirection = 'DESC'; // Ordinamento decrescente per rating
         } else if (type === 'worst') {
             path = "movies/worst10ByIds";
+            ratingSort = 1; // Ordina per rating
+            sortDirection = 'ASC'; // Ordinamento crescente per rating
         } else if (type === 'longest') {
             path = "movies/top10Longest";
+            minuteSort = 1; // Ordina per durata
+            sortDirection = 'DESC'; // Ordinamento decrescente per durata
         } else if (type === 'shortest') {
             path = "movies/top10Shortest";
+            minuteSort = 1; // Ordina per durata
+            sortDirection = 'ASC'; // Ordinamento crescente per durata
         }
+
+        // Aggiungi i parametri di ordinamento
+        queryParams.minuteSort = minuteSort;
+        queryParams.ratingSort = ratingSort;
+        queryParams.sortDirection = sortDirection;
 
         let topMovies_request_url = {
             host: options.servers.SQLBrokerHost,
@@ -589,7 +594,7 @@ module.exports = (options) => {
                 .then(topMovies => topMovies.data)
         ]).then(result => {
             res.render('./movies/top10', {
-                title: type === 'best' ? 'Top 10 Best Movies' : (type === 'worst' ? 'Top 10 Worst Movies' : (type === 'longest' ? 'Top 10 Longest Movies' : 'Top 10 Shortest Movies')) ,
+                title: type === 'best' ? 'Top 10 Best Movies' : (type === 'worst' ? 'Top 10 Worst Movies' : (type === 'longest' ? 'Top 10 Longest Movies' : 'Top 10 Shortest Movies')),
                 movies: result[3],
                 countries: result[0],
                 genres: result[1],
@@ -604,6 +609,7 @@ module.exports = (options) => {
             res.status(500).send(`Error fetching top ${type} movies`);
         });
     });
+
 
 
 

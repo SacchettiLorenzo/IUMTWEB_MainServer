@@ -1,19 +1,9 @@
-<div class="form-group mb-2">
-    {{#when selectedCountryId 'noteq' ''}}
-        <p><strong>Country: </strong>
-            {{#each countries}}
-                {{#when id 'eq' ../selectedCountryId}}
-                    {{country}}
-                {{/when}}
-            {{/each}}
-            <a href="/movies/top10-movies?removeCountry=true&type={{type}}" class="text-danger ml-2 remove-filter">X</a>
-        </p>
-    {{/when}}
+<div class="form-inline float-right w-25">
     <label for="countrySelect" class="mr-2">Select Country</label>
     <select class="form-control form-control-sm" id="countrySelect" name="countryId">
         <option value="" {{#when selectedCountryId 'eq' ''}}selected{{/when}}>All Countries</option>
         {{#each countries}}
-            <option value="{{id}}" {{#when selectedCountryId 'eq' id}}selected{{/when}}>{{country}}</option>
+            <option value="{{id}}" {{#when ../selectedCountryId 'eq' id}}selected{{/when}}>{{country}}</option>
         {{/each}}
     </select>
 </div>
