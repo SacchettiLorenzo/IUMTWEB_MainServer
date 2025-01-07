@@ -1,4 +1,12 @@
 <h1>{{title}}</h1>
+
+{{#when type 'eq' 'best'}}
+    <p class="lead">Showing the best rated movies.</p>
+{{/when}}
+{{#when type 'eq' 'worst'}}
+    <p class="lead">Showing the worst rated movies.</p>
+{{/when}}
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -18,10 +26,12 @@
     </tbody>
 </table>
 
-<form action="/movies/top10-bestMovies" method="get" class="form-inline">
+<form action="/movies/top10-movies" method="get" class="form-inline">
     {{> country_select }}
     {{> genre_select }}
     {{> language_select }}
+
+    <input type="hidden" name="type" value="{{type}}">
 
     <button type="submit" class="btn btn-primary btn-sm mb-2 ml-2">Filter</button>
 </form>

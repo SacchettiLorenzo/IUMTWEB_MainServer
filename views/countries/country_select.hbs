@@ -6,7 +6,7 @@
                     {{country}}
                 {{/when}}
             {{/each}}
-            <a href="/movies/top10-bestMovies?removeCountry=true" class="text-danger ml-2">X</a>
+            <a href="/movies/top10-movies?removeCountry=true&type={{../type}}" class="text-danger ml-2 remove-filter">X</a>
         </p>
     {{/when}}
     <label for="countrySelect" class="mr-2">Select Country</label>

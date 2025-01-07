@@ -543,8 +543,8 @@ module.exports = (options) => {
         });
     })
 
-    router.get('/top10-bestMovies', function (req, res, next) {
-
+    router.get('/top10-movies', function (req, res, next) {
+        let type = req.query.type || 'best';
         let countryId = req.query.countryId || '';
         let genreId = req.query.genreId || '';
         let languageId = req.query.languageId || '';
@@ -566,11 +566,11 @@ module.exports = (options) => {
         if (genreId) queryParams.genreId = genreId;
         if (languageId) queryParams.languageId = languageId;
 
-        // Creazione dell'URL per i film top 10
-        let topMovies_path = "movies/top10ByIds"; // End-point per i top 10 film
+        let path = type === 'best' ? "movies/top10ByIds" : "movies/worst10ByIds";
+
         let topMovies_request_url = {
             host: options.servers.SQLBrokerHost,
-            path: topMovies_path,
+            path: path,
             query: queryParams
         };
 
@@ -586,57 +586,25 @@ module.exports = (options) => {
                 .then(genres => genres.data.content),
             axios.get(url.build({ host: options.servers.SQLBrokerHost, path: languages_path, query: { page: 0, size: 1000 } }))
                 .then(languages => languages.data.content),
-            axios.get(url.build(topMovies_request_url)) // Richiesta per i film top 10
+            axios.get(url.build(topMovies_request_url))
                 .then(topMovies => topMovies.data)
         ]).then(result => {
             res.render('./movies/top10-rating', {
-                title: 'Top 10 Best Movies',
+                title: type === 'best' ? 'Top 10 Best Movies' : 'Top 10 Worst Movies',
                 movies: result[3],
                 countries: result[0],
                 genres: result[1],
                 languages: result[2],
                 selectedCountryId: countryId,
                 selectedGenreId: genreId,
-                selectedLanguageId: languageId
+                selectedLanguageId: languageId,
+                type: type
             });
         }).catch(error => {
             console.error("Error fetching data:", error);
-            res.status(500).send("Error fetching top best movies");
+            res.status(500).send(`Error fetching top ${type} movies`);
         });
     });
-
-
-
-
-
-
-    router.get('/top10-worstMovies', function (req, res, next) {
-        let topMoviesRequestUrl = url.build({
-            host: options.servers.SQLBrokerHost,
-            path: 'movies/top10-worstMovies'
-        });
-
-        axios.get(topMoviesRequestUrl).then(response => {
-            const movies = response.data.map(movies => ({
-                id: movies.id,
-                movies: movies.name,
-                movie_count: movies.rating
-            }));
-
-            res.render('./movies/top10-rating', {
-                title: 'Top 10 Worst movies',
-                type: 'movies',
-                movies: response.data
-            });
-        }).catch(error => {
-            console.error("Error fetching top worst movies:", error);
-            res.status(500).send("Error fetching top worst movies");
-        });
-    })
-
-
-
-
 
 
     return router;
