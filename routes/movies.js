@@ -57,7 +57,8 @@ module.exports = (options) => {
                         searchable: true,
                         pages_amount: (movies.data.totalPages - 1),
                         current_page: movies.data.number,
-                        page_size: movies.data.size
+                        page_size: movies.data.size,
+                        query_params: "&sortParam=" + req.query.sortParam + "&sortDirection=" + req.query.sortDirection,
                     });
             }).catch(error => {
                 console.log(error);
