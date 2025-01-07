@@ -1,0 +1,19 @@
+<div class="form-group mb-2">
+    {{#when selectedLanguageId 'noteq' ''}}
+        <p><strong>Language: </strong>
+            {{#each languages}}
+                {{#when id 'eq' ../selectedLanguageId}}
+                    {{language}}
+                {{/when}}
+            {{/each}}
+            <a href="/movies/top10-bestMovies?removeLanguage=true" class="text-danger ml-2">X</a>
+        </p>
+    {{/when}}
+    <label for="languageSelect" class="mr-2">Select Language</label>
+    <select class="form-control form-control-sm" id="languageSelect" name="languageId">
+        <option value="" {{#when selectedLanguageId 'eq' ''}}selected{{/when}}>All Languages</option>
+        {{#each languages}}
+            <option value="{{id}}" {{#when selectedLanguageId 'eq' id}}selected{{/when}}>{{language}}</option>
+        {{/each}}
+    </select>
+</div>

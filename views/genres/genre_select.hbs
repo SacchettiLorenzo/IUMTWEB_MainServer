@@ -1,0 +1,19 @@
+<div class="form-group mb-2">
+    {{#when selectedGenreId 'noteq' ''}}
+        <p><strong>Genre: </strong>
+            {{#each genres}}
+                {{#when id 'eq' ../selectedGenreId}}
+                    {{genre}}
+                {{/when}}
+            {{/each}}
+            <a href="/movies/top10-bestMovies?removeGenre=true" class="text-danger ml-2">X</a>
+        </p>
+    {{/when}}
+    <label for="genreSelect" class="mr-2">Select Genre</label>
+    <select class="form-control form-control-sm" id="genreSelect" name="genreId">
+        <option value="" {{#when selectedGenreId 'eq' ''}}selected{{/when}}>All Genres</option>
+        {{#each genres}}
+            <option value="{{id}}" {{#when selectedGenreId 'eq' id}}selected{{/when}}>{{genre}}</option>
+        {{/each}}
+    </select>
+</div>

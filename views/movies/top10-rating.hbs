@@ -17,3 +17,11 @@
     {{/each}}
     </tbody>
 </table>
+
+<form action="/movies/top10-bestMovies" method="get" class="form-inline">
+    {{> country_select }}
+    {{> genre_select }}
+    {{> language_select }}
+
+    <button type="submit" class="btn btn-primary btn-sm mb-2 ml-2">Filter</button>
+</form>

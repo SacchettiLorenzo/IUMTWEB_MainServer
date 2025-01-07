@@ -279,3 +279,21 @@ h1 {
 }
 
 
+
+
+.filters-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filters-section .form-group {
+    margin-bottom: 0;
+}
+
+.filters-section .btn {
+    margin-left: 1rem;
+}
+
