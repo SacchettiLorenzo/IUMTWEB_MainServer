@@ -1,6 +1,5 @@
 <h1>{{title}}</h1>
 
-<!-- Tendina per "Statistiche sui Film" -->
 <div class="card custom-card">
     <div class="card-header" id="statisticHeader">
         <h5 class="mb-0">
@@ -11,10 +10,9 @@
     </div>
     <div id="movieStatistics" class="collapse" aria-labelledby="statisticHeader" data-bs-parent="#movieStatsAccordion">
         <div class="card-body">
-            <!-- Contenuto delle statistiche sui film -->
             <ul>
-                <li><a href="/movies/top10-shortest">Top 10 Shortest Movies</a></li>
-                <li><a href="/movies/top10-longest">Top 10 Longest Movies</a></li>
+                <li><a href="/movies/top10-movies?type=shortest">Top 10 Shortest Movies</a></li>
+                <li><a href="/movies/top10-movies?type=longest">Top 10 Longest Movies</a></li>
                 <li><a href="/movies/top10-movies?type=best">Top 10 Best movies</a></li>
                 <li><a href="/movies/top10-movies?type=worst">Top 10 Worst movies</a></li>
             </ul>
@@ -22,7 +20,6 @@
     </div>
 </div>
 
-<!-- Tendina per "Generi e Tendenze" -->
 <div class="card custom-card">
     <div class="card-header" id="genreTrendHeader">
         <h5 class="mb-0">
@@ -33,7 +30,6 @@
     </div>
     <div id="genreTrend" class="collapse" aria-labelledby="genreTrendHeader" data-bs-parent="#genreTrendAccordion">
         <div class="card-body">
-            <!-- Contenuto delle statistiche sui generi -->
             <ul>
                 <li><a href="/genres/top-genres">Top 10 Genres</a></li>
             </ul>
@@ -52,7 +48,6 @@
     </div>
     <div id="countryStatistics" class="collapse" aria-labelledby="countryHeader" data-bs-parent="#countryStatsAccordion">
         <div class="card-body">
-            <!-- Contenuto delle statistiche sui paesi -->
             <ul>
                 <li><a href="/countries/top-countries">Top 10 Countries</a></li>
             </ul>

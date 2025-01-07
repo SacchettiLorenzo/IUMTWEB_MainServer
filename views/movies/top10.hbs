@@ -1,18 +1,18 @@
 <h1>{{title}}</h1>
 
-{{#when type 'eq' 'best'}}
-    <p class="lead">Showing the best rated movies.</p>
-{{/when}}
-{{#when type 'eq' 'worst'}}
-    <p class="lead">Showing the worst rated movies.</p>
-{{/when}}
 
 <table class="table table-striped">
     <thead>
     <tr>
         <th>Position</th>
         <th>Film</th>
-        <th>Rating</th>
+        {{#if rating}}
+            <th>Rating</th>
+        {{else if minute}}
+            <th>Minute</th>
+        {{else}}
+            <td>Not available</td>
+        {{/if}}
     </tr>
     </thead>
     <tbody>
@@ -20,16 +20,22 @@
         <tr>
             <td>{{@index}}</td>
             <td><a href="/movies/id?id={{id}}">{{name}}</a></td>
-            <td>{{rating}} / 5</td>
+            {{#if rating}}
+                <td>{{rating}} / 5</td>
+            {{else if minute}}
+                <td>{{minute}} minutes</td>
+            {{else}}
+                <td>Not available</td>
+            {{/if}}
         </tr>
     {{/each}}
     </tbody>
 </table>
 
 <form action="/movies/top10-movies" method="get" class="form-inline">
-    {{> country_select }}
-    {{> genre_select }}
-    {{> language_select }}
+    {{> country_select type=type}}
+    {{> genre_select type=type}}
+    {{> language_select type=type}}
 
     <input type="hidden" name="type" value="{{type}}">
 
