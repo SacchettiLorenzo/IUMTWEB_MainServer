@@ -4,8 +4,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const hbs = require('hbs')
 
-
-
 const servers = {
   SQLBrokerHost : "http://localhost:8080/",
   NoSQLBrokerHost : "http://localhost:3001/"
@@ -39,6 +37,7 @@ hbs.registerPartials(__dirname + '/views/languages');
 hbs.registerPartials(__dirname + '/views/genres');
 hbs.registerPartials(__dirname + '/views/reviews');
 hbs.registerPartials(__dirname + '/views/countries');
+hbs.registerPartials(__dirname + '/views/homepage');
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
@@ -108,7 +107,7 @@ app.use(cookieParser()); // Gestione dei cookie
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Definizione delle route
-app.use('/', indexRouter);
+app.use('/', indexRouter({servers:servers}));
 app.use('/movies', moviesRouter({servers:servers}));
 app.use('/actors', actorsRouter({servers:servers}));
 app.use('/crew', crewRouter({servers:servers}));
