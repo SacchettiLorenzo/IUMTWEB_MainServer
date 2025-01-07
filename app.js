@@ -20,6 +20,7 @@ const studiosRouter = require('./routes/studios');
 const themesRouter = require('./routes/themes');
 const languagesRouter = require('./routes/languages');
 const genresRouter = require('./routes/genres');
+const aboutRouter = require('./routes/about');
 
 
 var app = express();
@@ -38,6 +39,7 @@ hbs.registerPartials(__dirname + '/views/genres');
 hbs.registerPartials(__dirname + '/views/reviews');
 hbs.registerPartials(__dirname + '/views/countries');
 hbs.registerPartials(__dirname + '/views/homepage');
+hbs.registerPartials(__dirname + '/views/about');
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
@@ -118,6 +120,7 @@ app.use('/studios', studiosRouter({servers:servers}));
 app.use('/themes', themesRouter({servers:servers}));
 app.use('/languages', languagesRouter({servers:servers}));
 app.use('/genres', genresRouter({servers:servers}));
+app.use('/about', aboutRouter);
 
 // Gestione errori 404
 app.use(function (req, res, next) {
