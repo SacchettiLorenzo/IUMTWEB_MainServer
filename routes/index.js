@@ -26,6 +26,36 @@ router.get('/', async function(req, res) {
   }
 });
 
+router.get('/upcoming-movies', async (req, res) => {
+  try {
+    // Costruisce l'URL per richiedere i film dal 2025 in poi
+    const requestUrl = url.build({
+      host: options.servers.SQLBrokerHost,
+      path: 'movies/date',
+      query: {
+        date: 2025, // Passa l'anno come parametro
+      },
+    });
+
+    console.log('Request URL:', requestUrl); // Debug dell'URL
+
+    // Effettua la richiesta al server SQL
+    const response = await axios.get(requestUrl);
+
+    // I film sono già filtrati dal backend, non c'è bisogno di ulteriore filtraggio
+    const movies = response.data;
+
+    // Renderizza la sezione "Prossime Uscite"
+    res.render('partials/upcoming_movies', {
+      title: 'Prossime Uscite',
+      movies: movies.slice(0, 10), // Mostra i primi 10 film
+    });
+  } catch (error) {
+    console.error('Error fetching upcoming movies:', error.message);
+    res.status(500).send('Errore nel caricamento delle prossime uscite.');
+  }
+});
+
 router.get('/popular-movies', async (req, res) => {
   try {
     const requestUrl = `${global.SQLBrokerHost}/movies/popular?startYear=2001&endYear=2024&minRating=4.0&limit=50`;
@@ -111,6 +141,7 @@ router.get('/chat', async (req, res) => {
 });
 
 const { getMoviesFromDatabase, getActorsFromDatabase, getNewsFromDatabase } = require('./movies');
+const {options} = require("axios");
 
 
 router.get('/search', async (req, res) => {

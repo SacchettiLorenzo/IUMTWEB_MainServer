@@ -1,0 +1,12 @@
+<h1>{{title}}</h1>
+<ul>
+    {{#each reviews}}
+        <li>
+            <h3>{{this.movie_title}}</h3>
+            <p>{{this.comment}}</p>
+            <p><strong>Critico:</strong> {{this.critic_name}}</p>
+            <p><strong>Valutazione:</strong> {{this.rating}}</p>
+            <a href="/reviews/{{this.id}}">Dettagli</a>
+        </li>
+    {{/each}}
+</ul>

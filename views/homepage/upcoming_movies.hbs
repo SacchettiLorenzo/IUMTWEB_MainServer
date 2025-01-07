@@ -1,17 +1,33 @@
 <section id="upcoming-movies" class="container mt-5">
-    <h2 class="text-center">Prossime Uscite</h2>
-    <div class="row">
-        {{#each upcomingMovies}}
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img src="{{poster}}" class="card-img-top" alt="{{name}}" onerror="this.src='/public/images/default-movie.jpg'">
-                    <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                        <p class="card-text">Data di uscita: {{releaseDate}}</p>
-                        <a href="/movies/id?id={{id}}" class="btn btn-primary">Scopri di più</a>
+    <h2>Prossime Uscite</h2>
+    <div id="UpcomingMoviesCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {{#each movies}}
+                <button type="button" data-bs-target="#UpcomingMoviesCarousel" data-bs-slide-to="{{@index}}"
+                        class="{{#if @first}}active{{/if}}"
+                        aria-current="true"
+                        aria-label="Slide {{@index}}">
+                </button>
+            {{/each}}
+        </div>
+        <div class="carousel-inner">
+            {{#each movies}}
+                <div class="carousel-item {{#if @first}}active{{/if}}">
+                    <img src="{{poster}}" class="d-block w-100" alt="{{name}}" onerror="load_default_movie_image(this)">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{name}}</h5>
+                        <p>{{tagline}}</p>
                     </div>
                 </div>
-            </div>
-        {{/each}}
+            {{/each}}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#UpcomingMoviesCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#UpcomingMoviesCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 </section>
