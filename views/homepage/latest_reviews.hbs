@@ -1,9 +1,15 @@
-<h2 class="text-center">Ultime Recensioni</h2>
-<ul class="list-group">
-    {{#each latestReviews}}
-        <li class="list-group-item bg-dark text-white">
-            <strong>{{movieName}}</strong> - {{reviewSnippet}}
-            <a href="/reviews?id={{reviewId}}" class="btn btn-link">Leggi di più</a>
-        </li>
-    {{/each}}
-</ul>
+<!-- views/partials/latest_reviews.hbs -->
+<div class="latest-reviews">
+    <h2>Ultime Recensioni</h2>
+    <ul>
+        {{#each reviews}}
+            <li>
+                <h3>{{this.movie_title}}</h3>
+                <p><strong>Critico:</strong> {{this.critic_name}}</p>
+                <p><strong>Valutazione:</strong> {{this.rating}}</p>
+                <p><strong>Commento:</strong> {{this.comment}}</p>
+                <hr>
+            </li>
+        {{/each}}
+    </ul>
+</div>

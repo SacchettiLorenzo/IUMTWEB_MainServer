@@ -14,7 +14,7 @@
                     <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="/channels">Channels</a></li>
                 </ul>
-                <form class="d-flex" id="search-form">
+                <form class="d-flex position-relative" id="search-form" onsubmit="performSearch(event)">
                     <input
                             class="form-control me-2"
                             type="search"
@@ -22,12 +22,11 @@
                             name="query"
                             placeholder="Cerca nel sito..."
                             aria-label="Search"
-                            oninput="fetchSuggestions()"
                             required
                     >
                     <button class="btn btn-outline-light" type="submit">Cerca</button>
-                    <div id="suggestions" class="list-group position-absolute" style="z-index: 1000; width: 100%;"></div>
                 </form>
+                <div id="suggestions" class="list-group position-absolute" style="z-index: 1000;"></div>
             </div>
         </div>
     </nav>

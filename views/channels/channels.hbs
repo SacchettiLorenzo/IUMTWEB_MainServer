@@ -7,7 +7,7 @@
 <body>
 <div class="container mt-5">
     <h2>Join a Channel</h2>
-    <form action="/chat" method="get">
+    <form id="channelForm" method="get" action="/chat" onsubmit="return validateEntity(event)">
         <div class="mb-3">
             <label for="topic" class="form-label">Select a Topic:</label>
             <select id="topic" name="topic" class="form-select" onchange="toggleFields()" required>
@@ -18,30 +18,27 @@
         </div>
 
         <!-- Campo per scegliere un film -->
-        <div id="movieField" class="mb-3" style="display: none;">
+        <div id="movieField" class="mb-3" style="display: none; position: relative;">
             <label for="movieTitle" class="form-label">Movie Title:</label>
             <input type="text" id="movieTitle" name="movieTitle" class="form-control">
+            <div id="movieSuggestions" class="list-group position-absolute w-100" style="z-index: 1000;"></div>
+            <!-- Aggiungi questo per il messaggio di validazione -->
+            <small id="movieValidationMessage" class="text-danger"></small>
         </div>
 
         <!-- Campo per scegliere un attore -->
-        <div id="actorField" class="mb-3" style="display: none;">
+        <div id="actorField" class="mb-3" style="display: none; position: relative;">
             <label for="actorName" class="form-label">Actor Name:</label>
             <input type="text" id="actorName" name="actorName" class="form-control">
+            <div id="actorSuggestions" class="list-group position-absolute w-100" style="z-index: 1000;"></div>
+            <!-- Aggiungi questo per il messaggio di validazione -->
+            <small id="actorValidationMessage" class="text-danger"></small>
         </div>
 
         <button type="submit" class="btn btn-primary">Join Channel</button>
     </form>
 </div>
 
-<script>
-    function toggleFields() {
-        const topic = document.getElementById("topic").value;
-        const movieField = document.getElementById("movieField");
-        const actorField = document.getElementById("actorField");
-
-        movieField.style.display = topic === "movies" ? "block" : "none";
-        actorField.style.display = topic === "actors" ? "block" : "none";
-    }
-</script>
+<script src="/public/javascripts/channels.js"></script>
 </body>
 </html>

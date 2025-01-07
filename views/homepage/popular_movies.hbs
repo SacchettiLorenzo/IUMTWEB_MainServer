@@ -1,15 +1,20 @@
-<h2 class="text-center">Film Popolari</h2>
-<div class="row">
-    {{#each popularMovies}}
-        <div class="col-md-4 mb-4">
-            <div class="card bg-dark text-white">
-                <img src="{{poster}}" class="card-img-top" alt="{{name}}" onerror="load_default_movie_image(this)">
+<section id="popular-movies" class="container mt-5">
+    <h2>Popular Movies by Year</h2>
+    <div class="row">
+        <!-- Colonna per il grafico -->
+        <div class="col-md-8">
+            <canvas id="popularMoviesChart" width="400" height="300"></canvas>
+        </div>
+        <!-- Colonna per i dettagli -->
+        <div class="col-md-4">
+            <div id="movieDetails" class="card" style="display: none;">
+                <img id="moviePoster" src="" class="card-img-top" alt="Movie Poster">
                 <div class="card-body">
-                    <h5 class="card-title">{{name}}</h5>
-                    <p class="card-text">{{tagline}}</p>
-                    <a href="/movies/id?id={{id}}" class="btn btn-primary">Scopri di più</a>
+                    <h5 id="movieTitle" class="card-title"></h5>
+                    <p id="movieDescription" class="card-text"></p>
+                    <p id="movieRating" class="card-text"><strong>Rating:</strong> <span></span></p>
                 </div>
             </div>
         </div>
-    {{/each}}
-</div>
+    </div>
+</section>

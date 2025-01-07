@@ -1,0 +1,30 @@
+<div id="HomepageCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        {{#each movies}}
+            <button type="button" data-bs-target="#HomepageCarousel" data-bs-slide-to="{{@index}}"
+                    class="{{#if @first}}active{{/if}}"
+                    aria-current="true"
+                    aria-label="Slide {{@index}}">
+            </button>
+        {{/each}}
+    </div>
+    <div class="carousel-inner">
+        {{#each movies}}
+            <div class="carousel-item {{#if @first}}active{{/if}}">
+                <img src="{{poster}}" class="d-block w-100" alt="{{name}}" onerror="load_default_movie_image(this)">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>{{name}}</h5>
+                    <p>{{tagline}}</p>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#HomepageCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#HomepageCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
