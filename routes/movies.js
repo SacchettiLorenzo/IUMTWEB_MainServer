@@ -57,7 +57,8 @@ module.exports = (options) => {
                         searchable: true,
                         pages_amount: (movies.data.totalPages - 1),
                         current_page: movies.data.number,
-                        page_size: movies.data.size
+                        page_size: movies.data.size,
+                        query_params: "&sortParam=" + req.query.sortParam + "&sortDirection=" + req.query.sortDirection,
                     });
             }).catch(error => {
                 console.log(error);
@@ -231,14 +232,6 @@ module.exports = (options) => {
                     }).catch(error => {
                         console.log(error);
                     })
-
-                    /*
-                    axios.get(similar_movie_data_request_url).then(similar => {
-                        return similar.data
-                    }).catch(error => {
-                        console.log(error);
-                    })
-                     */
                 ]).then(result => {
                     let movie = result[0];
                     let actors = result[1];
@@ -258,9 +251,24 @@ module.exports = (options) => {
 
                     reviews_data_request_url = url.build(reviews_data_request_url);
 
+                    let oscars_data_request_url = {
+                        host: options.servers.NoSQLBrokerHost,
+                        path: "oscar/film/:title",
+                        params: {
+                            title: movie.name
+                        }
+                    }
+
+                    oscars_data_request_url = url.build(oscars_data_request_url);
+
                     Promise.all([
                         axios.get(reviews_data_request_url).then(reviews => {
                             return reviews.data
+                        }).catch(error => {
+                            console.log(error);
+                        }),
+                        axios.get(oscars_data_request_url).then(oscars_response => {
+                            return oscars_response.data
                         }).catch(error => {
                             console.log(error);
                         })
@@ -271,8 +279,16 @@ module.exports = (options) => {
                             reviews_ = result[0].reviews;
                         }
 
+                        let oscarsByFilm_;
+
+                        if(result[1] != null) {
+                            oscarsByFilm_ = result[1][0];
+                        }
+
                         res.render('./movies/single_movie', {
                             title: 'Movies',
+                            page: "single_movie",
+                            movie_title : movie.name,
                             movie: movie,
                             actors: actors,
                             reviews: reviews_,
@@ -281,6 +297,7 @@ module.exports = (options) => {
                             countries: countries,
                             themes: themes,
                             releases: releases,
+                            oscarsByFilm: oscarsByFilm_
                             //similar: result[2]
                         });
                     })
@@ -473,9 +490,12 @@ module.exports = (options) => {
         genres_request_url = url.build(genres_request_url);
 
         axios.get(genres_request_url).then(genres => {
+
+            /*
             if (!genresId) {
                 return res.status(400).send('Gender ID not specified');
             }
+             */
 
             // Richiesta per ottenere i film per il genere selezionato
             const request_url = url.build({
@@ -490,12 +510,13 @@ module.exports = (options) => {
 
             axios.get(request_url)
                 .then(movies => {
-                    res.render('./genres/genres_home', {
+                    res.render('./movies/movies_table_view', {
                         title: 'Movies - Filtered by Genre',
                         movies: movies.data.content,
                         genresId: genresId,
                         genres: genres.data.content, // Passa anche i generi
                         path: 'movies/genres',
+                        query_params: 'genresId=' + genresId,
                         pages: true,
                         searchable: true,
                         pages_amount: (movies.data.totalPages - 1),

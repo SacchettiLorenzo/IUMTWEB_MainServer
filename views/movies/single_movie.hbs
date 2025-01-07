@@ -76,7 +76,6 @@
                 </table>
             </div>
             <div class="col" id="movie-releases">
-
                 {{#grouped_each 2 releases}}
                 <ul class="row">
                     {{#each this}}
@@ -87,9 +86,12 @@
                 </ul>
                 {{/grouped_each}}
 
-
             </div>
         </div>
+        <div class="row mt-3">
+        {{> single_movie_oscars}}
+        </div>
+
     </div>
 
     <div class="row mt-3" id="movie-reviews">

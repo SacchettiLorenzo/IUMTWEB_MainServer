@@ -1,12 +1,13 @@
-<form action="/movies/genres" method="get" class="form-inline float-right">
+<form action="/movies/genres" method="get" class="form-inline float-right w-25">
     <div class="form-group mb-2">
         <label for="genreSelect" class="mr-2">Select the genre</label>
         <select class="form-control form-control-sm" id="genreSelect" name="genresId">
             <option value="" selected disabled hidden>Select a genre...</option>
             {{#each genres}}
-                <option value="{{id}}">{{genre}}</option>
+                <option value="{{id}}" {{#when ../genresId "eq" id}}selected{{/when}}>{{genre}}</option>
             {{/each}}
         </select>
     </div>
     <button type="submit" class="btn btn-primary btn-sm mb-2 ml-2">Search</button>
 </form>
+

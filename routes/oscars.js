@@ -20,6 +20,7 @@ module.exports = (options) => {
         });
     });
 
+    //todo: delete this route because we do not have link with NOSQL movies and SQL id
     /* GET details of a single Oscar */
     router.get('/:id', function (req, res, next) {
         let request_url = url.build({
@@ -93,9 +94,11 @@ module.exports = (options) => {
             const response = await axios.get(request_url);
             const oscarsByFilm = response.data;
 
-            res.render('oscars/film', {
-                title: `Oscars for ${title}`,
-                oscarsByFilm
+            console.log(oscarsByFilm);
+
+            res.render('oscars/single_movie_oscars', {
+                movie_title: ` ${title}`,
+                oscarsByFilm: oscarsByFilm[0]
             });
         } catch (error) {
             console.error('Error fetching Oscars by film:', error);

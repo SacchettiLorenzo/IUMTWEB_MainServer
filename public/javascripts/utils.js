@@ -44,10 +44,22 @@ async function sendMovieSearchFilter(){
     const theme = document.getElementById("themeSelect").value;
     const date = document.getElementById("dateInput").value;
 
+    let params = {}
+
+    params = {
+        ...params,
+        params:{
+            ...((country === "") ? {} : {country: country}),
+            ...((genre === "") ? {} : {genre: genre}),
+            ...((language === "") ? {} : {language: language}),
+            ...((theme === "") ? {} : {theme: theme}),
+            ...((date === "") ? {} : {date: date})
+        }
+    }
+
     let res = document.getElementById("searchResult");
 
-    axios.get("/movies/filter", {params : {country : country, genre : genre, language : language,theme: theme, date:date}}).then((response) => {
-        console.log(response.data);
+    axios.get("/movies/filter", {params : params.params}).then((response) => {
         res.innerHTML = tableTemplate({movies : response.data});
         res.style.display = "block";
     })
