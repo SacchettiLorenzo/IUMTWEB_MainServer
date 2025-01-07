@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col bg-info">
+        <div class="col border">
             <form class="">
                 <div class="form-group">
                     <label for="countrySelect">Select the Country</label>
@@ -42,15 +42,18 @@
                     <label for="dateInput">Select the date</label>
                     <input class="form-control" type="number" id="dateInput" step="1" value="2024">
                 </div>
-                <button type="button" class="btn btn-primary" onclick="sendMovieSearchFilter()">Search</button>
+                <button type="button" class="btn btn-primary mt-1" onclick="sendMovieSearchFilter()">Search</button>
             </form>
         </div>
-        <div class="col bg-danger">
+        <div class="col col-sm-1 d-flex align-items-center justify-content-center">
+            OR
+        </div>
+        <div class="col border">
             <form class="">
                 <div class="form-group">
                     <label for="MovieName">Select the movie name</label>
                     <input class="form-control" type="text" id="MovieName" name="MovieName" placeholder="Movie Name...">
-                    <button type="button" class="btn btn-primary" onclick="sendMoviesSearchWord()">Search</button>
+                    <button type="button" class="btn btn-primary mt-1" onclick="sendMoviesSearchWord()">Search</button>
                 </div>
             </form>
         </div>
