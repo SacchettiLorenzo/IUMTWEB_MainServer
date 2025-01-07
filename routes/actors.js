@@ -118,5 +118,24 @@ module.exports = (options) => {
 
     });
 
+
+    router.get('/top10-mostPopularActors', function (req, res, next) {
+        let topActorsRequestUrl = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: 'actors/top10-mostPopularActors'
+        });
+
+        axios.get(topActorsRequestUrl).then(response => {
+            res.render('./actors/top-actors', {
+                title: 'Top 10 Actors',
+                type: 'actors',
+                actors: response.data
+            });
+        }).catch(error => {
+            console.error("Error fetching top actors:", error);
+            res.status(500).send("Error fetching top actors");
+        });
+    })
+
 return router;
 }

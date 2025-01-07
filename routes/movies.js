@@ -513,8 +513,76 @@ module.exports = (options) => {
     });
 
 
+    router.get('/top10-movies', function (req, res, next) {
+        let type = req.query.type || 'best';
+        let countryId = req.query.countryId || '';
+        let genreId = req.query.genreId || '';
+        let languageId = req.query.languageId || '';
 
+        if (req.query.removeCountry) {
+            countryId = '';
+        }
 
+        if (req.query.removeGenre) {
+            genreId = '';
+        }
+
+        if (req.query.removeLanguage) {
+            languageId = '';
+        }
+
+        const queryParams = {};
+        if (countryId) queryParams.countryId = countryId;
+        if (genreId) queryParams.genreId = genreId;
+        if (languageId) queryParams.languageId = languageId;
+
+        let path;
+        if (type === 'best') {
+            path = "movies/top10ByIds";
+        } else if (type === 'worst') {
+            path = "movies/worst10ByIds";
+        } else if (type === 'longest') {
+            path = "movies/top10Longest";
+        } else if (type === 'shortest') {
+            path = "movies/top10Shortest";
+        }
+
+        let topMovies_request_url = {
+            host: options.servers.SQLBrokerHost,
+            path: path,
+            query: queryParams
+        };
+
+        let countries_path = "countries";
+        let genres_path = "genres";
+        let languages_path = "languages";
+
+        Promise.all([
+            axios.get(url.build({ host: options.servers.SQLBrokerHost, path: countries_path, query: { page: 0, size: 1000 } }))
+                .then(countries => countries.data.content),
+            axios.get(url.build({ host: options.servers.SQLBrokerHost, path: genres_path, query: { page: 0, size: 1000 } }))
+                .then(genres => genres.data.content),
+            axios.get(url.build({ host: options.servers.SQLBrokerHost, path: languages_path, query: { page: 0, size: 1000 } }))
+                .then(languages => languages.data.content),
+            axios.get(url.build(topMovies_request_url))
+                .then(topMovies => topMovies.data)
+        ]).then(result => {
+            res.render('./movies/top10', {
+                title: type === 'best' ? 'Top 10 Best Movies' : (type === 'worst' ? 'Top 10 Worst Movies' : (type === 'longest' ? 'Top 10 Longest Movies' : 'Top 10 Shortest Movies')) ,
+                movies: result[3],
+                countries: result[0],
+                genres: result[1],
+                languages: result[2],
+                selectedCountryId: countryId,
+                selectedGenreId: genreId,
+                selectedLanguageId: languageId,
+                type: type
+            });
+        }).catch(error => {
+            console.error("Error fetching data:", error);
+            res.status(500).send(`Error fetching top ${type} movies`);
+        });
+    });
 
 
 

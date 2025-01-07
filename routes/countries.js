@@ -1,8 +1,13 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
 const axios = require('axios');
+var url = require('url-composer');
+const {log} = require("debug");
+var async = require('async')
+const res = require("express/lib/response");
 
 module.exports = (options) => {
+
 
     /**
      * Route to fetch all countries.
@@ -17,7 +22,7 @@ module.exports = (options) => {
             console.error('Error fetching countries:', error.message);
             res.status(500).send('Error fetching countries.');
         }
-    });
+    })
 
     /**
      * Route to fetch paginated and sorted list of countries.
@@ -35,13 +40,14 @@ module.exports = (options) => {
             console.error('Error fetching countries:', error.message);
             res.status(500).send('Error fetching countries.');
         }
-    });
+    })
 
 
     /**
      * Route to fetch trending countries.
      * @name GET /countries/trending
      */
+    /*
     router.get('/trending', async (req, res) => {
         try {
             const {page = 0, size = 10} = req.query;
@@ -55,6 +61,7 @@ module.exports = (options) => {
             res.status(500).send('Error fetching trending countries.');
         }
     });
+     */
 
     /**
      * Route to search countries by name.
@@ -72,7 +79,25 @@ module.exports = (options) => {
             console.error('Error searching for countries:', error.message);
             res.status(500).send('Error searching for countries.');
         }
-    });
+    })
+
+    router.get('/top-countries', function (req, res, next) {
+        let topCountriesRequestUrl = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: 'countries/trending'
+        });
+
+        axios.get(topCountriesRequestUrl).then(response => {
+            res.render('./countries/top-countries', {
+                title: 'Top 10 Countries',
+                type: 'country',
+                countries: response.data
+            });
+        }).catch(error => {
+            console.error("Error fetching top countries:", error);
+            res.status(500).send("Error fetching top countries");
+        });
+    })
 
     /**
      * Route to fetch country details by ID.
@@ -88,7 +113,9 @@ module.exports = (options) => {
             console.error('Error fetching country details:', error.message);
             res.status(500).send('Error fetching country details.');
         }
-    });
+    })
+
+
 
     return router;
 

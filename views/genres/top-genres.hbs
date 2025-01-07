@@ -1,0 +1,20 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Position</th>
+        <th>Genre</th>
+        <th>Number of Movies</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {{#each genres}}
+        <tr>
+            <td>{{@index}}</td>
+            <td><a href="/movies/genres?genresId={{id}}">{{genre}}</a></td>
+
+            <td>{{movie_count}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

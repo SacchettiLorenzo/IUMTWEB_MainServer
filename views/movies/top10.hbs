@@ -1,0 +1,43 @@
+<h1>{{title}}</h1>
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Position</th>
+        <th>Film</th>
+        {{#if rating}}
+            <th>Rating</th>
+        {{else if minute}}
+            <th>Minute</th>
+        {{else}}
+            <td>Not available</td>
+        {{/if}}
+    </tr>
+    </thead>
+    <tbody>
+    {{#each movies}}
+        <tr>
+            <td>{{@index}}</td>
+            <td><a href="/movies/id?id={{id}}">{{name}}</a></td>
+            {{#if rating}}
+                <td>{{rating}} / 5</td>
+            {{else if minute}}
+                <td>{{minute}} minutes</td>
+            {{else}}
+                <td>Not available</td>
+            {{/if}}
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+<form action="/movies/top10-movies" method="get" class="form-inline">
+    {{> country_select type=type}}
+    {{> genre_select type=type}}
+    {{> language_select type=type}}
+
+    <input type="hidden" name="type" value="{{type}}">
+
+    <button type="submit" class="btn btn-primary btn-sm mb-2 ml-2">Filter</button>
+</form>

@@ -74,3 +74,53 @@ async function sendMoviesSearchWord(){
     })
 
 }
+
+window.onload = function() {
+    document.getElementById("MovieCarouselInner").children[0].classList.add('active');
+    document.getElementById("MovieCarouselIndicators").children[0].classList.add('active');
+
+    document.querySelectorAll('.card-body a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            let url = this.getAttribute('href');
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    displayTopCountries(data);
+                })
+                .catch(error => console.error('Error loading data:', error));
+        });
+    });
+};
+
+
+function displayTopCountries(data) {
+    const container = document.getElementById('topCountriesContainer');
+    container.innerHTML = '';
+    data.forEach(country => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${country.name}: ${country.movie_count} movies`;
+        container.appendChild(listItem);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const tables = document.querySelectorAll('table');
+
+    tables.forEach(table => {
+        const headers = table.querySelectorAll('th');
+        headers.forEach((header, index) => {
+            header.addEventListener('click', function() {
+                const rows = Array.from(table.querySelectorAll('tr:nth-child(n+2)'));
+                const sortedRows = rows.sort((a, b) => {
+                    const aText = a.cells[index].textContent.trim();
+                    const bText = b.cells[index].textContent.trim();
+                    return aText > bText ? 1 : -1;
+                });
+                table.tBodies[0].append(...sortedRows);
+            });
+        });
+    });
+});
+

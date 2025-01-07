@@ -1,0 +1,96 @@
+<h1>{{title}}</h1>
+
+<div class="card custom-card">
+    <div class="card-header" id="statisticHeader">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#movieStatistics" aria-expanded="false" aria-controls="movieStatistics">
+                Movie Stats
+            </button>
+        </h5>
+    </div>
+    <div id="movieStatistics" class="collapse" aria-labelledby="statisticHeader" data-bs-parent="#movieStatsAccordion">
+        <div class="card-body">
+            <ul>
+                <li><a href="/movies/top10-movies?type=shortest">Top 10 Shortest Movies</a></li>
+                <li><a href="/movies/top10-movies?type=longest">Top 10 Longest Movies</a></li>
+                <li><a href="/movies/top10-movies?type=best">Top 10 Best movies</a></li>
+                <li><a href="/movies/top10-movies?type=worst">Top 10 Worst movies</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="card custom-card">
+    <div class="card-header" id="genreTrendHeader">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#genreTrend" aria-expanded="false" aria-controls="genreTrend">
+                Genres and Trends
+            </button>
+        </h5>
+    </div>
+    <div id="genreTrend" class="collapse" aria-labelledby="genreTrendHeader" data-bs-parent="#genreTrendAccordion">
+        <div class="card-body">
+            <ul>
+                <li><a href="/genres/top-genres">Top 10 Genres</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Tendina per "Top Paesi" -->
+<div class="card custom-card">
+    <div class="card-header" id="countryHeader">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#countryStatistics" aria-expanded="false" aria-controls="countryStatistics">
+                Country Statistics
+            </button>
+        </h5>
+    </div>
+    <div id="countryStatistics" class="collapse" aria-labelledby="countryHeader" data-bs-parent="#countryStatsAccordion">
+        <div class="card-body">
+            <ul>
+                <li><a href="/countries/top-countries">Top 10 Countries</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Tendina per "Top Actor" -->
+<div class="card custom-card">
+    <div class="card-header" id="actorHeader">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#actorStatistics" aria-expanded="false" aria-controls="actorStatistics">
+                Actor Statistics
+            </button>
+        </h5>
+    </div>
+    <div id="actorStatistics" class="collapse" aria-labelledby="actorHeader" data-bs-parent="#actorStatsAccordion">
+        <div class="card-body">
+
+            <ul>
+                <li><a href="/actors/top10-mostPopularActors">Top 10 actors with most appearances</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Tendina per "Oscars" -->
+<div class="card custom-card">
+    <div class="card-header" id="oscarHeader">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#oscarStatistics" aria-expanded="false" aria-controls="actorStatistics">
+                Oscars Statistics
+            </button>
+        </h5>
+    </div>
+    <div id="oscarStatistics" class="collapse" aria-labelledby="oscarHeader" data-bs-parent="#oscarStatsAccordion">
+        <div class="card-body">
+
+            <ul>
+                <li><a href="/oscars/nominations/top/20">Top films with most nominations</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+

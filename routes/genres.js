@@ -8,6 +8,7 @@ const res = require("express/lib/response");
 
 module.exports = (options) => {
 
+
     router.get('/', function (req, res, next) {
         let request_url = {
             host: options.servers.SQLBrokerHost,
@@ -56,6 +57,32 @@ module.exports = (options) => {
     })
 
 
+    router.get('/top-genres', function (req, res, next) {
+        let topGenresRequestUrl = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: 'genres/trending'
+        });
+
+        axios.get(topGenresRequestUrl).then(response => {
+            // Verifica che i dati siano nel formato corretto
+            const genres = response.data.map(genres => ({
+                id: genres.id,  // Assicurati che l'ID sia presente
+                genre: genres.genre,
+                movie_count: genres.movie_count
+            }));
+            console.log(genres.id);
+
+            // Passa i generi con l'ID alla vista
+            res.render('./genres/top-genres', {
+                title: 'Top 10 Genres',
+                type: 'genre',
+                genres: genres
+            });
+        }).catch(error => {
+            console.error("Error fetching top genres:", error);
+            res.status(500).send("Error fetching top genres");
+        });
+    });
 
 
 
