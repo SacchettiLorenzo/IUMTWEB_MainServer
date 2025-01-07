@@ -231,14 +231,6 @@ module.exports = (options) => {
                     }).catch(error => {
                         console.log(error);
                     })
-
-                    /*
-                    axios.get(similar_movie_data_request_url).then(similar => {
-                        return similar.data
-                    }).catch(error => {
-                        console.log(error);
-                    })
-                     */
                 ]).then(result => {
                     let movie = result[0];
                     let actors = result[1];
@@ -258,9 +250,24 @@ module.exports = (options) => {
 
                     reviews_data_request_url = url.build(reviews_data_request_url);
 
+                    let oscars_data_request_url = {
+                        host: options.servers.NoSQLBrokerHost,
+                        path: "oscar/film/:title",
+                        params: {
+                            title: movie.name
+                        }
+                    }
+
+                    oscars_data_request_url = url.build(oscars_data_request_url);
+
                     Promise.all([
                         axios.get(reviews_data_request_url).then(reviews => {
                             return reviews.data
+                        }).catch(error => {
+                            console.log(error);
+                        }),
+                        axios.get(oscars_data_request_url).then(oscars_response => {
+                            return oscars_response.data
                         }).catch(error => {
                             console.log(error);
                         })
@@ -271,8 +278,16 @@ module.exports = (options) => {
                             reviews_ = result[0].reviews;
                         }
 
+                        let oscarsByFilm_;
+
+                        if(result[1] != null) {
+                            oscarsByFilm_ = result[1][0];
+                        }
+
                         res.render('./movies/single_movie', {
                             title: 'Movies',
+                            page: "single_movie",
+                            movie_title : movie.name,
                             movie: movie,
                             actors: actors,
                             reviews: reviews_,
@@ -281,6 +296,7 @@ module.exports = (options) => {
                             countries: countries,
                             themes: themes,
                             releases: releases,
+                            oscarsByFilm: oscarsByFilm_
                             //similar: result[2]
                         });
                     })
