@@ -489,9 +489,12 @@ module.exports = (options) => {
         genres_request_url = url.build(genres_request_url);
 
         axios.get(genres_request_url).then(genres => {
+
+            /*
             if (!genresId) {
                 return res.status(400).send('Gender ID not specified');
             }
+             */
 
             // Richiesta per ottenere i film per il genere selezionato
             const request_url = url.build({
@@ -506,12 +509,13 @@ module.exports = (options) => {
 
             axios.get(request_url)
                 .then(movies => {
-                    res.render('./genres/genres_home', {
+                    res.render('./movies/movies_table_view', {
                         title: 'Movies - Filtered by Genre',
                         movies: movies.data.content,
                         genresId: genresId,
                         genres: genres.data.content, // Passa anche i generi
                         path: 'movies/genres',
+                        query_params: 'genresId=' + genresId,
                         pages: true,
                         searchable: true,
                         pages_amount: (movies.data.totalPages - 1),
