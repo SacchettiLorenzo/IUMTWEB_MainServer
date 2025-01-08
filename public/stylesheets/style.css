@@ -499,3 +499,56 @@ h1 {
     color: #0056b3;
     text-decoration: underline;
 }
+
+.scrollable {
+    max-height: 400px; /* Limita l'altezza del contenitore */
+    overflow-y: auto; /* Abilita lo scorrimento verticale */
+    border: 2px solid #f6f6f6; /* Bordo blu */
+    padding: 15px;
+    background-color: #ffffff; /* Colore di sfondo bianco */
+    border-radius: 10px; /* Angoli arrotondati */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra leggera */
+}
+
+.scrollable .list-group-item {
+    border-left: 4px solid #007bff; /* Bordo colorato per ogni notizia */
+    margin-bottom: 10px; /* Spazio tra gli elementi */
+    padding: 15px;
+    background-color: #f8f9fa; /* Sfondo leggermente grigio */
+    border-radius: 5px; /* Angoli arrotondati */
+    transition: transform 0.2s, background-color 0.2s; /* Effetto hover */
+}
+
+.scrollable .list-group-item:hover {
+    transform: translateY(-3px); /* Solleva leggermente l'elemento */
+    background-color: #e9ecef; /* Cambia colore di sfondo */
+}
+
+.scrollable h5 {
+    color: #007bff; /* Colore del titolo */
+    font-weight: bold;
+}
+
+.scrollable p {
+    color: #555; /* Colore del testo della descrizione */
+    margin-top: 5px;
+}
+
+.scrollable small {
+    color: #999; /* Colore della data */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Colore blu primario */
+    border-color: #0056b3; /* Colore del bordo */
+    padding: 10px 20px; /* Spaziatura interna */
+    border-radius: 5px; /* Angoli arrotondati */
+    font-size: 1.2rem; /* Dimensione del testo */
+    transition: background-color 0.3s, transform 0.2s; /* Effetti al passaggio del mouse */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Colore più scuro al passaggio del mouse */
+    transform: translateY(-2px); /* Solleva leggermente il bottone */
+    text-decoration: none; /* Rimuove la sottolineatura */
+}

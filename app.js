@@ -22,6 +22,7 @@ const languagesRouter = require('./routes/languages');
 const genresRouter = require('./routes/genres');
 const aboutRouter = require('./routes/about');
 const popularActorsRoutes = require('./routes/index');
+const newsRouter = require('./routes/news');
 
 
 var app = express();
@@ -41,6 +42,7 @@ hbs.registerPartials(__dirname + '/views/reviews');
 hbs.registerPartials(__dirname + '/views/countries');
 hbs.registerPartials(__dirname + '/views/homepage');
 hbs.registerPartials(__dirname + '/views/about');
+hbs.registerPartials(__dirname + '/views/news');
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
@@ -129,6 +131,7 @@ app.use('/languages', languagesRouter({servers:servers}));
 app.use('/genres', genresRouter({servers:servers}));
 app.use('/about', aboutRouter);
 app.use('/', popularActorsRoutes({ servers: { SQLBrokerHost: 'http://localhost:8080/' } }));
+app.use('/news', newsRouter);
 
 // Gestione errori 404
 app.use(function (req, res, next) {

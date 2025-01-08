@@ -15,5 +15,6 @@
     <orderEntry type="library" name="chart.js" level="application" />
     <orderEntry type="library" name="chart.js" level="application" />
     <orderEntry type="library" name="leaflet" level="application" />
+    <orderEntry type="library" name="swiper" level="application" />
   </component>
 </module>
