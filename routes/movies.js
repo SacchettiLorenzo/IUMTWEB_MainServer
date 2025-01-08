@@ -436,7 +436,6 @@ module.exports = (options) => {
     });
 
     router.get('/filter', function (req, res, next) {
-        console.log(req.query);
 
         let path = "movies/filter";
 
@@ -460,7 +459,6 @@ module.exports = (options) => {
         request_url = url.build(request_url);
 
         axios.get(request_url).then(movies => {
-            console.log(movies.data);
             res.send(movies.data);
         }).catch(error => {
             console.log(error);
