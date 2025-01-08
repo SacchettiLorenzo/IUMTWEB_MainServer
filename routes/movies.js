@@ -2,14 +2,13 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 var url = require('url-composer');
+const {render_error} = require("../utils");
 
 
 var movies = []
 
 module.exports = (options) => {
 
-
-    /* GET home page. */
     router.get('/', function (req, res, next) {
 
         let genres_path = "genres";
@@ -47,13 +46,9 @@ module.exports = (options) => {
         Promise.all([
             axios.get(genres_request_url).then(genres => {
                 return genres;
-            }).catch(error => {
-                console.log(error);
             }),
             axios.get(request_url).then(movies => {
                 return movies;
-            }).catch(error => {
-                console.log(error);
             })
         ]).then((results) => {
             let genres = results[0];
@@ -71,6 +66,8 @@ module.exports = (options) => {
                     page_size: movies.data.size,
                     query_params: "&sortParam=" + req.query.sortParam + "&sortDirection=" + req.query.sortDirection,
                 });
+        }).catch(error => {
+            render_error(res, error, 500, "Internal Server Error");
         })
 
     });
@@ -97,7 +94,6 @@ module.exports = (options) => {
         axios.get(request_url).then(movies => {
 
             if (req.query.only_data === "true") {
-
                 res.send(movies.data);
             } else {
                 res.render('./movies/movie',
@@ -114,7 +110,7 @@ module.exports = (options) => {
             }
 
         }).catch(error => {
-            console.log(error);
+            render_error(res, error, 500, "Internal Server Error");
         })
     })
 
@@ -202,113 +198,97 @@ module.exports = (options) => {
 
             releases_request_url = url.build(releases_request_url);
 
+            Promise.all([
+                axios.get(movie_data_request_url).then(movie => {
+                    return movie.data
+                }),
+                axios.get(actors_data_request_url).then(actors => {
+                    return actors.data
+                }),
+                axios.get(languages_request_url).then(languages => {
+                    return languages.data; // Le lingue del film
+                }),
+                axios.get(genres_request_url).then(genres => {
+                    return genres.data; // I generi del film
+                }),
+                axios.get(countries_request_url).then(countries => {
+                    return countries.data; // I paesi del film
+                }),
+                axios.get(themes_request_url).then(themes => {
+                    return themes.data; // I temi del film
+                }),
+                axios.get(releases_request_url).then(releases => {
+                    return releases.data; // I temi del film
+                })
+            ]).then(result => {
+                let movie = result[0];
+                let actors = result[1];
+                let languages = result[2];
+                let genres = result[3];
+                let countries = result[4];
+                let themes = result[5];
+                let releases = result[6];
+
+                let reviews_data_request_url = {
+                    host: options.servers.NoSQLBrokerHost,
+                    path: "review/movie/:title",
+                    params: {
+                        title: movie.name
+                    }
+                }
+
+                reviews_data_request_url = url.build(reviews_data_request_url);
+
+                let oscars_data_request_url = {
+                    host: options.servers.NoSQLBrokerHost,
+                    path: "oscar/film/:title",
+                    params: {
+                        title: movie.name
+                    }
+                }
+
+                oscars_data_request_url = url.build(oscars_data_request_url);
+
                 Promise.all([
-                    axios.get(movie_data_request_url).then(movie => {
-                        return movie.data
-                    }).catch(error => {
-                        console.log(error);
+                    axios.get(reviews_data_request_url).then(reviews => {
+                        return reviews.data
                     }),
-                    axios.get(actors_data_request_url).then(actors => {
-                        return actors.data
-                    }).catch(error => {
-                        console.log(error);
-                    }),
-                    axios.get(languages_request_url).then(languages => {
-                        return languages.data; // Le lingue del film
-                    }).catch(error => {
-                        console.log(error);
-                    }),
-                    axios.get(genres_request_url).then(genres => {
-                        return genres.data; // I generi del film
-                    }).catch(error => {
-                        console.log(error);
-                    }),
-                    axios.get(countries_request_url).then(countries => {
-                        return countries.data; // I paesi del film
-                    }).catch(error => {
-                        console.log(error);
-                    }),
-                    axios.get(themes_request_url).then(themes => {
-                        return themes.data; // I temi del film
-                    }).catch(error => {
-                        console.log(error);
-                    }),
-                    axios.get(releases_request_url).then(releases => {
-                        return releases.data; // I temi del film
-                    }).catch(error => {
-                        console.log(error);
+                    axios.get(oscars_data_request_url).then(oscars_response => {
+                        return oscars_response.data
                     })
                 ]).then(result => {
-                    let movie = result[0];
-                    let actors = result[1];
-                    let languages = result[2];
-                    let genres = result[3];
-                    let countries = result[4];
-                    let themes = result[5];
-                    let releases = result[6];
+                    let reviews_;
 
-                    let reviews_data_request_url = {
-                        host: options.servers.NoSQLBrokerHost,
-                        path: "review/movie/:title",
-                        params: {
-                            title: movie.name
-                        }
+                    if (result[0] != null) {
+                        reviews_ = result[0].reviews;
                     }
 
-                    reviews_data_request_url = url.build(reviews_data_request_url);
+                    let oscarsByFilm_;
 
-                    let oscars_data_request_url = {
-                        host: options.servers.NoSQLBrokerHost,
-                        path: "oscar/film/:title",
-                        params: {
-                            title: movie.name
-                        }
+                    if (result[1] != null) {
+                        oscarsByFilm_ = result[1][0];
                     }
 
-                    oscars_data_request_url = url.build(oscars_data_request_url);
-
-                    Promise.all([
-                        axios.get(reviews_data_request_url).then(reviews => {
-                            return reviews.data
-                        }).catch(error => {
-                            console.log(error);
-                        }),
-                        axios.get(oscars_data_request_url).then(oscars_response => {
-                            return oscars_response.data
-                        }).catch(error => {
-                            console.log(error);
-                        })
-                    ]).then(result => {
-                        let reviews_;
-
-                        if(result[0] != null) {
-                            reviews_ = result[0].reviews;
-                        }
-
-                        let oscarsByFilm_;
-
-                        if(result[1] != null) {
-                            oscarsByFilm_ = result[1][0];
-                        }
-
-                        res.render('./movies/single_movie', {
-                            title: 'Movies',
-                            page: "single_movie",
-                            movie_title : movie.name,
-                            movie: movie,
-                            actors: actors,
-                            reviews: reviews_,
-                            languages: languages,
-                            genres: genres,
-                            countries: countries,
-                            themes: themes,
-                            releases: releases,
-                            oscarsByFilm: oscarsByFilm_
-                            //similar: result[2]
-                        });
-                    })
+                    res.render('./movies/single_movie', {
+                        title: 'Movies',
+                        page: "single_movie",
+                        movie_title: movie.name,
+                        movie: movie,
+                        actors: actors,
+                        reviews: reviews_,
+                        languages: languages,
+                        genres: genres,
+                        countries: countries,
+                        themes: themes,
+                        releases: releases,
+                        oscarsByFilm: oscarsByFilm_
+                        //similar: result[2]
+                    });
+                }).catch(error => {
+                    render_error(res, error, 500, "Internal Server Error");
                 })
-            }
+            })
+        }
     });
 
     router.get('/stats', function (req, res, next) {
@@ -414,31 +394,36 @@ module.exports = (options) => {
         Promise.all([
             axios.get(countries_request_url).then(countries => {
                 return countries.data.content;
-            }).catch(error => {
-                console.log(error);
             }),
             axios.get(genres_request_url).then(genres => {
                 return genres.data.content;
-            }).catch(error => {
-                console.log(error);
             }),
             axios.get(languages_request_url).then(languages => {
                 return languages.data.content;
-            }).catch(error => {
-                console.log(error);
             }),
             axios.get(themes_request_url).then(themes => {
                 return themes.data.content;
-            }).catch(error => {
-                console.log(error);
             })
         ]).then(result => {
-            res.render('./movies/movies_search', {title: 'Movies', countries: result[0], genres: result[1],languages: result[2],themes: result[3]});
+            res.render('./movies/movies_search', {
+                title: 'Movies',
+                countries: result[0],
+                genres: result[1],
+                languages: result[2],
+                themes: result[3]
+            });
+        }).catch(error => {
+            render_error(res, error, 500, "Internal Server Error");
         })
     })
 
     router.get('/filter/table', function (req, res, next) {
-        res.sendFile('views/movies/movies_table.hbs', {root: '.'})
+        try {
+            res.sendFile('views/movies/movies_table.hbs', {root: '.'})
+        } catch (error) {
+            render_error(res, error, 400, "Unable to send component");
+        }
+
     });
 
     router.get('/filter', function (req, res, next) {
@@ -467,11 +452,9 @@ module.exports = (options) => {
         axios.get(request_url).then(movies => {
             res.send(movies.data);
         }).catch(error => {
-            console.log(error);
+            render_error(res, error, 500, "Internal Server Error");
         })
-
     });
-
 
 
     router.get('/genres', (req, res, next) => {
@@ -494,12 +477,6 @@ module.exports = (options) => {
         genres_request_url = url.build(genres_request_url);
 
         axios.get(genres_request_url).then(genres => {
-
-            /*
-            if (!genresId) {
-                return res.status(400).send('Gender ID not specified');
-            }
-             */
 
             // Richiesta per ottenere i film per il genere selezionato
             const request_url = url.build({
@@ -529,11 +506,10 @@ module.exports = (options) => {
                     });
                 })
                 .catch(error => {
-                    console.error('Error fetching movies by genre ID:', error);
-                    res.status(500).send('Internal Server Error');
+                    render_error(res, error, 500, "Internal Server Error");
                 });
         }).catch(error => {
-            console.log(error);
+            render_error(res, error, 500, "Internal Server Error");
         });
     });
 
@@ -588,11 +564,19 @@ module.exports = (options) => {
         let languages_path = "languages";
 
         Promise.all([
-            axios.get(url.build({ host: options.servers.SQLBrokerHost, path: countries_path, query: { page: 0, size: 1000 } }))
+            axios.get(url.build({
+                host: options.servers.SQLBrokerHost,
+                path: countries_path,
+                query: {page: 0, size: 1000}
+            }))
                 .then(countries => countries.data.content),
-            axios.get(url.build({ host: options.servers.SQLBrokerHost, path: genres_path, query: { page: 0, size: 1000 } }))
+            axios.get(url.build({host: options.servers.SQLBrokerHost, path: genres_path, query: {page: 0, size: 1000}}))
                 .then(genres => genres.data.content),
-            axios.get(url.build({ host: options.servers.SQLBrokerHost, path: languages_path, query: { page: 0, size: 1000 } }))
+            axios.get(url.build({
+                host: options.servers.SQLBrokerHost,
+                path: languages_path,
+                query: {page: 0, size: 1000}
+            }))
                 .then(languages => languages.data.content),
             axios.get(url.build(topMovies_request_url))
                 .then(topMovies => topMovies.data)
@@ -609,12 +593,13 @@ module.exports = (options) => {
                 type: type
             });
         }).catch(error => {
-            console.error("Error fetching data:", error);
-            res.status(500).send(`Error fetching top ${type} movies`);
+            render_error(res,error,500,"Internal Server Error");
         });
     });
 
-
+    router.get('/*', function (req, res, next) {
+        render_error(res, null, 404, "Page not found");
+    })
 
 
     return router;

@@ -22,7 +22,6 @@ const languagesRouter = require('./routes/languages');
 const genresRouter = require('./routes/genres');
 const {render_error} = require('./utils');
 const aboutRouter = require('./routes/about');
-const popularActorsRoutes = require('./routes/index');
 
 
 var app = express();
@@ -129,7 +128,6 @@ app.use('/themes', themesRouter({servers:servers}));
 app.use('/languages', languagesRouter({servers:servers}));
 app.use('/genres', genresRouter({servers:servers}));
 app.use('/about', aboutRouter);
-app.use('/', popularActorsRoutes({ servers: { SQLBrokerHost: 'http://localhost:8080/' } }));
 
 
 app.use((req, res) => {

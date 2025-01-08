@@ -5,6 +5,7 @@ var url = require('url-composer');
 const {log} = require("debug");
 var async = require('async')
 const res = require("express/lib/response");
+const {render_error} = require("../utils");
 
 function filter_actors_summary(actors){
     actors.forEach((actor) => {
@@ -41,7 +42,7 @@ module.exports = (options) => {
 
             res.render('./actors/actors', {title: 'Actors', actors: actors.data.content, pages : false});
         }).catch(error => {
-            console.log(error);
+            render_error(res, error, 500, "Internal Server Error");
         })
     });
 
@@ -58,7 +59,7 @@ module.exports = (options) => {
             actors.data = filter_actors_summary(actors.data);
             res.render('./actors/actors', {title: 'Actors', actors: actors.data});
         }).catch(error => {
-            console.log(error);
+            render_error(res, error, 500, "Internal Server Error");
         })
     })
 
@@ -94,25 +95,13 @@ module.exports = (options) => {
             })
 
         ]).then(result => {
-
-            //todo: enable when NOSqlBroker is online
-            /*
-            let oscar_data_request_url = url.build({
-                host: options.servers.NOSQLBrokerHost,
-                path: "actor",
-                query: {
-                    name: result[0].name,
-                }
-            })
-
-            axios.get(movies_data_request_url).then(oscar => {
-                res.render('./actors/single_actor', {title: 'Actors', actor: result[0], movies: result[1], oscar: oscar.data});
-            }).catch(error => {
-                console.log(error);
-            })
-            */
-
-            res.render('./actors/single_actor', {title: 'Actors', actor: result[0], movies: result[1]});
+            res.render('./actors/single_actor', {
+                title: 'Actors',
+                actor: result[0],
+                movies: result[1]
+            });
+        }).catch(error => {
+            render_error(res, error, 500, "Internal Server Error");
         })
 
 
@@ -132,9 +121,12 @@ module.exports = (options) => {
                 actors: response.data
             });
         }).catch(error => {
-            console.error("Error fetching top actors:", error);
-            res.status(500).send("Error fetching top actors");
+            render_error(res, error, 500, "Internal Server Error");
         });
+    });
+
+    router.get('/*', function (req, res, next) {
+        render_error(res, null, 404, "Page not found");
     })
 
 return router;

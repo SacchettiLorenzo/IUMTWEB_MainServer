@@ -17,24 +17,22 @@
     {{{body}}}
   </main>
     {{> footer}}
+</body>
+<a href="#top" class="back-to-top">Back to Top ↑</a>
   <script src="/public/javascripts/search.js"></script>
   <script src="/public/javascripts/popularMovies.js"></script>
   <script src="/public/javascripts/popularCountries.js"></script>
   <script src="/public/javascripts/popularGenres.js"></script>
-  </body>
-</main>
-{{> footer}}
-<a href="#top" class="back-to-top">Back to Top ↑</a>
-<script src="/public/javascripts/search.js"></script>
-<script src="/public/javascripts/popularMovies.js"></script>
 <script src="/public/javascripts/popularActors.js"></script>
-
-<!-- Script per Back to Top -->
 <script>
     document.querySelector('.back-to-top').addEventListener('click', function (event) {
         event.preventDefault(); // Evita il comportamento predefinito del link
         window.scrollTo({ top: 0, behavior: 'smooth' }); // Scrolla in cima alla pagina
     });
 </script>
-</body>
+
+
+<!-- Script per Back to Top -->
+
+
 </html>

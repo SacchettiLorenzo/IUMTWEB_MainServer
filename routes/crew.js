@@ -3,6 +3,7 @@ var router = express.Router();
 const axios = require('axios');
 var url = require('url-composer');
 const res = require("express/lib/response");
+const {render_error} = require("../utils");
 
 module.exports = (options) => {
 
@@ -29,9 +30,13 @@ module.exports = (options) => {
         axios.get(request_url).then(crew => {
             res.render('./crew/crew', {title: 'Crew', crew: crew.data.content});
         }).catch(error => {
-            console.log(error);
+            render_error(res, error, 500, "Internal Server Error");
         })
     });
+
+    router.get('/*', function (req, res, next) {
+        render_error(res, null, 404, "Page not found");
+    })
 
     return router;
 
