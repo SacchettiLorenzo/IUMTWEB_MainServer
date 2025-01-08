@@ -26,6 +26,13 @@ module.exports = (options) => {
         },
       });
 
+    let reviews_data_request_url = {
+      host: options.servers.NoSQLBrokerHost,
+      path: "review/last_review"
+    }
+
+    reviews_data_request_url = url.build(reviews_data_request_url);
+
       Promise.all([
         axios.get(moviesRequestUrl).then(movies =>{
           return movies
@@ -35,13 +42,25 @@ module.exports = (options) => {
         }),
         axios.get(UpcomingRequestUrl).then(upcoming =>{
           return upcoming
-        })
+        }),
+        axios.get(reviews_data_request_url).then(reviews => {
+          return reviews.data
+        }),
       ]).then(results => {
+
+
+        let reviews_ = [];
+
+        for (const result of results[3]) {
+          reviews_.push(result.reviews);
+        }
+
         res.render('index', {
           title : "Home",
           movies: results[0].data.content.sort(() => 0.5 - Math.random()).slice(0, 10),
           actors: JSON.stringify(results[1].data),
-          upcoming_movies : results[2].data.slice(0, 10)
+          upcoming_movies : results[2].data.slice(0, 10),
+          reviews: reviews_
         })
       }).catch(error => {
         render_error(res,error,500,"Internal Server Error");

@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Funzione per aggiornare la card
     const updateActorCard = (actor) => {
-        document.getElementById('actorImage').src = actor.imageUrl || '/public/images/default_actor.jpg';
+        document.getElementById('actorImage').src = actor.imageUrl || '/public/images/default_actor.png';
         document.getElementById('actorLink').textContent = actor.name;
         document.getElementById('actorLink').href = `/actors/id?id=${actor.id}`; // Formato accettato dalla route attuale
         document.getElementById('actorMovies').textContent = `Movies: ${actor.actor_count}`;
