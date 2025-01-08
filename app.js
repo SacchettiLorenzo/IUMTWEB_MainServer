@@ -122,7 +122,7 @@ app.use('/genres', genresRouter({servers:servers}));
 
 app.use((req, res) => {
   res.status(404).render("error", {
-    is404: true,
+    error_code : 404,
     message: "The page you are looking for does not exist."
   });
 });

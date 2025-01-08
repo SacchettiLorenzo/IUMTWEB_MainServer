@@ -1,11 +1,5 @@
 <div id="error-container">
-    {{#when is404 "eq" true}}
-        <h1 class="error-red">Oops! Page Not Found</h1>
-        <div class="error-code">404</div>
-    {{else}}
-        <h1>Oops! Something went wrong.</h1>
-    {{/when}}
-
-    <p>{{message}}</p>
+        <h1 class="error-red">{{message}}</h1>
+        <div class="error-code">{{error_code}}</div>
     <a href="/" class="btn-home">Go to Home</a>
 </div>
