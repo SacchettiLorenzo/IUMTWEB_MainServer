@@ -88,10 +88,16 @@ module.exports = (options) => {
         });
 
         axios.get(topCountriesRequestUrl).then(response => {
+            const countries = response.data.map(countries => ({
+                id: countries.id,  // Assicurati che l'ID sia presente
+                country: countries.country,
+                movie_count: countries.movie_count
+            }));
+
             res.render('./countries/top-countries', {
                 title: 'Top 10 Countries',
                 type: 'country',
-                countries: response.data
+                countries: countries
             });
         }).catch(error => {
             console.error("Error fetching top countries:", error);
