@@ -2,7 +2,7 @@
     <h2>Prossime Uscite</h2>
     <div id="UpcomingMoviesCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
         <div class="carousel-indicators">
-            {{#each movies}}
+            {{#each upcoming_movies}}
                 <button type="button" data-bs-target="#UpcomingMoviesCarousel" data-bs-slide-to="{{@index}}"
                         class="{{#if @first}}active{{/if}}"
                         aria-current="true"
@@ -11,7 +11,7 @@
             {{/each}}
         </div>
         <div class="carousel-inner">
-            {{#each movies}}
+            {{#each upcoming_movies}}
                 <div class="carousel-item {{#if @first}}active{{/if}}">
                     <img src="{{poster}}" class="d-block w-100" alt="{{name}}" onerror="load_default_movie_image(this)">
                     <div class="carousel-caption d-none d-md-block">

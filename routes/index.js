@@ -3,13 +3,14 @@ var router = express.Router();
 const axios = require('axios');
 global.SQLBrokerHost = 'http://localhost:8080';
 var url = require('url-composer');
+const {render_error} = require("../utils");
 
 module.exports = (options) => {
 
   router.get('/', async function (req, res) {
-    try {
       // URL per i film
-      const moviesRequestUrl = options.servers.SQLBrokerHost + 'movies?size=20&sortParam=id&sortDirection=asc';
+      const random_page = Math.floor(Math.random() * 500);
+      const moviesRequestUrl = options.servers.SQLBrokerHost + 'movies?size=20&page='+random_page+'&sortParam=id&sortDirection=asc';
 
       // URL per gli attori
       const actorsRequestUrl = url.build({
@@ -17,29 +18,35 @@ module.exports = (options) => {
         path: 'actors/top10-mostPopularActors'
       });
 
-      // Esegui le due richieste in parallelo
-      const [moviesResponse, actorsResponse] = await Promise.all([
-        axios.get(moviesRequestUrl),
-        axios.get(actorsRequestUrl)
-      ]);
-
-      // Dati dei film
-      const movies = moviesResponse.data.content;
-      const randomMovies = movies.sort(() => 0.5 - Math.random()).slice(0, 10);
-
-      // Dati degli attori
-      const actors = actorsResponse.data;
-
-      // Renderizza la homepage con entrambi i dati
-      res.render('index', {
-        title: 'Home',
-        movies: randomMovies,
-        actors: JSON.stringify(actors) // Passiamo i dati come stringa JSON
+      const UpcomingRequestUrl = url.build({
+        host: options.servers.SQLBrokerHost,
+        path: 'movies/date',
+        query: {
+          date: 2025, // Passa l'anno come parametro
+        },
       });
-    } catch (error) {
-      console.error('Errore durante il caricamento della homepage:', error);
-      res.status(500).send('Errore durante il caricamento della homepage');
-    }
+
+      Promise.all([
+        axios.get(moviesRequestUrl).then(movies =>{
+          return movies
+        }),
+        axios.get(actorsRequestUrl).then(actors =>{
+          return actors
+        }),
+        axios.get(UpcomingRequestUrl).then(upcoming =>{
+          return upcoming
+        })
+      ]).then(results => {
+        res.render('index', {
+          title : "Home",
+          movies: results[0].data.content.sort(() => 0.5 - Math.random()).slice(0, 10),
+          actors: JSON.stringify(results[1].data),
+          upcoming_movies : results[2].data.slice(0, 10)
+        })
+      }).catch(error => {
+        render_error(res,error,500,"Internal Server Error");
+      })
+
   });
 
   router.get('/upcoming-movies', async (req, res) => {
@@ -60,11 +67,12 @@ module.exports = (options) => {
 
       // I film sono già filtrati dal backend, non c'è bisogno di ulteriore filtraggio
       const movies = response.data;
+      console.log(movies);
 
       // Renderizza la sezione "Prossime Uscite"
       res.render('homepage/upcoming_movies', {
         title: 'Prossime Uscite',
-        movies: movies.slice(0, 10), // Mostra i primi 10 film
+        upcoming_movies: movies.slice(0, 10), // Mostra i primi 10 film
       });
     } catch (error) {
       console.error('Error fetching upcoming movies:', error.message);
