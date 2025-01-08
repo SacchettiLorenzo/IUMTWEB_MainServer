@@ -1,16 +1,21 @@
 <section id="popular-actors" class="container mt-5">
-    <h2 class="text-center">Attori Popolari</h2>
-    <div class="row">
-        {{#each popularActors}}
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img src="{{photo}}" class="card-img-top" alt="{{name}}" onerror="this.src='/public/images/default-actor.jpg'">
+    <h2>Popular Actors</h2>
+    {{#if popularActors.length}}
+        <div class="row">
+            <div class="col-md-8">
+                <canvas id="popularActorsChart" width="400" height="300"></canvas>
+            </div>
+            <div class="col-md-4">
+                <div id="actorDetails" class="card" style="display: none;">
+                    <img id="actorPhoto" src="" class="card-img-top" alt="Actor Photo">
                     <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                        <a href="/actors/id?id={{id}}" class="btn btn-primary">Scopri di più</a>
+                        <h5 id="actorName" class="card-title"></h5>
+                        <p id="actorPopularity" class="card-text"><strong>Popularity:</strong> <span></span></p>
                     </div>
                 </div>
             </div>
-        {{/each}}
-    </div>
+        </div>
+    {{else}}
+        <p>No popular actors found.</p>
+    {{/if}}
 </section>
