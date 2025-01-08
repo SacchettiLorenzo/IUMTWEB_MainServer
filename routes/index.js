@@ -221,34 +221,5 @@ router.get('/popular-genres', async (req, res) => {
   }
 });
 
-router.use((req, res) => {
-  // Gestione errori 404
-  res.status(404).render('error', {
-    title: '404 - Page not found',
-    error: {
-      status: 404,
-      message: 'The page you are looking for is not available.',
-    },
-  });
-});
-
-router.use((err, req, res, next) => {
-  console.error(err.stack); // Log dell'errore
-  const errorStatus = err.status || 500;
-  const errorMessage = err.message || 'An unexpected error occurred. Please try again later.';
-  res.status(errorStatus).render('error', {
-    title: 'Error Page',
-    error: {
-      status: errorStatus,
-      message: errorMessage,
-      stack: err.stack,
-    },
-  });
-});
-
-
-
-
-
 
 module.exports = router;
