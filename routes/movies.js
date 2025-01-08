@@ -24,49 +24,55 @@ module.exports = (options) => {
 
         genres_request_url = url.build(genres_request_url);
 
-        axios.get(genres_request_url).then(genres => {
+        let path = "movies";
 
-            let path = "movies";
+        let request_url = {
+            host: options.servers.SQLBrokerHost,
+            path: path,
+            query: {}
+        };
 
-            let request_url = {
-                host: options.servers.SQLBrokerHost,
-                path: path,
-                query: {}
-            };
+        request_url = {
+            ...request_url,
+            query: {
+                ...((req.query.page == null) ? {} : {page: req.query.page}),
+                ...((req.query.size == null) ? {} : {size: req.query.size}),
+                ...((req.query.sortParam == null) ? {} : {sortParam: req.query.sortParam}),
+                ...((req.query.sortDirection == null) ? {} : {sortDirection: req.query.sortDirection})
+            }
+        };
 
-            request_url = {
-                ...request_url,
-                query: {
-                    ...((req.query.page == null) ? {} : {page: req.query.page}),
-                    ...((req.query.size == null) ? {} : {size: req.query.size}),
-                    ...((req.query.sortParam == null) ? {} : {sortParam: req.query.sortParam}),
-                    ...((req.query.sortDirection == null) ? {} : {sortDirection: req.query.sortDirection})
-                }
-            };
+        request_url = url.build(request_url);
 
-            request_url = url.build(request_url);
-
-            axios.get(request_url).then(movies => {
-                res.render('./movies/movie',
-                    {
-                        title: 'Movies',
-                        movies: movies.data.content,
-                        genres: genres.data.content, // Passa i generi
-                        path: path,
-                        pages: true,
-                        searchable: true,
-                        pages_amount: (movies.data.totalPages - 1),
-                        current_page: movies.data.number,
-                        page_size: movies.data.size,
-                        query_params: "&sortParam=" + req.query.sortParam + "&sortDirection=" + req.query.sortDirection,
-                    });
+        Promise.all([
+            axios.get(genres_request_url).then(genres => {
+                return genres;
             }).catch(error => {
                 console.log(error);
-            });
+            }),
+            axios.get(request_url).then(movies => {
+                return movies;
+            }).catch(error => {
+                console.log(error);
+            })
+        ]).then((results) => {
+            let genres = results[0];
+            let movies = results[1];
+            res.render('./movies/movie',
+                {
+                    title: 'Movies',
+                    movies: movies.data.content,
+                    genres: genres.data.content,
+                    path: path,
+                    pages: true,
+                    searchable: true,
+                    pages_amount: (movies.data.totalPages - 1),
+                    current_page: movies.data.number,
+                    page_size: movies.data.size,
+                    query_params: "&sortParam=" + req.query.sortParam + "&sortDirection=" + req.query.sortDirection,
+                });
+        })
 
-        }).catch(error => {
-            console.log(error);
-        });
     });
 
     router.get('/name', function (req, res, next) {

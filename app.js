@@ -20,7 +20,7 @@ const studiosRouter = require('./routes/studios');
 const themesRouter = require('./routes/themes');
 const languagesRouter = require('./routes/languages');
 const genresRouter = require('./routes/genres');
-
+const {render_error} = require('./utils');
 
 var app = express();
 
@@ -121,10 +121,7 @@ app.use('/genres', genresRouter({servers:servers}));
 
 
 app.use((req, res) => {
-  res.status(404).render("error", {
-    error_code : 404,
-    message: "The page you are looking for does not exist."
-  });
+  render_error(res,404,"The page you are looking for does not exist.");
 });
 
 app.use((err, req, res, next) => {
