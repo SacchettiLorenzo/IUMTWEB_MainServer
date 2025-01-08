@@ -1,3 +1,11 @@
+/**
+ * @fileOverview This script loads popular countries data from "/popular-countries",
+ * then displays them in a pie chart using Chart.js.
+ *
+ * 1) Fetches data from "/popular-countries" upon DOMContentLoaded.
+ * 2) If successful, creates a pie chart.
+ * 3) If an error or missing data occurs, redirects the user to the error page.
+ */
 document.addEventListener("DOMContentLoaded", async () => {
     const chartCanvas = document.getElementById("popularCountriesChart").getContext("2d");
 
@@ -63,5 +71,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     } catch (error) {
         console.error("Error loading popular countries:", error);
+        window.location.href = "/error";
     }
 });

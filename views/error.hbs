@@ -1,8 +1,11 @@
-<h1>{{title}}</h1>
-<p>{{message}}</p>
+<div id="error-container">
+    {{#when is404 "eq" true}}
+        <h1 class="error-red">Oops! Page Not Found</h1>
+        <div class="error-code">404</div>
+    {{else}}
+        <h1>Oops! Something went wrong.</h1>
+    {{/when}}
 
-{{#if backHome}}
-    <p>
-        <a href="/">Back to Home</a>
-    </p>
-{{/if}}
+    <p>{{message}}</p>
+    <a href="/" class="btn-home">Go to Home</a>
+</div>

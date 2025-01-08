@@ -1,3 +1,10 @@
+/**
+ * @fileOverview This script loads popular genres data from "/popular-genres"
+ * and displays them in a bar chart using Chart.js.
+ * - If no data or an error occurs, the user is redirected to "/error".
+ * - Otherwise, the script scales the movie counts if necessary and
+ *   creates a responsive bar chart.
+ */
 document.addEventListener("DOMContentLoaded", async () => {
     const chartCanvas = document.getElementById("popularGenresChart").getContext("2d");
 
@@ -84,5 +91,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     } catch (error) {
         console.error("Error loading popular genres:", error);
+        window.location.href = "/error";
     }
 });

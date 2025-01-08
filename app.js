@@ -120,22 +120,25 @@ app.use('/themes', themesRouter({servers:servers}));
 app.use('/languages', languagesRouter({servers:servers}));
 app.use('/genres', genresRouter({servers:servers}));
 
-app.use((req, res, next) => {
-  res.status(404);
-  res.render('error', {
-    title: 'Page not found',
-    message: 'Oops! The page you are looking for does not exist.',
-    backHome: true
+
+app.use((req, res) => {
+  res.status(404).render("error", {
+    is404: true,
+    message: "The page you are looking for does not exist."
   });
 });
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.status || 500);
-  res.render('error', {
-    title: 'An error occurred',
+  res.status(500).render('error', {
     message: err.message,
-    backHome: true
+    is404: false
+  });
+});
+
+app.get('/error', (req, res) => {
+  res.status(500).render('error', {
+    message: 'An unexpected error has occurred.'
   });
 });
 

@@ -2,13 +2,14 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 var url = require('url-composer');
-const {log} = require("debug");
-var async = require('async')
-const res = require("express/lib/response");
+
 
 module.exports = (options) => {
 
-    /* GET home page. */
+    /**
+     * Route to fetch all themes.
+     * @name GET /themes
+     */
     router.get('/', function (req, res, next) {
 
         let path = "themes";
@@ -45,11 +46,17 @@ module.exports = (options) => {
                 });
 
         }).catch(error => {
-            console.log(error);
-        })
+            console.error("Error fetching themes:", error);
+            res.status(500).render("error", {
+                message: "Unable to fetch the list of themes."
+            });
+        });
     });
 
-
+    /**
+     * Route to fetch a theme for a specific movie (by movieId).
+     * @name GET /themes/theme
+     */
     router.get('/theme', function (req, res, next) {
         let movie_data_request_url = url.build({
             host: options.servers.SQLBrokerHost,
@@ -63,11 +70,17 @@ module.exports = (options) => {
 
             res.render('./themes/themes', {title: 'Theme', themes: themes.data});
         }).catch(error => {
-            console.log(error);
-        })
+            console.error("Error fetching theme by movie ID:", error);
+            res.status(500).render("error", {
+                message: "Unable to fetch the theme for the specified movie."
+            });
+        });
     })
 
-
+    /**
+     * Route to fetch the top 10 themes.
+     * @name GET /themes/top10
+     */
     router.get('/top10', function (req, res, next) {
         let movie_data_request_url = url.build({
             host: options.servers.SQLBrokerHost,
@@ -79,20 +92,12 @@ module.exports = (options) => {
 
             res.render('./themes/top10', {title: 'Themes top10', themes: themes.data});
         }).catch(error => {
-            console.log(error);
-        })
+            console.error("Error fetching top 10 themes:", error);
+            res.status(500).render("error", {
+                message: "Unable to fetch the top 10 themes."
+            });
+        });
     })
 
     return router;
 }
-
-
-/*
-    QUERY
-    -http://localhost:3000/themes visualizza tutti i temi
-    -http://localhost:3000/themes/theme?movieId=1000001  per ottenere il tema del film in base al suo id
-    -http://localhost:3000/themes/top10 per ottenere una lista dei 10 top themi più usati
-    
-
-
- */
