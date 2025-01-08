@@ -91,7 +91,7 @@ module.exports = (options) => {
         axios.get(request_url).then(movies => {
 
             if (req.query.only_data === "true") {
-                console.log("ciaiciaociacoaic")
+
                 res.send(movies.data);
             } else {
                 res.render('./movies/movie',

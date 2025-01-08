@@ -6,13 +6,18 @@
     <tr>
         <th>Position</th>
         <th>Film</th>
-        {{#if rating}}
+        {{# when type 'eq' "best"}}
             <th>Rating</th>
-        {{else if minute}}
+        {{/when}}
+        {{# when type 'eq' "worst"}}
+            <th>Rating</th>
+        {{/when}}
+        {{# when type 'eq' "longest"}}
             <th>Minute</th>
-        {{else}}
-            <td>Not available</td>
-        {{/if}}
+        {{/when}}
+        {{# when type 'eq' "shortest"}}
+            <th>Minute</th>
+        {{/when}}
     </tr>
     </thead>
     <tbody>
@@ -20,13 +25,18 @@
         <tr>
             <td>{{@index}}</td>
             <td><a href="/movies/id?id={{id}}">{{name}}</a></td>
-            {{#if rating}}
+            {{# when ../type 'eq' "best"}}
                 <td>{{rating}} / 5</td>
-            {{else if minute}}
+            {{/when}}
+            {{# when ../type 'eq' "worst"}}
+                <td>{{rating}} / 5</td>
+            {{/when}}
+            {{# when ../type 'eq' "longest"}}
                 <td>{{minute}} minutes</td>
-            {{else}}
-                <td>Not available</td>
-            {{/if}}
+            {{/when}}
+            {{# when ../type 'eq' "shortest"}}
+                <td>{{minute}} minutes</td>
+            {{/when}}
         </tr>
     {{/each}}
     </tbody>
