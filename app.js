@@ -4,6 +4,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const hbs = require('hbs')
 
+const swaggerUi = require('swagger-ui-express');
+const openApiDocumentation = require('./swagger/docs.json')
+
 const servers = {
   SQLBrokerHost : "http://localhost:8080/",
   NoSQLBrokerHost : "http://localhost:3001/"
@@ -118,6 +121,8 @@ app.use('/studios', studiosRouter({servers:servers}));
 app.use('/themes', themesRouter({servers:servers}));
 app.use('/languages', languagesRouter({servers:servers}));
 app.use('/genres', genresRouter({servers:servers}));
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
 // Gestione errori 404
 app.use(function (req, res, next) {

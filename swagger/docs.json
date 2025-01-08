@@ -1,0 +1,173 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "CineReviews",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "Local Server"
+    }
+  ],
+  "paths": {
+    "/movies": {
+      "get": {
+        "description": "Get movies",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/page"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/size"
+          },
+          {
+            "name": "sortParam",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/sortParam"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/sortDirection"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movies were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "page" : {
+        "type": "integer",
+        "description": "number of the page if Pagination is used"
+      },
+      "size" : {
+        "type": "integer",
+        "description": "size of the page if Pagination is used"
+      },
+      "sortParam" : {
+        "type": "string",
+        "description": "parameter used to filter the data"
+      },
+      "sortDirection" : {
+        "type": "string",
+        "enum": ["ASC","DESC"],
+        "description": "parameter used to chose the filtering order"
+      },
+      "Movie": {
+        "type": "object",
+        "properties": {
+          "id" : {
+            "type": "integer",
+            "description": "Id of the movie",
+            "example": 1000001
+          },
+          "name" : {
+            "type": "string",
+            "description": "Name of the movie",
+            "example": "Barbie"
+          },
+          "date": {
+            "type": "integer",
+            "description": "Release date of the movie",
+            "example": "2024"
+          },
+          "tagline": {
+            "type": "string",
+            "description": "tagline of the movie",
+            "example": ""
+          },
+          "description": {
+            "type": "string",
+            "description": "description of the movie",
+            "example": ""
+          },
+          "minute": {
+            "type": "integer",
+            "description": "length of the movie in minutes",
+            "example": 136
+          },
+          "rating": {
+            "type": "number",
+            "description": "rating of the movie",
+            "example": 3.8
+          },
+          "poster": {
+            "type": "string",
+            "description": "link of the movie's poster",
+            "example": ""
+          }
+        }
+      },
+      "Actor": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the actor",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the actor",
+            "example": "Leonardo DiCaprio"
+          },
+          "summary": {
+            "type": "string",
+            "description": "Short biography or summary about the actor",
+            "example": "An acclaimed actor known for his roles in Titanic and Inception."
+          },
+          "section": {
+            "type": "string",
+            "description": "Another description",
+            "example": ""
+          },
+          "image_url": {
+            "type": "string",
+            "description": "URL of the actor's image",
+            "example": ""
+          }
+        }
+      },
+      "Crew": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the crew member",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the crew member",
+            "example": "Christopher Nolan"
+          }
+        }
+      }
+
+
+    }
+  }
+
+
+}
