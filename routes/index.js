@@ -177,5 +177,52 @@ module.exports = (options) => {
   });
 
   return router;
+router.get('/popular-countries', async (req, res) => {
+  try {
+    const requestUrl = `${global.SQLBrokerHost}/countries/trending`;
+
+    const response = await axios.get(requestUrl);
+    const countries = response.data;
+
+    if (!countries || countries.length === 0) {
+      console.error("No countries found.");
+      return res.json([]);
+    }
+
+    const countryData = countries.map(country => ({
+      name: country.country,
+      movieCount: country.movie_count,
+    }));
+
+    res.json(countryData);
+  } catch (error) {
+    console.error('Error fetching top countries:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.get('/popular-genres', async (req, res) => {
+  try {
+    const requestUrl = `${global.SQLBrokerHost}/genres/trending`;
+    const response = await axios.get(requestUrl);
+    const genres = response.data;
+
+    if (!genres || genres.length === 0) {
+      console.error("No genres found.");
+      return res.json([]);
+    }
+
+    const genreData = genres.map(genre => ({
+      genre: genre.genre,
+      movieCount: genre.movie_count,
+    }));
+
+    res.json(genreData);
+  } catch (error) {
+    console.error('Error fetching popular genres:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 }

@@ -119,20 +119,26 @@ app.use('/themes', themesRouter({servers:servers}));
 app.use('/languages', languagesRouter({servers:servers}));
 app.use('/genres', genresRouter({servers:servers}));
 
-// Gestione errori 404
-app.use(function (req, res, next) {
-  res.status(404).render('error', { message: 'Page not found', error: {} });
+
+app.use((req, res) => {
+  res.status(404).render("error", {
+    is404: true,
+    message: "The page you are looking for does not exist."
+  });
 });
 
-// Gestione degli errori generici
-app.use(function (err, req, res, next) {
-  // Fornisci errori solo in ambiente di sviluppo
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render('error', {
+    message: err.message,
+    is404: false
+  });
+});
 
-  // Renderizza la pagina di errore
-  res.status(err.status || 500);
-  res.render('error');
+app.get('/error', (req, res) => {
+  res.status(500).render('error', {
+    message: 'An unexpected error has occurred.'
+  });
 });
 
 module.exports = app;

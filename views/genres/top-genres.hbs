@@ -1,20 +1,24 @@
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Position</th>
-        <th>Genre</th>
-        <th>Number of Movies</th>
-
-    </tr>
-    </thead>
-    <tbody>
-    {{#each genres}}
+<div class="container mt-4">
+    <h1>Popular Genres</h1>
+    <table class="table table-striped">
+        <thead>
         <tr>
-            <td>{{@index}}</td>
-            <td><a href="/movies/genres?genresId={{id}}">{{genre}}</a></td>
-
-            <td>{{movie_count}}</td>
+            <th>Position</th>
+            <th>Genre</th>
+            <th>Number of Movies</th>
         </tr>
-    {{/each}}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {{#each genres}}
+            <tr>
+                <td>{{@index}}</td>
+                <td><a href="/movies/genres?genresId={{id}}">{{genre}}</a></td>
+                <td>{{movie_count}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+    <h2>Top 10 genres chart</h2>
+    <canvas id="popularGenresChart"></canvas>
+</div>

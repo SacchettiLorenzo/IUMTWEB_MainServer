@@ -2,13 +2,14 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 var url = require('url-composer');
-const {log} = require("debug");
-var async = require('async')
-const res = require("express/lib/response");
+
 
 module.exports = (options) => {
 
-
+    /**
+     * Route to fetch all genres.
+     * @name GET /genres
+     */
     router.get('/', function (req, res, next) {
         let request_url = {
             host: options.servers.SQLBrokerHost,
@@ -16,7 +17,6 @@ module.exports = (options) => {
             query: {}
         }
 
-        // Costruzione dei parametri per la query
         request_url = {
             ...request_url,
             query: {
@@ -27,18 +27,23 @@ module.exports = (options) => {
             }
         }
 
-        // Composizione dell'URL finale
         request_url = url.build(request_url);
 
         axios.get(request_url).then(genres => {
 
             res.render('./genres/genres', { title: 'Genres', genres: genres.data.content, pages: false });
         }).catch(error => {
-            console.log(error);
+            console.error("Error fetching genres:", error);
+            res.status(500).render("error", {
+                message: "Unable to fetch genres data."
+            });
         });
     })
 
-
+    /**
+     * Route to fetch genres for a specific movie (by movieId).
+     * @name GET /genres/movie
+     */
     router.get('/movie', function (req, res, next) {
         let movie_data_request_url = url.build({
             host: options.servers.SQLBrokerHost,
@@ -52,11 +57,18 @@ module.exports = (options) => {
 
             res.render('./genres/genres', {title: 'Genres', genres: genres.data});
         }).catch(error => {
-            console.log(error);
-        })
-    })
+            console.error("Error fetching genres by movie:", error);
 
+            res.status(500).render("error", {
+                message: "Unable to fetch genres for the selected movie."
+            });
+        });
+    });
 
+    /**
+     * Route to fetch top genres.
+     * @name GET /genres/top-genres
+     */
     router.get('/top-genres', function (req, res, next) {
         let topGenresRequestUrl = url.build({
             host: options.servers.SQLBrokerHost,
@@ -64,15 +76,14 @@ module.exports = (options) => {
         });
 
         axios.get(topGenresRequestUrl).then(response => {
-            // Verifica che i dati siano nel formato corretto
+
             const genres = response.data.map(genres => ({
-                id: genres.id,  // Assicurati che l'ID sia presente
+                id: genres.id,
                 genre: genres.genre,
                 movie_count: genres.movie_count
             }));
             console.log(genres.id);
 
-            // Passa i generi con l'ID alla vista
             res.render('./genres/top-genres', {
                 title: 'Top 10 Genres',
                 type: 'genre',
@@ -80,22 +91,13 @@ module.exports = (options) => {
             });
         }).catch(error => {
             console.error("Error fetching top genres:", error);
-            res.status(500).send("Error fetching top genres");
+            res.status(500).render("error", {
+                message: "Unable to fetch top genres."
+            });
         });
     });
-
-
-
 
 
     return router;
 }
 
-
-/*
-    QUERY
-    -http://localhost:3000/genres visualizza tutti i generi
-    -http://localhost:3000/genres/movie?movieId=1000001  per visualizzare tutti i generi in base all'id del film
-
-
- */
