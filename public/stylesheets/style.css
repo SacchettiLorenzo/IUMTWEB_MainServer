@@ -308,17 +308,39 @@ h2 {
 
 #UpcomingMoviesCarousel .carousel-item img {
     max-height: 400px; /* Altezza massima delle immagini */
-    object-fit: contain; /* Mostra l'immagine intera senza ritagliarla */
+    object-fit: contain; /* Mostra l'immagine completa senza ritagliarla */
     width: auto; /* Mantiene la proporzione originale */
     margin: 0 auto; /* Centra l'immagine */
+    border-radius: 10px; /* Bordi arrotondati */
 }
 
+/* Carousel Caption */
 #UpcomingMoviesCarousel .carousel-caption {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7); /* Sfondo semitrasparente */
     border-radius: 10px;
-    padding: 15px;
+    padding: 20px;
+    color: white;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7); /* Aggiunge profondità al testo */
 }
 
+/* Carousel Navigation Buttons */
+#UpcomingMoviesCarousel .carousel-control-prev-icon,
+#UpcomingMoviesCarousel .carousel-control-next-icon {
+    filter: invert(1); /* Cambia il colore delle icone in bianco */
+    width: 50px;
+    height: 50px;
+}
+
+#UpcomingMoviesCarousel .carousel-indicators button {
+    background-color: #fff; /* Cambia il colore del pulsante attivo */
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+#UpcomingMoviesCarousel .carousel-indicators .active {
+    background-color: #007bff; /* Colore dinamico per il pulsante attivo */
+}
 
 
 .custom-card {
@@ -393,8 +415,6 @@ h1 {
 }
 
 
-
-
 .filters-section {
     display: flex;
     flex-direction: row;
@@ -465,4 +485,51 @@ h1 {
 
 .btn-home:hover {
     background-color: #0056b3;
+}
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.back-to-top:hover {
+    background-color: #0056b3; /* Colore più scuro al passaggio del mouse */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+}
+
+.popular-actors-section {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.popular-actors-section h2 {
+    color: #343a40;
+}
+
+#actorCard {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+#actorCard:hover {
+    transform: scale(1.05);
+}
+#actorName a {
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+#actorName a:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }

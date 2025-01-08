@@ -8,24 +8,37 @@ module.exports = (options) => {
 
   router.get('/', async function (req, res) {
     try {
-      // Ottieni i primi 20 film ordinati per ID
-      const requestUrl = options.servers.SQLBrokerHost + 'movies?size=20&sortParam=id&sortDirection=asc';
+      // URL per i film
+      const moviesRequestUrl = options.servers.SQLBrokerHost + 'movies?size=20&sortParam=id&sortDirection=asc';
 
-      // Recupera i dati dei film
-      const response = await axios.get(requestUrl);
+      // URL per gli attori
+      const actorsRequestUrl = url.build({
+        host: options.servers.SQLBrokerHost,
+        path: 'actors/top10-mostPopularActors'
+      });
 
-      // Seleziona casualmente 10 film dai primi 20
-      const movies = response.data.content;
+      // Esegui le due richieste in parallelo
+      const [moviesResponse, actorsResponse] = await Promise.all([
+        axios.get(moviesRequestUrl),
+        axios.get(actorsRequestUrl)
+      ]);
+
+      // Dati dei film
+      const movies = moviesResponse.data.content;
       const randomMovies = movies.sort(() => 0.5 - Math.random()).slice(0, 10);
 
-      // Renderizza la homepage con i film casuali
+      // Dati degli attori
+      const actors = actorsResponse.data;
+
+      // Renderizza la homepage con entrambi i dati
       res.render('index', {
         title: 'Home',
-        movies: randomMovies
+        movies: randomMovies,
+        actors: JSON.stringify(actors) // Passiamo i dati come stringa JSON
       });
     } catch (error) {
-      console.error('Error fetching movies for homepage carousel:', error);
-      res.status(500).send('Internal Server Error');
+      console.error('Errore durante il caricamento della homepage:', error);
+      res.status(500).send('Errore durante il caricamento della homepage');
     }
   });
 
@@ -91,6 +104,26 @@ module.exports = (options) => {
     } catch (error) {
       console.error('Error fetching popular movies:', error);
       res.status(500).send('Internal Server Error');
+    }
+  });
+
+  router.get('/popular-actors', async (req, res) => {
+    let topActorsRequestUrl = url.build({
+      host: options.servers.SQLBrokerHost,
+      path: 'actors/top10-mostPopularActors'
+    });
+
+    try {
+      const response = await axios.get(topActorsRequestUrl);
+      console.log('Dati attori ricevuti per /popular-actors:', response.data);
+
+      return res.render('homepage/popular_actors', {
+        title: 'Popular Actors',
+        actors: response.data
+      });
+    } catch (error) {
+      console.error('Errore nel recupero degli attori popolari:', error);
+      return res.status(500).send('Internal Server Error');
     }
   });
 

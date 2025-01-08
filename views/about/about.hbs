@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - CineReviews</title>
+    <link rel="stylesheet" href="/public/stylesheets/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+{{{header}}}
+
+<main class="container mt-4">
+    <h1 class="text-center mb-4">About Us</h1>
+
+    <section class="mb-4">
+        <p class="lead text-justify">
+            <strong>CineReviews</strong> is the go-to destination for all cinema enthusiasts who want to stay updated
+            on the latest news, dive deep into the details of the most anticipated films, and discover the faces
+            behind the scenes of the film industry.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4 mb-3">Our Passion for Cinema</h2>
+        <p class="text-justify">
+            Born from the passion of a group of dedicated movie lovers, <strong>CineReviews</strong> is committed to
+            providing in-depth reviews, exclusive previews, and detailed articles about films, actors, directors,
+            and cinematic events. From indie productions to major blockbusters, our goal is to explore the world
+            of cinema in all its forms, celebrating its diversity and creativity.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4 mb-3">Our Mission</h2>
+        <p class="text-justify">
+            Our mission is simple: to deliver high-quality content that informs, inspires, and engages our readers,
+            taking them on a journey through the vast cinematic landscape. Whether it’s reviewing the latest box
+            office hit, interviewing emerging talents, or delving into the themes and techniques behind timeless
+            masterpieces, we strive to create a rich and comprehensive experience.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4 mb-3">Meet Our Team</h2>
+        <p class="text-justify">
+            The editorial team at <strong>CineReviews</strong> consists of three passionate experts:
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+            <strong>Lorenzo Sacchetti</strong>
+            <strong>Federico Santorsola</strong>
+            <strong>Davide Vercelli</strong>
+        </div>
+        <p class="text-justify mt-3">
+            United by their love for cinema and a desire to share the magic of the big screen with their readers, they work tirelessly to bring the best of the cinematic world to you.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4 mb-3">Stay Updated</h2>
+        <p class="text-justify">
+            Every day, we enrich our site with fresh content, including reviews, in-depth articles, news, and
+            interviews, to offer a complete overview of the cinematic world. <strong>CineReviews</strong> is the
+            perfect place for anyone who wants to immerse themselves in the fascinating universe of cinema and stay
+            up-to-date on the latest trends.
+        </p>
+    </section>
+
+    <section class="mb-4">
+        <h2 class="h4 mb-3">Where to Find Us</h2>
+        <div id="map" style="width: 100%; height: 400px; border: 1px solid #ccc; border-radius: 8px;"></div>
+        <script>
+            // Initialize the map
+            const map = L.map('map').setView([45.0703, 7.6869], 16);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add a marker for the Dipartimento di Informatica
+            L.marker([45.0703, 7.6869]).addTo(map)
+                    .bindPopup("<b>Dipartimento di Informatica</b><br>Università degli Studi di Torino")
+                    .openPopup();
+        </script>
+    </section>
+
+    <section class="mt-5">
+        <h2 class="h4 mb-3">Contact Information</h2>
+        <address>
+            <strong>CineReviews Srl</strong><br>
+            P. IVA 1234567890<br>
+            Ingresso da, C.so Svizzera 185, Via Pessinetto, 12<br>
+            10149 Torino TO<br>
+            Tel. 011 670 6711<br>
+        </address>
+    </section>
+</main>
+
+{{{footer}}}
+</body>
+</html>
