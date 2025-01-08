@@ -21,6 +21,7 @@ const themesRouter = require('./routes/themes');
 const languagesRouter = require('./routes/languages');
 const genresRouter = require('./routes/genres');
 const aboutRouter = require('./routes/about');
+const popularActorsRoutes = require('./routes/index');
 
 
 var app = express();
@@ -101,6 +102,12 @@ hbs.registerHelper("div", function (operand_1, operand_2) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+// Middleware per debug del rendering del layout
+app.use((req, res, next) => {
+  console.log(`Rendering layout for ${req.url}`);
+  next();
+});
+
 // Middleware di Express
 app.use(logger('dev')); // Log delle richieste
 app.use(express.json()); // Parsing JSON
@@ -121,6 +128,7 @@ app.use('/themes', themesRouter({servers:servers}));
 app.use('/languages', languagesRouter({servers:servers}));
 app.use('/genres', genresRouter({servers:servers}));
 app.use('/about', aboutRouter);
+app.use('/', popularActorsRoutes({ servers: { SQLBrokerHost: 'http://localhost:8080/' } }));
 
 // Gestione errori 404
 app.use(function (req, res, next) {

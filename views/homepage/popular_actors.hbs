@@ -1,21 +1,27 @@
 <section id="popular-actors" class="container mt-5">
-    <h2>Popular Actors</h2>
-    {{#if popularActors.length}}
-        <div class="row">
-            <div class="col-md-8">
-                <canvas id="popularActorsChart" width="400" height="300"></canvas>
-            </div>
-            <div class="col-md-4">
-                <div id="actorDetails" class="card" style="display: none;">
-                    <img id="actorPhoto" src="" class="card-img-top" alt="Actor Photo">
-                    <div class="card-body">
-                        <h5 id="actorName" class="card-title"></h5>
-                        <p id="actorPopularity" class="card-text"><strong>Popularity:</strong> <span></span></p>
-                    </div>
+    <h2 class="text-center">Popular Actors</h2>
+    <div class="row">
+        <!-- Grafico -->
+        <div class="col-md-8">
+            <canvas id="actorsChart"></canvas>
+        </div>
+        <!-- Card dinamica -->
+        <div class="col-md-4">
+            <div id="actorCard" class="card">
+                <img id="actorImage" class="card-img-top" src="" alt="Actor Image">
+                <div class="card-body">
+                    <!-- Nome come link -->
+                    <h5 id="actorName" class="card-title">
+                        <a id="actorLink" href="#" class="text-decoration-none"></a>
+                    </h5>
+                    <p id="actorMovies" class="card-text"></p>
                 </div>
             </div>
         </div>
-    {{else}}
-        <p>No popular actors found.</p>
-    {{/if}}
+    </div>
+
+    <!-- Dati JSON per JavaScript -->
+    <script id="actorsData" type="application/json">
+        {{{actors}}}
+    </script>
 </section>

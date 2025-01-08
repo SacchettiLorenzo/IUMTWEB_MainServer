@@ -1,69 +1,56 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const chartCanvas = document.getElementById("popularActorsChart").getContext("2d");
-    const detailsSection = document.getElementById("actorDetails");
-    const actorPhoto = document.getElementById("actorPhoto");
-    const actorName = document.getElementById("actorName");
-    const actorPopularity = document.getElementById("actorPopularity").querySelector("span");
+document.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('actorsChart').getContext('2d');
 
-    try {
-        const response = await axios.get("/popular-actors"); // Chiamata alla route
-        const actors = response.data;
+    // Dati iniziali degli attori (passati dal backend)
+    const actors = JSON.parse(document.getElementById('actorsData').textContent);
 
-        if (!actors || actors.length === 0) {
-            throw new Error("No popular actors found.");
-        }
+    // Dati per il grafico
+    const labels = actors.map(actor => actor.name);
+    const data = actors.map(actor => actor.actor_count);
 
-        // Preparazione dei dati per il grafico a barre
-        const barData = actors.map(actor => ({
-            label: actor.name,
-            data: actor.popularity,
-            actor: actor, // Conserva i dettagli dell'attore
-        }));
-
-        // Configurazione del grafico a barre
-        const chart = new Chart(chartCanvas, {
-            type: "bar",
-            data: {
-                labels: barData.map(data => data.label),
-                datasets: [{
-                    label: "Popularity",
-                    data: barData.map(data => data.data),
-                    backgroundColor: "rgba(54, 162, 235, 0.6)",
-                    borderColor: "rgba(54, 162, 235, 1)",
-                    borderWidth: 1,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                const actor = barData[tooltipItem.dataIndex].actor;
-                                return `${actor.name} (Popularity: ${actor.popularity})`;
-                            }
-                        }
-                    }
+    // Crea il grafico
+    const chart = new Chart(ctx, {
+        type: 'bar', // Puoi cambiare in 'scatter', 'line', ecc.
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Movies',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
                 },
-                onClick: (event, elements) => {
-                    if (elements.length > 0) {
-                        const index = elements[0].index;
-                        const selectedActor = barData[index].actor;
-                        displayActorDetails(selectedActor);
+                tooltip: {
+                    callbacks: {
+                        label: (context) => `${context.raw} movies`
                     }
                 }
+            },
+            onClick: (e) => {
+                const points = chart.getElementsAtEventForMode(e, 'nearest', { intersect: true }, false);
+                if (points.length) {
+                    const index = points[0].index;
+                    updateActorCard(actors[index]);
+                }
             }
-        });
-
-        // Funzione per mostrare i dettagli dell'attore
-        function displayActorDetails(actor) {
-            actorPhoto.src = actor.photo;
-            actorName.textContent = actor.name;
-            actorPopularity.textContent = actor.popularity.toFixed(1);
-            detailsSection.style.display = "block"; // Mostra la sezione dettagli
         }
-    } catch (error) {
-        console.error("Error loading popular actors:", error);
-    }
+    });
+
+    // Funzione per aggiornare la card
+    const updateActorCard = (actor) => {
+        document.getElementById('actorImage').src = actor.imageUrl || '/public/images/default_actor.jpg';
+        document.getElementById('actorLink').textContent = actor.name;
+        document.getElementById('actorLink').href = `/actors/id?id=${actor.id}`; // Formato accettato dalla route attuale
+        document.getElementById('actorMovies').textContent = `Movies: ${actor.actor_count}`;
+    };
+
+    // Mostra il primo attore come default
+    updateActorCard(actors[0]);
 });
