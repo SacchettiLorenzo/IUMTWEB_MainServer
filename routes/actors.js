@@ -108,21 +108,24 @@ module.exports = (options) => {
     });
 
 
-    router.get('/top10-mostPopularActors', function (req, res, next) {
-        let topActorsRequestUrl = url.build({
-            host: options.servers.SQLBrokerHost,
-            path: 'actors/top10-mostPopularActors'
-        });
-
-        axios.get(topActorsRequestUrl).then(response => {
-            res.render('./actors/top-actors', {
-                title: 'Top 10 Actors',
-                type: 'actors',
-                actors: response.data
+    router.get('/top10-mostPopularActors', async (req, res, next) => {
+        try {
+            const topActorsRequestUrl = url.build({
+                host: options.servers.SQLBrokerHost,
+                path: 'actors/top10-mostPopularActors'
             });
-        }).catch(error => {
+
+            const response = await axios.get(topActorsRequestUrl);
+            const actors = response.data;
+
+            res.render('./actors/top-actors', {
+                title: 'Top 10 Actors with Most Appearances',
+                actors: actors, // Per la tabella
+                actorsJson: JSON.stringify(actors) // Per il grafico
+            });
+        }catch{
             render_error(res, error, 500, "Internal Server Error");
-        });
+        }
     });
 
     router.get('/*', function (req, res, next) {
