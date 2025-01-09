@@ -116,15 +116,6 @@
               }
             }
           },
-          "204": {
-            "description": "Movies were not found with the given id",
-            "content": {
-              "text/html": {
-                "schema": {
-                }
-              }
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -225,15 +216,6 @@
         "responses": {
           "200": {
             "description": "Movies were obtained",
-            "content": {
-              "text/html": {
-                "schema": {
-                }
-              }
-            }
-          },
-          "204": {
-            "description": "Movies were not found with the given parameters",
             "content": {
               "text/html": {
                 "schema": {
@@ -408,15 +390,6 @@
               }
             }
           },
-          "204": {
-            "description": "No actors were found for this movie",
-            "content": {
-              "text/html": {
-                "schema": {
-                }
-              }
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -443,15 +416,6 @@
         "responses": {
           "200": {
             "description": "Actors were obtained",
-            "content": {
-              "text/html": {
-                "schema": {
-                }
-              }
-            }
-          },
-          "204": {
-            "description": "No actors were found with given id",
             "content": {
               "text/html": {
                 "schema": {

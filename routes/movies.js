@@ -198,6 +198,8 @@ module.exports = (options) => {
 
             releases_request_url = url.build(releases_request_url);
 
+
+
             Promise.all([
                 axios.get(movie_data_request_url).then(movie => {
                     return movie.data
@@ -222,6 +224,12 @@ module.exports = (options) => {
                 })
             ]).then(result => {
                 let movie = result[0];
+
+                if(movie == null || movie == undefined || movie == "") {
+                    render_error(res, null, 404, "Unable to find movie with requested id");
+                    return
+                }
+
                 let actors = result[1];
                 let languages = result[2];
                 let genres = result[3];
