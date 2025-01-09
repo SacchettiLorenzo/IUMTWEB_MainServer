@@ -1,20 +1,47 @@
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Position</th>
-        <th>Actor</th>
-        <th>Number of attendances</th>
+<div class="container mt-5">
+    <h2 class="text-center">Top 10 Actors with Most Appearances</h2>
 
-    </tr>
-    </thead>
-    <tbody>
-    {{#each actors}}
-        <tr>
-            <td>{{@index}}</td>
-            <td><a href="/actors/id?id={{id}}">{{name}}</a></td>
+    <!-- Sezione del grafico -->
+    <div class="row">
+        <div class="col-md-8">
+            <canvas id="actorsChart"></canvas>
+        </div>
+        <div class="col-md-4">
+            <!-- Scheda dinamica -->
+            <div id="actorCard" class="card">
+                <img id="actorImage" class="card-img-top" src="" alt="Actor Image">
+                <div class="card-body">
+                    <a id="actorLink" href="#" class="card-title h5 text-decoration-none"></a>
+                    <p id="actorMovies" class="card-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <td>{{actor_count}}</td>
-        </tr>
-    {{/each}}
-    </tbody>
-</table>
+    <!-- Tabella -->
+    <div class="table-responsive mt-5">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Position</th>
+                <th>Actor</th>
+                <th>Number of Appearances</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each actors}}
+                <tr>
+                    <td>{{@index}}</td>
+                    <td><a href="/actors/id?id={{id}}">{{name}}</a></td>
+                    <td>{{actor_count}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Dati JSON -->
+    <script id="actorsData" type="application/json">
+        {{{actorsJson}}}
+    </script>
+</div>
