@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 var url = require('url-composer');
+const {render_error} = require("../utils");
 
 
 module.exports = (options) => {
@@ -33,10 +34,7 @@ module.exports = (options) => {
 
             res.render('./languages/languages', { title: 'Languages', languages: languages.data.content, pages: false });
         }).catch(error => {
-            console.error("Error fetching languages:", error);
-            res.status(500).render("error", {
-                message: "Unable to fetch the list of languages."
-            });
+            render_error(res, error, 500, "Internal Server Error");
         });
     });
 
@@ -57,10 +55,7 @@ module.exports = (options) => {
 
             res.render('./languages/languages', {title: 'Language', languages: languages.data});
         }).catch(error => {
-            console.error("Error fetching language by movie ID:", error);
-            res.status(500).render("error", {
-                message: "Unable to fetch languages for the specified movie."
-            });
+            render_error(res, error, 500, "Internal Server Error");
         });
     });
 
@@ -79,10 +74,7 @@ module.exports = (options) => {
 
             res.render('./languages/top10', {title: 'Language top10', languages: languages.data});
         }).catch(error => {
-            console.error("Error fetching top 10 languages:", error);
-            res.status(500).render("error", {
-                message: "Unable to fetch the top 10 languages."
-            });
+            render_error(res, error, 500, "Internal Server Error");
         });
     });
 

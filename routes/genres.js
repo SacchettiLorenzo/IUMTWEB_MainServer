@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 var url = require('url-composer');
+const {render_error} = require("../utils");
 
 
 module.exports = (options) => {
@@ -33,10 +34,7 @@ module.exports = (options) => {
 
             res.render('./genres/genres', { title: 'Genres', genres: genres.data.content, pages: false });
         }).catch(error => {
-            console.error("Error fetching genres:", error);
-            res.status(500).render("error", {
-                message: "Unable to fetch genres data."
-            });
+            render_error(res, error, 500, "Internal Server Error");
         });
     })
 
@@ -57,11 +55,7 @@ module.exports = (options) => {
 
             res.render('./genres/genres', {title: 'Genres', genres: genres.data});
         }).catch(error => {
-            console.error("Error fetching genres by movie:", error);
-
-            res.status(500).render("error", {
-                message: "Unable to fetch genres for the selected movie."
-            });
+            render_error(res, error, 500, "Internal Server Error");
         });
     });
 
@@ -90,10 +84,7 @@ module.exports = (options) => {
                 genres: genres
             });
         }).catch(error => {
-            console.error("Error fetching top genres:", error);
-            res.status(500).render("error", {
-                message: "Unable to fetch top genres."
-            });
+            render_error(res, error, 500, "Internal Server Error");
         });
     });
 

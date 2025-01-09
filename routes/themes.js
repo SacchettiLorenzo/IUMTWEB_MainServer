@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios');
 var url = require('url-composer');
+const {render_error} = require("../utils");
 
 
 module.exports = (options) => {
@@ -46,10 +47,7 @@ module.exports = (options) => {
                 });
 
         }).catch(error => {
-            console.error("Error fetching themes:", error);
-            res.status(500).render("error", {
-                message: "Unable to fetch the list of themes."
-            });
+            render_error(res, error, 500, "Internal Server Error");
         });
     });
 
@@ -70,10 +68,7 @@ module.exports = (options) => {
 
             res.render('./themes/themes', {title: 'Theme', themes: themes.data});
         }).catch(error => {
-            console.error("Error fetching theme by movie ID:", error);
-            res.status(500).render("error", {
-                message: "Unable to fetch the theme for the specified movie."
-            });
+            render_error(res, error, 500, "Internal Server Error");
         });
     })
 
@@ -92,10 +87,7 @@ module.exports = (options) => {
 
             res.render('./themes/top10', {title: 'Themes top10', themes: themes.data});
         }).catch(error => {
-            console.error("Error fetching top 10 themes:", error);
-            res.status(500).render("error", {
-                message: "Unable to fetch the top 10 themes."
-            });
+            render_error(res, error, 500, "Internal Server Error");
         });
     })
 
