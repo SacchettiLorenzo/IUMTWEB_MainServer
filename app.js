@@ -20,6 +20,7 @@ const studiosRouter = require('./routes/studios');
 const themesRouter = require('./routes/themes');
 const languagesRouter = require('./routes/languages');
 const genresRouter = require('./routes/genres');
+const newsRouter = require('./routes/news');
 const {render_error} = require('./utils');
 const aboutRouter = require('./routes/about');
 
