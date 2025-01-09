@@ -17,7 +17,7 @@ async function extractFirstImage(url) {
         const image = $('img.block-image-ads.hero-image').attr('src') ||
             $('img.block-image-ads.hero-image').attr('data-original-mos');
 
-        return image || '/public/images/default-news.jpg'; // Immagine di default se non trovata
+        return image || '/public/images/default_news.png'; // Immagine di default se non trovata
     } catch (error) {
         console.error(`Error fetching image from ${url}:`, error.message);
         return '/public/images/default-news.jpg'; // Immagine di default in caso di errore

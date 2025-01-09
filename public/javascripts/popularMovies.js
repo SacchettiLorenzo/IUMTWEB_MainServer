@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Funzione per mostrare i dettagli del film
         function displayMovieDetails(movie) {
-            moviePoster.src = movie.poster || "/images/default-movie.png";
+            moviePoster.src = movie.poster || "/images/default_movie.png";
             movieTitle.textContent = movie.name;
             movieDescription.textContent = movie.description || "No description available.";
             movieRating.textContent = movie.rating.toFixed(1);
