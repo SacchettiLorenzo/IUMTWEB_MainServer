@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Crea il grafico
     const chart = new Chart(ctx, {
-        type: 'bar', // Puoi cambiare in 'scatter', 'line', ecc.
+        type: 'bar',
         data: {
             labels: labels,
             datasets: [{
                 label: 'Number of Movies',
                 data: data,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             }]
         },
@@ -43,14 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Funzione per aggiornare la card
+    // Funzione per aggiornare la scheda dinamica
     const updateActorCard = (actor) => {
         document.getElementById('actorImage').src = actor.imageUrl || '/public/images/default_actor.jpg';
         document.getElementById('actorLink').textContent = actor.name;
-        document.getElementById('actorLink').href = `/actors/id?id=${actor.id}`; // Formato accettato dalla route attuale
+        document.getElementById('actorLink').href = `/actors/id?id=${actor.id}`;
         document.getElementById('actorMovies').textContent = `Movies: ${actor.actor_count}`;
     };
 
-    // Mostra il primo attore come default
+    // Mostra il primo attore come predefinito
     updateActorCard(actors[0]);
 });
