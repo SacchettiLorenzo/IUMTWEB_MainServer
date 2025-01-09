@@ -239,9 +239,99 @@
           }
         }
       }
+    },"/themes": {
+      "get": {
+        "description": "Retrieve a list of all themes.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            },
+            "description": "The page number for pagination."
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "The number of items per page."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of themes was retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Theme"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/themes/theme": {
+      "get": {
+        "description": "Retrieve themes for a specific movie by its ID.",
+        "parameters": [
+          {
+            "name": "movieId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The ID of the movie."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Themes for the specified movie were retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Theme"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/themes/top10": {
+      "get": {
+        "description": "Retrieve the top 10 most used themes.",
+        "responses": {
+          "200": {
+            "description": "The top 10 themes were retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Theme"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
-
-
   },
   "components": {
     "schemas": {
