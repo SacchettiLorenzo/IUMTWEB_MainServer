@@ -335,6 +335,166 @@
           }
         }
       }
+    },
+    "/actors": {
+      "get": {
+        "description": "Get Actors",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/page"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/size"
+          },
+          {
+            "name": "sortParam",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/sortParam"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/sortDirection"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Actors were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/actors/movie": {
+      "get": {
+        "description": "Get actors for a certain movie",
+        "parameters": [
+          {
+            "name": "movieId",
+            "required": true,
+            "in": "query",
+            "$ref": "#/components/schemas/Movie/properties/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Actors were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No actors were found for this movie",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/actors/id": {
+      "get": {
+        "description": "get single actor page",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "query",
+            "$ref": "#/components/schemas/Actor/properties/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Actors were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No actors were found with given id",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/actors/top10-mostPopularActors": {
+      "get": {
+        "description": "lis tof the top 10 most popular actors",
+        "responses": {
+          "200": {
+            "description": "Actors were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
