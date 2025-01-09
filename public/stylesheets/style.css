@@ -493,7 +493,7 @@ h1 {
     background-color: #007bff;
     color: white;
     padding: 10px 15px;
-    border-radius: 50px;
+    border-radius: 100px;
     text-decoration: none;
     font-size: 0.9em;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -585,4 +585,144 @@ h1 {
     background-color: #0056b3; /* Colore più scuro al passaggio del mouse */
     transform: translateY(-2px); /* Solleva leggermente il bottone */
     text-decoration: none; /* Rimuove la sottolineatura */
+}
+
+/* Corpo della pagina */
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+    background-color: #ffffff; /* Sfondo chiaro */
+    margin: 0;
+    padding: 0;
+}
+
+/* Titoli */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: #131313;
+    margin-bottom: 20px;
+}
+
+/* Link */
+a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* Pulsanti */
+.btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    padding: 10px 20px;
+    color: #fff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+/* Tabelle */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombra per un effetto più moderno */
+}
+
+.table th {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+}
+
+.table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Intestazione e piè di pagina */
+header, footer {
+    background: linear-gradient(90deg, #2a2a2a, #131313);
+    color: #fff;
+    padding: 7px;
+    text-align: center;
+}
+
+
+footer a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+h1:hover, h2:hover, h3:hover {
+    color: #007bff;
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+}
+
+/* Navbar links */
+.navbar .nav-link {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 0.90rem;
+    margin-right: 10px;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    color: #ffdd57; /* Cambia colore al passaggio del mouse */
+}
+
+/* Brand styling */
+.navbar-brand {
+    font-size: 1.8rem;
+    color: #fff !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Search input */
+#search-input {
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    padding: 10px;
+}
+
+/* Search button */
+#search-form .btn {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+#search-form .btn:hover {
+    background-color: #ffc107; /* Cambia colore al passaggio del mouse */
+    color: #000;
+}
+
+/* Suggestions dropdown */
+#suggestions {
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.navbar .nav-link.active {
+    font-weight: 600;
+    color: #ffdd57;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.7%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
