@@ -3,33 +3,48 @@ const Parser = require('rss-parser');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const router = express.Router();
+const { render_error } = require("../utils");
 
 const parser = new Parser();
 const feedUrl = 'https://www.cinemablend.com/rss/topic/news/movies';
 
-// Funzione per estrarre la prima immagine da una pagina HTML
+/**
+ * Extracts the first image from an HTML page using a provided URL.
+ * @async
+ * @function extractFirstImage
+ * @param {string} url - The URL of the HTML page.
+ * @returns {Promise<string>} - The URL of the extracted image or a default image if not found.
+ */
 async function extractFirstImage(url) {
     try {
         const response = await axios.get(url);
         const $ = cheerio.load(response.data);
 
-        // Cerca l'immagine con la classe specifica "block-image-ads hero-image"
+        // Attempts to find the first image with a specific class or attribute
         const image = $('img.block-image-ads.hero-image').attr('src') ||
             $('img.block-image-ads.hero-image').attr('data-original-mos');
 
-        return image || '/public/images/default_news.png'; // Immagine di default se non trovata
+        return image || '/public/images/default_news.png'; // Default image if none found
     } catch (error) {
         console.error(`Error fetching image from ${url}:`, error.message);
-        return '/public/images/default-news.jpg'; // Immagine di default in caso di errore
+        return '/public/images/default-news.jpg'; // Default image in case of an error
     }
 }
 
-// Route per la pagina delle news
+/**
+ * Retrieves the latest movie news from an RSS feed, including image extraction.
+ * Renders the news page or provides JSON data if requested via AJAX.
+ * @name GET /
+ * @function
+ * @memberof module:news
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
 router.get('/', async (req, res) => {
     try {
         const feed = await parser.parseURL(feedUrl);
 
-        // Mappa le notizie e recupera le immagini
+        // Maps news items and extracts their associated images
         const newsWithImages = await Promise.all(
             feed.items.map(async item => {
                 const imageUrl = await extractFirstImage(item.link);
@@ -43,17 +58,27 @@ router.get('/', async (req, res) => {
             })
         );
 
-        // Gestisce richieste AJAX (homepage) o render della pagina
+        // Handles AJAX requests or full page rendering
         if (req.xhr || req.headers.accept.indexOf('json') > -1) {
-            return res.json(newsWithImages.slice(0, 5)); // Limitiamo a 5 notizie per la homepage
+            return res.json(newsWithImages.slice(0, 5)); // Limits to the top 5 news items for the homepage
         }
 
-        // Renderizza la pagina completa con tutte le notizie
         res.render('news/news', { title: 'Latest News', news: newsWithImages });
     } catch (error) {
-        console.error('Error fetching RSS feed:', error.message);
-        res.status(500).render('error', { message: 'Error fetching news' });
+        render_error(res, error, 500, "Internal Server Error");
     }
+});
+
+/**
+ * Handles all unmatched routes and returns a 404 error page.
+ * @name GET /*
+ * @function
+ * @memberof module:news
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
+router.get('/*', function (req, res, next) {
+    render_error(res, null, 404, "Page not found");
 });
 
 module.exports = router;

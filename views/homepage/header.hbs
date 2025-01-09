@@ -1,31 +1,34 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(90deg, #2a2a2a, #131313);">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">CineReviews</a>
+            <a class="navbar-brand" href="/" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.5rem;">
+                CineReviews
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/movies">Movies</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/actors">Actors</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/statistics">Statistics</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/news">News</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/channels">Channels</a></li>
-                </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link text-light" href="/"><i class="fas fa-home"></i> Home</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="/movies"><i class="fas fa-film"></i> Movies</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="/actors"><i class="fas fa-user"></i> Actors</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="/statistics"><i class="fas fa-chart-bar"></i> Statistics</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="/news"><i class="fas fa-newspaper"></i> News</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" href="/channels"><i class="fas fa-tv"></i> Channels</a></li>
+                    </ul>
                 <form class="d-flex position-relative" id="search-form" onsubmit="performSearch(event)">
                     <input
-                            class="form-control me-2"
+                            class="form-control me-2 rounded-pill"
                             type="search"
                             id="search-input"
                             name="query"
-                            placeholder="Cerca nel sito..."
+                            placeholder="Search on CineReviews"
                             aria-label="Search"
                             required
+                            style="border: 2px solid #fff;"
                     >
-                    <button class="btn btn-outline-light" type="submit">Cerca</button>
+                    <button class="btn btn-light rounded-pill px-4" type="submit">Search</button>
                 </form>
                 <div id="suggestions" class="list-group position-absolute" style="z-index: 1000;"></div>
             </div>

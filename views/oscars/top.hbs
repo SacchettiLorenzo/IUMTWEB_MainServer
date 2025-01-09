@@ -1,4 +1,11 @@
 <h1>Top {{limit}} Films with Most Oscars</h1>
+
+<!-- Sezione per il grafico -->
+<div class="my-4">
+    <canvas id="topFilmsChart" width="400" height="200"></canvas>
+</div>
+
+<!-- Tabella esistente -->
 <table class="table table-striped">
     <thead>
     <tr>
@@ -15,3 +22,10 @@
     {{/each}}
     </tbody>
 </table>
+
+<!-- Script per i dati JSON -->
+<script id="topFilmsData" type="application/json">
+    {{{json topFilms}}}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/public/javascripts/topOscars.js"></script>
