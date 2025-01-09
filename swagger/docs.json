@@ -163,6 +163,51 @@
             "example": "Christopher Nolan"
           }
         }
+      },
+      "Genre": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the genre",
+            "example": 1
+          },
+          "genre": {
+            "type": "string",
+            "description": "Genre name",
+            "example": "Comedy"
+          }
+        }
+      },
+      "Theme": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the theme",
+            "example": 1
+          },
+          "theme": {
+            "type": "string",
+            "description": "short description of the theme",
+            "example": "Humanity and the world around us"
+          }
+        }
+      },
+      "Language": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the language",
+            "example": 1
+          },
+          "theme": {
+            "type": "string",
+            "description": "language specification",
+            "example": "English"
+          }
+        }
       }
 
 
