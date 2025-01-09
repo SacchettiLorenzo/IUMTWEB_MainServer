@@ -495,6 +495,31 @@
           }
         }
       }
+    },
+    "/crew": {
+      "get": {
+        "description": "get list of the crew",
+        "responses": {
+          "200": {
+            "description": "Crews were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
