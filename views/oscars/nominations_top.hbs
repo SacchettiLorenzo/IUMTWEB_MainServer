@@ -1,5 +1,12 @@
 <h1>Top {{limit}} Films with Most Nominations</h1>
-<table class="table table-striped">
+
+<!-- Sezione per il grafico -->
+<div class="my-4">
+    <canvas id="nominationsChart" width="400" height="200"></canvas>
+</div>
+
+<!-- Tabella esistente -->
+    <table class="table table-striped table-hover">
     <thead>
     <tr>
         <th>Film Title</th>
@@ -15,3 +22,10 @@
     {{/each}}
     </tbody>
 </table>
+
+<!-- Script per i dati JSON -->
+<script id="nominationsData" type="application/json">
+    {{{json topNominatedFilms}}}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/public/javascripts/nominationsChart.js"></script>

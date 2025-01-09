@@ -44,6 +44,7 @@ hbs.registerPartials(__dirname + '/views/homepage');
 hbs.registerPartials(__dirname + '/views/about');
 hbs.registerPartials(__dirname + '/views/news');
 
+// Registrazione degli helper
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
   for(var i = 0; i < n; ++i)
@@ -54,6 +55,11 @@ hbs.registerHelper('times', function(n, block) {
 hbs.registerHelper('date_formatter', function(date) {
   const date_ = new Date(date);
   return date_.getFullYear() + '-' + (date_.getMonth() + 1) + '-' + date_.getDate();
+});
+
+// Helper per convertire in JSON
+hbs.registerHelper('json', function(context) {
+  return JSON.stringify(context);
 });
 
 hbs.registerHelper('grouped_each', function(every, context, options) {
@@ -71,7 +77,8 @@ hbs.registerHelper('grouped_each', function(every, context, options) {
   return out;
 });
 
-hbs.registerHelper( "when",function(operand_1, operator, operand_2, options) {
+// Altri helper
+hbs.registerHelper("when", function(operand_1, operator, operand_2, options) {
   var operators = {
     'eq': function(l,r) { return l == r; },
     'noteq': function(l,r) { return l != r; },
@@ -88,16 +95,15 @@ hbs.registerHelper( "when",function(operand_1, operator, operand_2, options) {
 
 hbs.registerHelper("add", function (operand_1, operand_2) {
   return operand_1 + operand_2;
-})
+});
 
 hbs.registerHelper("sub", function (operand_1, operand_2) {
   return operand_1 - operand_2;
-})
+});
 
 hbs.registerHelper("div", function (operand_1, operand_2) {
   return (operand_1 / operand_2);
-})
-
+});
 
 
 // Configurazione del motore di template (Handlebars)
