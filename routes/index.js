@@ -203,9 +203,85 @@ module.exports = (options) => {
     }
   });
 
-  // Route 404
-  router.get('/*', function (req, res) {
-    render_error(res, null, 404, "Page not found");
+  const {getMoviesFromDatabase, getActorsFromDatabase, getNewsFromDatabase} = require('./movies');
+  //const {options} = require("axios");
+
+  router.get('/statistics', function (req, res) {
+    // Renderizza la pagina statistics
+    res.render('statistics/statistics', {title: 'Statistics'});
+  });
+
+  router.get('/search', async (req, res) => {
+    const query = req.query.query || ''; // Query digitata dall'utente
+    if (!query) {
+      return res.json([]); // Nessun risultato per query vuota
+    }
+
+    try {
+      // Cerchiamo sia nei film che negli attori
+      const [movies, actors] = await Promise.all([
+        axios.get(`${options.servers.SQLBrokerHost}movies/name`, {params: {partial: query}}),
+        axios.get(`${options.servers.SQLBrokerHost}actors/name`, {params: {partial: query}}),
+      ]);
+
+      // Formattiamo i risultati per la barra di ricerca
+      const results = [
+        ...movies.data.map(movie => ({id: movie.id, name: movie.name, type: 'movie'})),
+        ...actors.data.map(actor => ({id: actor.id, name: actor.name, type: 'actor'})),
+      ];
+
+      res.json(results); // Restituiamo i risultati
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  router.get('/popular-countries', async (req, res) => {
+    try {
+      const requestUrl = `${global.SQLBrokerHost}/countries/trending`;
+
+      const response = await axios.get(requestUrl);
+      const countries = response.data;
+
+      if (!countries || countries.length === 0) {
+        console.error("No countries found.");
+        return res.json([]);
+      }
+
+      const countryData = countries.map(country => ({
+        name: country.country,
+        movieCount: country.movie_count,
+      }));
+
+      res.json(countryData);
+    } catch (error) {
+      console.error('Error fetching top countries:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  router.get('/popular-genres', async (req, res) => {
+    try {
+      const requestUrl = `${global.SQLBrokerHost}/genres/trending`;
+      const response = await axios.get(requestUrl);
+      const genres = response.data;
+
+      if (!genres || genres.length === 0) {
+        console.error("No genres found.");
+        return res.json([]);
+      }
+
+      const genreData = genres.map(genre => ({
+        genre: genre.genre,
+        movieCount: genre.movie_count,
+      }));
+
+      res.json(genreData);
+    } catch (error) {
+      console.error('Error fetching popular genres:', error);
+      res.status(500).send('Internal Server Error');
+    }
   });
 
   return router;
