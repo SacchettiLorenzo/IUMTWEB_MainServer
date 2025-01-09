@@ -46,7 +46,289 @@
             "content": {
               "text/html": {
                 "schema": {
-
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/name": {
+      "get": {
+        "description": "Get movies by name",
+        "parameters": [
+          {
+            "name": "partial",
+            "in": "query",
+            "required": true,
+            "$ref": "#/components/schemas/partial"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movies were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/id": {
+      "get": {
+        "description": "Get movie by name",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "$ref": "#/components/schemas/Movie/properties/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movies were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Movies were not found with the given id",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/search": {
+      "get": {
+        "description": "Get movie search page",
+        "responses": {
+          "200": {
+            "description": "Movie search were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/filter/table": {
+      "get": {
+        "description": "Get handlebars table component",
+        "responses": {
+          "200": {
+            "description": "handlebars table componentwere obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/filter": {
+      "get": {
+        "description": "Get filterd data",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/Country/properties/id"
+          },
+          {
+            "name": "genre",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/Genre/properties/id"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/Language/properties/id"
+          },
+          {
+            "name": "theme",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/Theme/properties/id"
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/Movie/properties/date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movies were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Movies were not found with the given parameters",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/genres": {
+      "get": {
+        "description": "Get movies filtered by genre",
+        "parameters": [
+          {
+            "name": "genreId",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/Genre/properties/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movies were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/top10-movies": {
+      "get": {
+        "description": "Get top 10 movies based on parameters",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/Country/properties/id"
+          },
+          {
+            "name": "genre",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/Genre/properties/id"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "$ref": "#/components/schemas/Language/properties/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movies were obtained",
+            "content": {
+              "text/html": {
+                "schema": {
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
                 }
               }
             }
@@ -57,32 +339,39 @@
   },
   "components": {
     "schemas": {
-      "page" : {
+      "page": {
         "type": "integer",
         "description": "number of the page if Pagination is used"
       },
-      "size" : {
+      "size": {
         "type": "integer",
         "description": "size of the page if Pagination is used"
       },
-      "sortParam" : {
+      "sortParam": {
         "type": "string",
         "description": "parameter used to filter the data"
       },
-      "sortDirection" : {
+      "sortDirection": {
         "type": "string",
-        "enum": ["ASC","DESC"],
+        "enum": [
+          "ASC",
+          "DESC"
+        ],
         "description": "parameter used to chose the filtering order"
+      },
+      "partial": {
+        "type": "string",
+        "description": "part of the name of the movie"
       },
       "Movie": {
         "type": "object",
         "properties": {
-          "id" : {
+          "id": {
             "type": "integer",
             "description": "Id of the movie",
             "example": 1000001
           },
-          "name" : {
+          "name": {
             "type": "string",
             "description": "Name of the movie",
             "example": "Barbie"
@@ -164,10 +453,6 @@
           }
         }
       }
-
-
     }
   }
-
-
 }
