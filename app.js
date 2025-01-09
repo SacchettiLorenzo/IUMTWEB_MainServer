@@ -4,6 +4,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const hbs = require('hbs')
 
+const swaggerUi = require('swagger-ui-express');
+const openApiDocumentation = require('./swagger/docs.json')
+
 const servers = {
   SQLBrokerHost : "http://localhost:8080/",
   NoSQLBrokerHost : "http://localhost:3001/"
@@ -139,7 +142,12 @@ app.use('/about', aboutRouter);
 app.use('/news', newsRouter);
 
 app.use((req, res) => {
-  render_error(res,404,"The page you are looking for does not exist.");
+  render_error(res,null,404,"The page you are looking for does not exist.");
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
+
+// Gestione errori 404
+app.use(function (req, res, next) {
+  res.status(404).render('error', { message: 'Page not found', error: {} });
 });
 
 app.use((err, req, res, next) => {
