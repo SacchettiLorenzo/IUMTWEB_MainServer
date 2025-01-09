@@ -41,6 +41,7 @@ hbs.registerPartials(__dirname + '/views/reviews');
 hbs.registerPartials(__dirname + '/views/countries');
 hbs.registerPartials(__dirname + '/views/homepage');
 hbs.registerPartials(__dirname + '/views/about');
+hbs.registerPartials(__dirname + '/views/news');
 
 hbs.registerHelper('times', function(n, block) {
   var accum = '';
@@ -128,7 +129,7 @@ app.use('/themes', themesRouter({servers:servers}));
 app.use('/languages', languagesRouter({servers:servers}));
 app.use('/genres', genresRouter({servers:servers}));
 app.use('/about', aboutRouter);
-
+app.use('/news', newsRouter);
 
 app.use((req, res) => {
   render_error(res,404,"The page you are looking for does not exist.");

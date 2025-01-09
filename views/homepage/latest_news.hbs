@@ -1,12 +1,11 @@
 <section id="latest-news" class="container mt-5">
-    <h2 class="text-center">Ultime Notizie</h2>
-    <div class="list-group">
-        {{#each news}}
-            <a href="/news/id?id={{id}}" class="list-group-item list-group-item-action">
-            <h5 class="mb-1">{{title}}</h5>
-            <p class="mb-1">{{snippet}}</p>
-            <small>{{date}}</small>
-            </a>
-        {{/each}}
+    <h2 class="text-center">Latest Movie News</h2>
+    <div id="news-list" class="list-group scrollable">
+        <!-- Le notizie saranno inserite dinamicamente -->
+    </div>
+    <div class="text-center mt-3">
+        <a href="/news" class="btn btn-primary btn-lg">
+            Want to read more news?
+        </a>
     </div>
 </section>
