@@ -18,14 +18,14 @@
 {{> header }}
 <main>
     {{{body}}}
-  </main>
-    {{> footer}}
+</main>
+{{> footer}}
 </body>
 <a href="#top" class="back-to-top">Back to Top ↑</a>
-  <script src="/public/javascripts/search.js"></script>
-  <script src="/public/javascripts/popularMovies.js"></script>
-  <script src="/public/javascripts/popularCountries.js"></script>
-  <script src="/public/javascripts/popularGenres.js"></script>
+<script src="/public/javascripts/search.js"></script>
+<script src="/public/javascripts/popularMovies.js"></script>
+<script src="/public/javascripts/popularCountries.js"></script>
+<script src="/public/javascripts/popularGenres.js"></script>
 <script src="/public/javascripts/popularActors.js"></script>
 <script src="/public/javascripts/latestNews.js"></script>
 <script src="/public/javascripts/nominationsChart.js"></script>
@@ -36,9 +36,18 @@
         window.scrollTo({ top: 0, behavior: 'smooth' }); // Scrolla in cima alla pagina
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
 
 
 <!-- Script per Back to Top -->
 
 
 </html>
+

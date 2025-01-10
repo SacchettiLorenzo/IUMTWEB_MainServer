@@ -618,7 +618,7 @@ a {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     padding: 10px 20px;
-    color: #fff;
+    color: #050505;
     border: none;
     transition: all 0.3s ease;
 }
@@ -725,4 +725,117 @@ h1:hover, h2:hover, h3:hover {
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.7%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Stile per le card */
+#actor-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 0 auto; /* Centrare le card */
+}
+
+#actor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.card {
+    padding: 10px; /* Margine interno per la card */
+    margin: 0 auto; /* Centrare le card */
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1rem; /* Ridimensiona il titolo */
+    color: #333;
+}
+
+/* Stile per l'immagine */
+.card-img-top {
+    border-radius: 15px 15px 0 0;
+    object-fit: contain; /* Mostra l'intera immagine senza tagliarla */
+    height: 160px; /* Altezza leggermente ridotta */
+}
+
+/* Layout responsive */
+@media (max-width: 992px) {
+    .card {
+        max-width: 45%; /* 2 card per riga su schermi medi */
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        max-width: 100%; /* Card a tutta larghezza per schermi piccoli */
+    }
+}
+
+/* Stile per le card dei film */
+#movie-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin: 0 auto; /* Centrare le card */
+}
+
+#movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Stile per il poster */
+.card-img-top {
+    border-radius: 15px 15px 0 0;
+    object-fit: cover; /* Mostra il poster ritagliato correttamente */
+    height: 250px;
+    width: 100%;
+}
+
+/* Layout responsive */
+@media (max-width: 768px) {
+    .card {
+        max-width: 100%; /* Card a tutta larghezza per schermi piccoli */
+    }
+}
+
+/* Tabella film */
+#movie_table {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#movie_table th, #movie_table td {
+    vertical-align: middle;
+}
+
+#movie_table th {
+    background-color: #343a40;
+    color: #fff;
+}
+
+#movie_table td a {
+    font-weight: bold;
+    color: #007bff;
+}
+
+#movie_table td a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

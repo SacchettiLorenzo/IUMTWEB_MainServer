@@ -1,18 +1,19 @@
 <div class="container">
-    {{#grouped_each 3 actors}}
+    {{#grouped_each 3 movies}}
         <div class="row g-4 justify-content-center">
             {{#each this}}
                 <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
-                    <div class="card shadow-sm text-center" style="border-radius: 15px; max-width: 280px;" id="actor-card">
-                        <!-- Immagine -->
-                        <img src="{{imageUrl}}" alt="{{name}}" class="card-img-top mx-auto"
+                    <div class="card shadow-sm text-center" style="border-radius: 15px; max-width: 280px;" id="movie-card">
+                        <!-- Poster -->
+                        <img src="{{poster}}" alt="{{name}}" class="card-img-top mx-auto"
                              style="height: 250px; object-fit: cover; border-radius: 15px 15px 0 0;"
-                             onerror="load_default_actor_image(this)">
+                             onerror="load_default_movie_image(this)">
                         <!-- Corpo della Card -->
                         <div class="card-body">
                             <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text text-muted" style="font-size: 0.9rem;">Rating: {{rating}}</p>
                             <button type="button" class="btn btn-primary btn-sm"
-                                    onclick="location.href='/actors/id?id={{id}}'">
+                                    onclick="location.href='/movies/id?id={{id}}'">
                             Show More
                             </button>
                         </div>
@@ -22,5 +23,3 @@
         </div>
     {{/grouped_each}}
 </div>
-
-
