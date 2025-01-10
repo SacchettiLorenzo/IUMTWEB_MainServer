@@ -520,8 +520,938 @@
           }
         }
       }
+    },
+    "/releases/all": {
+      "get": {
+        "summary": "Fetch all releases",
+        "description": "Retrieve a paginated and sorted list of all releases.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer" },
+            "description": "Page number for pagination."
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer" },
+            "description": "Number of results per page."
+          },
+          {
+            "name": "sortParam",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Field to sort the results by."
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["ASC", "DESC"] },
+            "description": "Sort direction, either ascending (ASC) or descending (DESC)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved releases.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ReleaseList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/releases/{id}": {
+      "get": {
+        "summary": "Fetch release by ID",
+        "description": "Retrieve details for a specific release by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "The ID of the release."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved release details.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Release" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/releases/country": {
+      "get": {
+        "summary": "Fetch releases by country",
+        "description": "Retrieve a list of releases filtered by the specified country.",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Country to filter releases by."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved releases by country.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ReleaseList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/releases/type": {
+      "get": {
+        "summary": "Fetch releases by type and country",
+        "description": "Retrieve a list of releases filtered by type and country.",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Type of release to filter by."
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Country to filter releases by."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved releases by type and country.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ReleaseList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/releases/rating": {
+      "get": {
+        "summary": "Fetch releases by rating",
+        "description": "Retrieve a list of releases filtered by the specified rating.",
+        "parameters": [
+          {
+            "name": "rating",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "number" },
+            "description": "Rating to filter releases by."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved releases by rating.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ReleaseList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/countries/all": {
+      "get": {
+        "summary": "Fetch all countries",
+        "description": "Retrieve a list of all countries.",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved countries.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CountryList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/countries": {
+      "get": {
+        "summary": "Fetch paginated and sorted countries",
+        "description": "Retrieve a paginated and sorted list of countries.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer" },
+            "description": "Page number for pagination."
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer" },
+            "description": "Number of results per page."
+          },
+          {
+            "name": "sortParam",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Field to sort the results by."
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "enum": ["ASC", "DESC"] },
+            "description": "Sort direction, either ascending (ASC) or descending (DESC)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved countries.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CountryList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/countries/name": {
+      "get": {
+        "summary": "Search countries by name",
+        "description": "Retrieve a list of countries that match the specified name.",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Name of the country to search for."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved countries matching the search criteria.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CountryList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/countries/top-countries": {
+      "get": {
+        "summary": "Fetch top trending countries",
+        "description": "Retrieve a list of the top trending countries based on movie count.",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved top countries.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CountryList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/countries/{id}": {
+      "get": {
+        "summary": "Fetch country by ID",
+        "description": "Retrieve details for a specific country by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID of the country."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved country details.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Country" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/studios/all": {
+      "get": {
+        "summary": "Fetch all studios",
+        "description": "Retrieve a list of all studios.",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved studios.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/StudioList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/studios/{id}": {
+      "get": {
+        "summary": "Fetch studio by ID",
+        "description": "Retrieve details for a specific studio by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" },
+            "description": "ID of the studio."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved studio details.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Studio" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/studio/search": {
+      "get": {
+        "summary": "Search studios by keyword",
+        "description": "Retrieve a list of studios matching the provided keyword.",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Keyword to search for studios."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved studios matching the keyword.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/StudioList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/studio/count": {
+      "get": {
+        "summary": "Fetch total count of studios",
+        "description": "Retrieve the total number of studios available.",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved studio count.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "integer", "example": 50 }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/studio/top": {
+      "get": {
+        "summary": "Fetch top studios by popularity",
+        "description": "Retrieve the top studios based on popularity or other criteria.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 10 },
+            "description": "Number of top studios to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved top studios.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/StudioList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/studio/alphabetical": {
+      "get": {
+        "summary": "Fetch studios ordered alphabetically",
+        "description": "Retrieve a list of studios sorted alphabetically.",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved alphabetically ordered studios.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/StudioList" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/news": {
+      "get": {
+        "summary": "Get latest movie news",
+        "description": "Retrieve the latest movie news from the RSS feed, including extracted images.",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the latest news.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/NewsItem" }
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "description": "Rendered HTML page with news items."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/news/{id}": {
+      "get": {
+        "summary": "Get news item by ID",
+        "description": "Retrieve a specific news item by its ID, including details and images.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "The ID of the news item to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the news item.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/NewsItem" }
+              }
+            }
+          },
+          "404": {
+            "description": "News item not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/news/*": {
+      "get": {
+        "summary": "Handle unmatched news routes",
+        "description": "Handles all unmatched routes under /news and returns a 404 error page.",
+        "responses": {
+          "404": {
+            "description": "Page not found."
+          }
+        }
+      }
+    },
+    "/about": {
+      "get": {
+        "summary": "Render the 'About Us' page",
+        "description": "Displays information about the CineReviews platform.",
+        "responses": {
+          "200": {
+            "description": "Successfully rendered the 'About Us' page.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "description": "Rendered HTML page with information about CineReviews."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error while rendering the 'About Us' page."
+          }
+        }
+      }
+    },
+    "/about/*": {
+      "get": {
+        "summary": "Handle unmatched routes under /about",
+        "description": "Handles unmatched routes in the /about namespace and renders a 404 error page.",
+        "responses": {
+          "404": {
+            "description": "Page not found."
+          }
+        }
+      }
+    },
+    "/oscars": {
+      "get": {
+        "summary": "Fetch all Oscars",
+        "description": "Returns a list of all Oscars.",
+        "responses": {
+          "200": {
+            "description": "A list of all Oscars was retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/oscars/{id}": {
+      "get": {
+        "summary": "Fetch Oscar details by ID",
+        "description": "Fetches details of a specific Oscar by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the Oscar.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Oscar details retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/oscars/top/{limit}": {
+      "get": {
+        "summary": "Fetch top films by Oscar wins",
+        "description": "Fetches the top N films with the most Oscars.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "The number of top films to fetch.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Top films retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/oscars/year/{year}": {
+      "get": {
+        "summary": "Fetch Oscars by year",
+        "description": "Fetches Oscars for a specific year.",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "description": "The year for which to fetch Oscars.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Oscars for the specified year retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/oscars/category/{category}": {
+      "get": {
+        "summary": "Fetch Oscars by category",
+        "description": "Fetches Oscars based on a specific category.",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "description": "The category for which to fetch Oscars.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Oscars for the specified category retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/oscars/film/{title}": {
+      "get": {
+        "summary": "Fetch Oscars by film title",
+        "description": "Fetches Oscars awarded to a specific film by its title.",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "description": "The title of the film.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Oscars for the specified film retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/oscars/all": {
+      "get": {
+        "summary": "Fetch all Oscars",
+        "description": "Fetches a complete list of all Oscars.",
+        "responses": {
+          "200": {
+            "description": "A list of all Oscars was retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/oscars/nominations/top/{limit}": {
+      "get": {
+        "summary": "Fetch top nominated films",
+        "description": "Fetches the top N films with the most nominations.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "path",
+            "required": true,
+            "description": "The number of top nominated films to fetch.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Top nominated films retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/oscars/*": {
+      "get": {
+        "summary": "Handle unmatched routes",
+        "description": "Handles unmatched routes in the /oscars namespace.",
+        "responses": {
+          "404": {
+            "description": "Page not found."
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Home Page",
+        "description": "Renders the home page with movies, actors, upcoming movies, and reviews.",
+        "responses": {
+          "200": {
+            "description": "Home page rendered successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/upcoming-movies": {
+      "get": {
+        "summary": "Upcoming Movies",
+        "description": "Renders a page with upcoming movie releases.",
+        "responses": {
+          "200": {
+            "description": "Upcoming movies retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/popular-movies": {
+      "get": {
+        "summary": "Popular Movies",
+        "description": "Provides popular movies as JSON.",
+        "responses": {
+          "200": {
+            "description": "Popular movies retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/popular-actors": {
+      "get": {
+        "summary": "Popular Actors",
+        "description": "Renders a page with the top 10 popular actors.",
+        "responses": {
+          "200": {
+            "description": "Popular actors retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/channels": {
+      "get": {
+        "summary": "Channels Page",
+        "description": "Renders the channels page.",
+        "responses": {
+          "200": {
+            "description": "Channels page rendered successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/chat": {
+      "get": {
+        "summary": "Chat Page",
+        "description": "Renders a chat page for movies or actors.",
+        "parameters": [
+          {
+            "name": "topic",
+            "in": "query",
+            "required": true,
+            "description": "Topic for the chat (movies or actors).",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "movieTitle",
+            "in": "query",
+            "required": false,
+            "description": "Movie title for the chat.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "actorName",
+            "in": "query",
+            "required": false,
+            "description": "Actor name for the chat.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chat page rendered successfully."
+          },
+          "400": {
+            "description": "Bad request. Missing query parameters."
+          },
+          "404": {
+            "description": "No matching entity found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/statistics": {
+      "get": {
+        "summary": "Statistics Page",
+        "description": "Renders the statistics page.",
+        "responses": {
+          "200": {
+            "description": "Statistics page rendered successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "summary": "Search",
+        "description": "Searches for movies and actors and returns the results as JSON.",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "description": "Search query.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/popular-countries": {
+      "get": {
+        "summary": "Popular Countries",
+        "description": "Provides a list of popular countries based on movie count.",
+        "responses": {
+          "200": {
+            "description": "Popular countries retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/popular-genres": {
+      "get": {
+        "summary": "Popular Genres",
+        "description": "Provides a list of popular genres based on movie count.",
+        "responses": {
+          "200": {
+            "description": "Popular genres retrieved successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
     }
-  },
+},
   "components": {
     "schemas": {
       "page": {
@@ -635,6 +1565,211 @@
             "type": "string",
             "description": "Name of the crew member",
             "example": "Christopher Nolan"
+          }
+        }
+      },
+      "Release": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "Release ID." },
+          "name": { "type": "string", "description": "Name of the release." },
+          "type": { "type": "string", "description": "Type of the release." },
+          "country": { "type": "string", "description": "Country of release." },
+          "rating": { "type": "number", "description": "Rating of the release." }
+        }
+      },
+      "ReleaseList": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/Release" }
+      },
+      "Country": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "Country ID." },
+          "country": { "type": "string", "description": "Name of the country." },
+          "movie_count": { "type": "integer", "description": "Number of movies associated with the country." }
+        }
+      },
+      "CountryList": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/Country" }
+      },
+      "Studio": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "description": "ID of the studio." },
+          "name": { "type": "string", "description": "Name of the studio." },
+          "country": { "type": "string", "description": "Country of the studio." },
+          "founded_year": { "type": "integer", "description": "Year the studio was founded." }
+        }
+      },
+      "StudioList": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/Studio" }
+      },
+      "NewsItem": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the news item."
+          },
+          "link": {
+            "type": "string",
+            "description": "URL to the full news article."
+          },
+          "description": {
+            "type": "string",
+            "description": "Short description or snippet of the news article."
+          },
+          "pubDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Publication date of the news article."
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "URL of the associated image for the news item."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "description": "HTTP status code of the error",
+            "example": 404
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "Page not found"
+          }
+        }
+      },
+      "Oscar": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the Oscar",
+            "example": 1
+          },
+          "filmTitle": {
+            "type": "string",
+            "description": "Title of the film",
+            "example": "Inception"
+          },
+          "year": {
+            "type": "integer",
+            "description": "Year the Oscar was awarded",
+            "example": 2020
+          },
+          "category": {
+            "type": "string",
+            "description": "Oscar category",
+            "example": "Best Picture"
+          }
+        }
+      },
+      "TopOscarFilmsRequest": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "Number of top Oscar-winning films to retrieve",
+            "example": 10
+          }
+        }
+      },
+      "YearOscarRequest": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "description": "Year to filter Oscars by",
+            "example": 2020
+          }
+        }
+      },
+      "CategoryOscarRequest": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Oscar category to filter by",
+            "example": "Best Director"
+          }
+        }
+      },
+      "FilmOscarRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Film title to filter Oscars by",
+            "example": "Inception"
+          }
+        }
+      },
+      "SearchQuery": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query for movies or actors",
+            "example": "Leonardo"
+          }
+        }
+      },
+      "ChatQuery": {
+        "type": "object",
+        "properties": {
+          "topic": {
+            "type": "string",
+            "description": "Chat topic (movies or actors)",
+            "example": "movies"
+          },
+          "movieTitle": {
+            "type": "string",
+            "description": "Title of the movie",
+            "example": "Inception"
+          },
+          "actorName": {
+            "type": "string",
+            "description": "Name of the actor",
+            "example": "Leonardo DiCaprio"
+          }
+        }
+      },
+      "Country": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the country",
+            "example": "USA"
+          },
+          "movieCount": {
+            "type": "integer",
+            "description": "Number of movies from the country",
+            "example": 120
+          }
+        }
+      },
+      "Genre": {
+        "type": "object",
+        "properties": {
+          "genre": {
+            "type": "string",
+            "description": "Genre name",
+            "example": "Action"
+          },
+          "movieCount": {
+            "type": "integer",
+            "description": "Number of movies in this genre",
+            "example": 50
           }
         }
       }
