@@ -26,6 +26,7 @@ const genresRouter = require('./routes/genres');
 const newsRouter = require('./routes/news');
 const {render_error} = require('./utils');
 const aboutRouter = require('./routes/about');
+const reviewsRouter = require('./routes/reviews');
 
 
 var app = express();
@@ -46,6 +47,7 @@ hbs.registerPartials(__dirname + '/views/countries');
 hbs.registerPartials(__dirname + '/views/homepage');
 hbs.registerPartials(__dirname + '/views/about');
 hbs.registerPartials(__dirname + '/views/news');
+hbs.registerPartials(__dirname + '/views/reviews');
 
 // Registrazione degli helper
 hbs.registerHelper('times', function(n, block) {
@@ -140,6 +142,7 @@ app.use('/languages', languagesRouter({servers:servers}));
 app.use('/genres', genresRouter({servers:servers}));
 app.use('/about', aboutRouter);
 app.use('/news', newsRouter);
+app.use('/reviews', reviewsRouter({servers:servers}));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
 app.use((req, res) => {

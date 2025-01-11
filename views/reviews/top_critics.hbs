@@ -1,0 +1,24 @@
+<div class="container mt-4">
+    <h1>Top 10 Critics</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Position</th>
+            <th>Critic Name</th>
+            <th>Total Reviews</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each critics}}
+            <tr>
+                <td>{{@index}}</td>
+                <td>{{_id}}</td>
+                <td>{{totalReviews}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+
+</div>
+
