@@ -142,7 +142,7 @@ app.use('/about', aboutRouter);
 app.use('/news', newsRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
-app.use((req, res) => {
+app.use('/*',(req, res) => {
   render_error(res, null, 404, "The page you are looking for does not exist.");
 });
 

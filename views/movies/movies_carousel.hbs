@@ -7,7 +7,7 @@
     <div id="MovieCarouselInner" class="carousel-inner">
     {{#each movies}}
         <div class="carousel-item bg-dark text-light ">
-            <img class="w-25 mx-auto d-block" src="{{poster}}" alt="{{name}}" onerror="load_default_movie_image(this)">
+            <a href='/movies/id?id={{id}}'><img class="w-25 mx-auto d-block" src="{{poster}}" alt="{{name}}" onerror="load_default_movie_image(this)"></a>
             <div class="container">
                 <div class="carousel-caption text-start bg-dark text-light opacity-75">
                     <h1 class="">{{name}}</h1>

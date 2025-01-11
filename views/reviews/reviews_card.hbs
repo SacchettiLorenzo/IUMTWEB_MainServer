@@ -6,6 +6,10 @@
                     <div class="container">
                         <div class="row">
                             <h6 class="col"> {{critic_name}}</h6>
+                            {{#when ../../title 'eq' 'Home'}}
+                                <h6 class="col" ><a href='/movies/name?partial={{movie_title}}&only_data=false'>{{movie_title}}</a></h6>
+                            {{/when}}
+
                             {{#if top_critic}}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-star-fill col" viewBox="0 0 16 16">

@@ -12,6 +12,9 @@
                     <p>
                         {{description}}
                     </p>
+                    <p>
+                        Rating:{{rating}}
+                    </p>
                 </div>
             </div>
             <div class="col" id="movie-poster">
@@ -25,7 +28,14 @@
             <div class="col" id="movie-details">
                 <table class="table">
                     <tbody>
-
+                    <tr>
+                        <th scope="row">Minutes:</th>
+                        <td>
+                            {{#with movie}}
+                                {{minute}}
+                            {{/with}}
+                        </td>
+                    </tr>
                     <tr>
                         <th scope="row">Languages:</th>
                         <td>
@@ -94,10 +104,14 @@
 
     </div>
 
+    {{#if reviews}}
+        <h2 class="text-center mt-3">Reviews</h2>
+    {{/if}}
+
     <div class="row mt-3" id="movie-reviews">
         {{> reviews_card}}
     </div>
-
+    <h2 class="text-center mt-3">Actors</h2>
     <div class="row mt-3" id="movie-actors">
         {{> actors_card}}
     </div>

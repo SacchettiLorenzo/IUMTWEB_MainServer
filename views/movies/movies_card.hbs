@@ -1,8 +1,8 @@
 <div class="container">
-    {{#grouped_each 3 movies}}
+    {{#grouped_each 4 movies}}
         <div class="row g-4 justify-content-center mt-2">
             {{#each this}}
-                <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
+                <div class="col-lg-3 col-md-6 col-sm-12  justify-content-center">
                     <div class="card shadow-sm text-center" style="border-radius: 15px; max-width: 280px;" id="movie-card">
                         <!-- Poster -->
                         <img src="{{poster}}" alt="{{name}}" class="card-img-top mx-auto"

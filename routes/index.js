@@ -48,7 +48,14 @@ module.exports = (options) => {
             movies: movies.data.content.sort(() => 0.5 - Math.random()).slice(0, 10),
             actors: JSON.stringify(actors.data),
             upcoming_movies: upcoming.data.slice(0, 10),
-            reviews: reviews.data.map(r => r.reviews),
+            reviews: reviews.data.map(r =>
+                {
+                  return {
+                    ...r.reviews,
+                    movie_title: r.movie_title,
+                  }
+                }
+            ),
           });
         })
         .catch(error => {

@@ -13,7 +13,7 @@
         <div class="carousel-inner">
             {{#each upcoming_movies}}
                 <div class="carousel-item {{#if @first}}active{{/if}}">
-                    <img src="{{poster}}" class="d-block w-100" alt="{{name}}" onerror="load_default_movie_image(this)">
+                    <a href='/movies/id?id={{id}}'><img  src="{{poster}}" class="d-block w-100" alt="{{name}}" onerror="load_default_movie_image(this)"></a>
                     <div class="carousel-caption d-none d-md-block">
                         <h5>{{name}}</h5>
                         <p>{{tagline}}</p>
