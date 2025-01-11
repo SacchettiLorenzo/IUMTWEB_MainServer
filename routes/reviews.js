@@ -152,7 +152,7 @@ module.exports = (options) => {
             const response = await axios.get(request_url);
 
             res.render('reviews/top_reviewed_movies', {
-                title: 'Top 10 Movies by Distinct Critics',
+                title: 'Top 10 most critically acclaimed films',
                 movies: response.data
             });
         } catch (error) {

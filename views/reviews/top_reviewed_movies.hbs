@@ -1,0 +1,22 @@
+<div class="container mt-4">
+    <h1>Top 10 most critically acclaimed films</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Position</th>
+            <th>Movie Title</th>
+            <th>Number of Distinct Critics</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each movies}}
+            <tr>
+                <td>{{@index}}</td>
+                <td>{{movie_title}}</td>
+                <td>{{criticsCount}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+</div>
