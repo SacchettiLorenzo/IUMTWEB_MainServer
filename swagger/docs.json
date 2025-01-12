@@ -2209,36 +2209,6 @@
             "example": "Leonardo DiCaprio"
           }
         }
-      },
-      "Country": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the country",
-            "example": "USA"
-          },
-          "movieCount": {
-            "type": "integer",
-            "description": "Number of movies from the country",
-            "example": 120
-          }
-        }
-      },
-      "Genre": {
-        "type": "object",
-        "properties": {
-          "genre": {
-            "type": "string",
-            "description": "Genre name",
-            "example": "Action"
-          },
-          "movieCount": {
-            "type": "integer",
-            "description": "Number of movies in this genre",
-            "example": 50
-          }
-        }
       }
     }
   }
