@@ -108,14 +108,22 @@
         <h2 class="text-center mt-3">Reviews</h2>
     {{/if}}
 
-    <div class="row mt-3" id="movie-reviews">
+    <div class="row mt-3 w-75 mx-auto" id="movie-reviews">
         {{> reviews_card}}
     </div>
-    <h2 class="text-center mt-3">Actors</h2>
-    <div class="row mt-3" id="movie-actors">
+    <h2 class="text-center mt-3 ">Actors</h2>
+    <div class="row mt-3 w-75 mx-auto" id="movie-actors">
         {{> actors_card}}
     </div>
 
-    similar movies
+    <div class="row mt-3 mb-3 w-25 mx-auto" >
+        {{#with movie}}
+            <button type="button" class="btn btn-primary btn-sm  mt-3 mb-3 "
+                    onclick="location.href='/crew/movie?movieId={{id}}'">
+            Show movie crew Members
+            </button>
+        {{/with}}
+    </div>
+
 </div>
 

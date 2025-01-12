@@ -34,6 +34,23 @@ module.exports = (options) => {
         })
     });
 
+    router.get('/movie', function (req, res, next) {
+        let movie_data_request_url = url.build({
+            host: options.servers.SQLBrokerHost,
+            path: "crew/movie",
+            query: {
+                movieId: req.query.movieId,
+            }
+        })
+
+        axios.get(movie_data_request_url).then(crew => {
+            res.render('./crew/crew', {title: 'Crew', crew: crew.data});
+        }).catch(error => {
+            render_error(res, error, 500, "Internal Server Error");
+        })
+    })
+
+
     router.get('/*', function (req, res, next) {
         render_error(res, null, 404, "Page not found");
     })
