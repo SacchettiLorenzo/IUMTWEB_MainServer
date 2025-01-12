@@ -466,12 +466,11 @@ module.exports = (options) => {
 
 
     router.get('/genres', (req, res, next) => {
-        const genresId = req.query.genresId || 1;  // Imposta un genere di default se non fornito
+        const genresId = req.query.genresId || 1;
         const page = req.query.page || 0;
         const size = req.query.size || 10;
         let path = "movies/genres";
 
-        // Richiesta per caricare i generi
         let genres_path = "genres";
         let genres_request_url = {
             host: options.servers.SQLBrokerHost,
@@ -486,7 +485,6 @@ module.exports = (options) => {
 
         axios.get(genres_request_url).then(genres => {
 
-            // Richiesta per ottenere i film per il genere selezionato
             const request_url = url.build({
                 host: options.servers.SQLBrokerHost,
                 path: path,
@@ -536,27 +534,26 @@ module.exports = (options) => {
         let path;
         let minuteSort = null;
         let ratingSort = null;
-        let sortDirection = 'DESC'; // Default sorting direction, can be modified
+        let sortDirection = 'DESC';
 
         if (type === 'best') {
             path = "movies/top10ByIds";
-            ratingSort = 1; // Ordina per rating
-            sortDirection = 'DESC'; // Ordinamento decrescente per rating
+            ratingSort = 1;
+            sortDirection = 'DESC';
         } else if (type === 'worst') {
             path = "movies/worst10ByIds";
-            ratingSort = 1; // Ordina per rating
-            sortDirection = 'ASC'; // Ordinamento crescente per rating
+            ratingSort = 1;
+            sortDirection = 'ASC';
         } else if (type === 'longest') {
             path = "movies/top10Longest";
-            minuteSort = 1; // Ordina per durata
-            sortDirection = 'DESC'; // Ordinamento decrescente per durata
+            minuteSort = 1;
+            sortDirection = 'DESC';
         } else if (type === 'shortest') {
             path = "movies/top10Shortest";
-            minuteSort = 1; // Ordina per durata
-            sortDirection = 'ASC'; // Ordinamento crescente per durata
+            minuteSort = 1;
+            sortDirection = 'ASC';
         }
 
-        // Aggiungi i parametri di ordinamento
         queryParams.minuteSort = minuteSort;
         queryParams.ratingSort = ratingSort;
         queryParams.sortDirection = sortDirection;
