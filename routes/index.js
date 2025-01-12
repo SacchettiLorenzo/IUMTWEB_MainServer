@@ -291,5 +291,39 @@ module.exports = (options) => {
     }
   });
 
+  /**
+   * Returns the top 10 critics as JSON (like /popular-countries).
+   * @name GET /popular-critics
+   */
+  router.get('/popular-critics', async (req, res) => {
+    try {
+
+      const response = await axios.get('http://localhost:3001/review/critics/top-10');
+      const criticsData = response.data;
+
+      res.json(criticsData);
+    } catch (error) {
+      console.error('Error fetching top critics:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  /**
+   * Returns the top 10 reviewed movies as JSON.
+   * @name GET /popular-reviewed-movies
+   */
+  router.get('/popular-reviewed-movies', async (req, res) => {
+    try {
+
+      const response = await axios.get('http://localhost:3001/review/movies/top-10-reviewed');
+      const moviesData = response.data;
+
+      res.json(moviesData);
+    } catch (error) {
+      console.error('Error fetching top reviewed movies:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
   return router;
 };
