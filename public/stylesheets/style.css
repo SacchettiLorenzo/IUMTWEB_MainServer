@@ -660,7 +660,7 @@ footer a {
 
 h1:hover, h2:hover, h3:hover {
     color: #007bff;
-    transform: scale(1.02);
+    /*transform: scale(1.02);*/
     transition: all 0.3s ease;
 }
 

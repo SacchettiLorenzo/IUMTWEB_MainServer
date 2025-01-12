@@ -40,7 +40,16 @@ module.exports = (options) => {
         axios.get(request_url).then(actors => {
             actors.data.content = filter_actors_summary(actors.data.content);
 
-            res.render('./actors/actors', {title: 'Actors', actors: actors.data.content, pages : false});
+            res.render('./actors/actors', {
+                title: 'Actors',
+                actors: actors.data.content,
+                path: "actors",
+                pages: true,
+                searchable: true,
+                pages_amount: (actors.data.totalPages - 1),
+                current_page: actors.data.number,
+                page_size: actors.data.size,
+            });
         }).catch(error => {
             render_error(res, error, 500, "Internal Server Error");
         })

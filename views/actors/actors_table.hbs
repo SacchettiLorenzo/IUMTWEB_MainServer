@@ -1,4 +1,4 @@
-<table class="table table-striped table-hover table-condensed table-bordered table-responsive">
+<table class="table table-striped table-hover table-condensed table-bordered table-responsive" id="actors_table">
     <tr>
         <th scope="col">Id</th>
         <th scope="col">Name</th>
@@ -9,7 +9,7 @@
     {{#each actors}}
         <tr>
             <th scope="row">{{id}}</th>
-            <td>{{name}}</td>
+            <td><a href="/actors/id?id={{id}}">{{name}}</a></td>
             <td>{{summary}}</td>
             <td>{{section}}</td>
             <td>{{image_url}}</td>

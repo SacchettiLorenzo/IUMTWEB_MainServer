@@ -71,7 +71,10 @@ function loadTableTemplate(){
     })
 }
 
+
+
 async function sendMoviesSearchWord(){
+
     if(tableTemplate == null){
         await loadTableTemplate();
     }
@@ -88,8 +91,21 @@ async function sendMoviesSearchWord(){
 }
 
 window.onload = function() {
-    document.getElementById("MovieCarouselInner").children[0].classList.add('active');
-    document.getElementById("MovieCarouselIndicators").children[0].classList.add('active');
+
+    try{
+        document.getElementById("MovieCarouselInner").children[0].classList.add('active');
+        document.getElementById("MovieCarouselIndicators").children[0].classList.add('active');
+    }catch(e){
+        console.error(e);
+    }
+
+    document.getElementById("searchNameForm").addEventListener("submit", function(event){
+        event.preventDefault();
+    });
+
+    document.getElementById("movieSearchFilterForm").addEventListener("submit", function(event){
+        event.preventDefault();
+    });
 
     document.querySelectorAll('.card-body a').forEach(link => {
         link.addEventListener('click', function(event) {
@@ -117,6 +133,9 @@ function displayTopCountries(data) {
     });
 }
 
+/**
+ * enable tables to be sorted accordingly to the clicked th element
+ */
 document.addEventListener('DOMContentLoaded', function() {
     const tables = document.querySelectorAll('table');
 
