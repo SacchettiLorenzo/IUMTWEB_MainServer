@@ -113,7 +113,7 @@ module.exports = (options) => {
     router.get('/:id', async (req, res) => {
         try {
             const { id } = req.params;
-            const response = await axios.get(`http://localhost:8080/countries/${id}`);
+            const response = await axios.get(`http://localhost:8080/countries?id=${id}`);
             const country = response.data;
             res.render('countries/details', { title: 'Country Details', country });
         } catch (error) {
